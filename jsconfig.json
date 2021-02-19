@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "esnext"
+  },
+  "typeAcquisition": {
+    "enable": true
+  }
+}

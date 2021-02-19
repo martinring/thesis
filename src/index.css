@@ -1,0 +1,155 @@
+@import 'katex/dist/katex.css';
+
+@font-face {
+  font-family: serif;
+  src: url('fonts/texgyrepagella-regular.woff');
+}
+
+@font-face {
+  font-family: serif;
+  src: url('fonts/texgyrepagella-italic.woff');
+  font-style: italic;
+}
+
+@font-face {
+  font-family: serif;
+  src: url('fonts/texgyrepagella-bold.woff');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: serif;
+  src: url('fonts/texgyrepagella-bolditalic.woff');
+  font-weight: bold;
+  font-style: italic;
+}
+
+body {
+  font-family: serif;
+  counter-reset: chapter section subsection figure example;
+  line-height: 1.5;
+  text-align: justify;
+  padding-left: 5rem;
+}
+
+h1,h2,h2,h4,h5,h6 {
+  text-align: left;
+}
+
+a[href^="#fig:"]::before {
+  content: 'Figure ' target-counter(attr(href),chapter) '.' target-counter(attr(href), figure)
+}
+
+figure {
+  text-align: center;
+  display: block;  
+  counter-increment: figure;
+}
+
+div.example {
+  background-color: #eee;
+  counter-increment: example;
+  padding: 1rem
+}
+
+div.example::before {
+  content: 'Example ' counter(chapter) '.' counter(example) ' ';
+  font-weight: bold;
+}
+
+figure > figcaption {
+  margin-top: 0.5rem;
+  text-align: justify;
+  font-style: italic;
+}
+
+figure > figcaption::before {
+  content: 'Figure ' counter(chapter) '.' counter(figure) ' ';
+  font-weight: bold;
+}
+
+h1 {
+  counter-reset: section figure;
+  font-size: 3.5rem;  
+  line-height: 1.2;
+  position: relative;
+  margin-bottom: 2.5rem;
+}
+
+h1::before {
+  position: absolute;
+  left: -5rem;
+  counter-increment: chapter;
+  content: counter(chapter);
+}
+
+h2 {
+  counter-reset: subsection;  
+  position: relative;
+}
+
+h2::before {
+  content: counter(chapter) '.' counter(section) ' ';
+  counter-increment: section;
+  position: absolute;
+  left: -5rem;
+}
+
+h3 {
+  position: relative;
+}
+
+h3::before {
+  content: counter(chapter) '.' counter(section) '.' counter(subsection);
+  counter-increment: subsection;
+  position: absolute;
+  left: -5rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+hr {
+  visibility: hidden;
+}
+
+@media screen {
+  body {
+    max-width: 30rem;
+    margin-left: 5rem;
+  }
+
+  figure {
+    float: right;
+    position: absolute;
+    left: 40rem;
+    width: 25rem;
+  }
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 3cm;
+    margin-inside: 4cm;
+    @bottom {
+      content: counter(page);
+    }
+  }
+
+  span.katex > .katex-html {
+    display: none;
+  }
+
+
+
+  h1 {
+    page-break-before: always;
+    padding-top: 4rem;  
+  }
+
+  hr {
+    page-break-after: always;
+  }
+}

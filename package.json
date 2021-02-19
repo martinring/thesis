@@ -1,0 +1,28 @@
+{
+  "name": "thesis",
+  "version": "1.0.0",
+  "description": "PhD Thesis",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/martinring/thesis.git"
+  },
+  "scripts": {
+    "build": "./build.js"
+  },
+  "author": "Martin Ring <martin.ring@dfki.de>",
+  "devDependencies": {
+    "citation-js": "0.5.0-alpha.10",
+    "esbuild": "0.8.49",
+    "katex": "0.12.0",
+    "markdown-it": "12.0.4",
+    "markdown-it-attrs": "^4.0.0",
+    "markdown-it-bracketed-spans": "1.0.1",
+    "markdown-it-container": "3.0.0",
+    "markdown-it-header-sections": "1.0.0",
+    "markdown-it-include": "2.0.0",
+    "markdown-it-mathjax-svg-next": "^1.0.1",
+    "markdown-it-texmath": "0.8.0",
+    "prince": "1.8.6"
+  }
+}
