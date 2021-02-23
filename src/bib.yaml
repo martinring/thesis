@@ -1,0 +1,2687 @@
+---
+- type: book
+  id: SystemCStandard
+  citation-label: SystemCStandard
+  note: IEEE Standard 1666 – 2011
+  publisher: IEEE
+  title: Standard SystemC Language Reference Manual
+- accessed:
+    date-parts: [[2015,5,20]]    
+  author:
+  - given: Mark
+    family: Richters
+  - given: Martin
+    family: Gogolla
+  container-title: Object Modeling with the OCL
+  collection-number: '2263'
+  collection-title: Lecture Notes in Computer Science
+  editor:
+  - given: Tony
+    family: Clark
+  - given: Jos
+    family: Warmer
+  type: chapter
+  id: RichtersGogolla2002
+  citation-label: RichtersGogolla2002
+  ISBN: 978-3-540-43169-5, 978-3-540-45669-8
+  issued:
+    date-parts: [[2002]]    
+  keyword: Management of Computing and Information Systems,Software engineering
+  language: en
+  page: 42-68
+  publisher: Springer
+  title-short: OCL
+  title: 'OCL: Syntax, Semantics, and Tools'
+- publisher-place: Manchester, UK
+  author:
+  - given: Serge
+    family: Autexier
+  - given: Normen
+    family: Müller
+  container-title: Proceedings of 10th ACM Symposium on Document Engineering (DocEng2010)
+  editor:
+  - given: Michael
+    family: Gormish
+  - given: Rolf
+    family: Ingold
+  type: paper-conference
+  id: GMoC
+  citation-label: GMoC
+  issued:
+    date-parts:
+    - - 2010
+      - 9
+  title: Semantics-Based Change Impact Analysis for Heterogeneous Collections of Documents
+- author:
+  - given: Mathias
+    family: Soeken
+  - given: Nabila
+    family: Abdessaied
+  - given: Arman
+    family: Allahyari-Abhari
+  - given: Andi
+    family: Buzo
+  - given: Liana
+    family: Musat
+  - given: Georg
+    family: Pelz
+  - given: Rolf
+    family: Drechsler
+  container-title: Forum on Specification and Design Languages. Proceedings
+  type: paper-conference
+  id: nlp
+  citation-label: nlp
+  issued:
+    date-parts:
+    - - 2014
+  title: Quality Assessment for Requirements based on Natural Language Processing
+- accessed:
+    date-parts:
+    - - 2015
+      - 10
+      - 28
+  author:
+  - family: The Eclipse Foundation
+  type: webpage
+  id: EMFDiff
+  citation-label: EMFDiff
+  issued:
+    date-parts:
+    - - 2012
+  title: EMF Diff/Merge
+  URL: http://www.eclipse.org/diffmerge/
+- author:
+  - given: Lionel C
+    family: Briand
+  - given: Yvan
+    family: Labiche
+  - given: LO
+    family: Sullivan
+  container-title: International Conference on Software Maintenance (ICSM 2003). Proceedings.
+  type: paper-conference
+  id: briand2003impact
+  citation-label: briand2003impact
+  issued:
+    date-parts:
+    - - 2003
+  page: 256-265
+  publisher: IEEE
+  title: Impact analysis and change management of UML models
+- author:
+  - given: Carsten
+    family: Schulz-Key
+  - given: Markus
+    family: Winterholer
+  - given: Thomas
+    family: Schweizer
+  - given: Tommy
+    family: Kuhn
+  - given: Wolfgang
+    family: Rosentiel
+  container-title: Asia and South Pacific Design Automation Conference (ASP-DAC)
+  type: paper-conference
+  id: schulz2004
+  citation-label: schulz2004
+  issued:
+    date-parts:
+    - - 2004
+  page: 238-243
+  publisher: IEEE
+  title: Object-Oriented Modeling and Synthesis of SystemC Specifications
+- author:
+  - given: Rolf
+    family: Drechsler
+  - given: Mathias
+    family: Soeken
+  - given: Robert
+    family: Wille
+  container-title: Models, Methods, and Tools for Complex Chip Design
+  collection-title: Lecture Notes in Electrical Engineering
+  DOI: 10.1007/978-3-319-01418-0_3
+  editor:
+  - given: Jan
+    family: Haase
+  type: chapter
+  id: drechsler2014fsl
+  citation-label: drechsler2014fsl
+  ISBN: 978-3-319-01417-3
+  issued:
+    date-parts:
+    - - 2014
+  language: English
+  page: 37-52
+  publisher: Springer
+  title: Formal Specification Level
+  volume: '265'
+- container-title: IEEE Transactions on Computer-Aided Design of Integrated Circuits
+    and Systems
+  author:
+  - given: Louis J
+    family: Hafer
+  - given: Alice C
+    family: Parker
+  type: article-journal
+  id: hafer1983formal
+  citation-label: hafer1983formal
+  issue: '1'
+  issued:
+    date-parts:
+    - - 1983
+  page: 4-18
+  publisher: IEEE
+  title: A formal method for the specification, analysis, and design of register-transfer
+    level digital logic
+  volume: '2'
+- author:
+  - given: Dave
+    family: Steinberg
+  - given: Frank
+    family: Budinsky
+  - given: Ed
+    family: Merks
+  - given: Marcelo
+    family: Paternostro
+  type: book
+  id: steinberg2008emf
+  citation-label: steinberg2008emf
+  issued:
+    date-parts:
+    - - 2008
+  publisher: Pearson Education
+  title: 'EMF: Eclipse Modeling Framework'
+- author:
+  - given: Oliver
+    family: Keszocze
+  - given: Mathias
+    family: Soeken
+  - given: Eugen
+    family: Kuksa
+  - given: Rolf
+    family: Drechsler
+  container-title: 1<sup>st</sup> International Workshop on Natural Language Analysis
+    in Software Engineering (NaturaLiSE)
+  type: paper-conference
+  id: keszocze2013lips
+  citation-label: keszocze2013lips
+  issued:
+    date-parts:
+    - - 2013
+  page: 31-38
+  publisher: IEEE
+  title: 'Lips: An IDE for model driven engineering based on natural language processing'
+- author:
+  - given: Vivek
+    family: Sinha
+  - given: Frederic
+    family: Doucet
+  - given: Chuck
+    family: Siska
+  - given: Rajesh
+    family: Gupta
+  - given: Stan
+    family: Liao
+  - given: Abhijit
+    family: Ghosh
+  container-title: Proceedings of the 13th International Symposium on System Synthesis
+  type: paper-conference
+  id: sinha2000yaml
+  citation-label: sinha2000yaml
+  issued:
+    date-parts:
+    - - 2000
+  page: 9-14
+  publisher: IEEE
+  title: 'YAML: a tool for hardware design visualization and capture'
+- author:
+  - given: Serge
+    family: Autexier
+  container-title: Special Issue
+  editor:
+  - given: Shi Hui
+    family: Dieter Hutter
+    suffix: Berthold Hoffmann
+  type: article-journal
+  id: Diff
+  citation-label: Diff
+  issue: '2'
+  issued:
+    date-parts:
+    - - 2015
+      - 8
+  publisher: ISCAS
+  title: Similarity-Based Diff, Three-Way-Diff and Merge
+  volume: '9'
+- author:
+  - given: Agnes
+    family: Lanusse
+  - given: Yann
+    family: Tanguy
+  - given: Huascar
+    family: Espinoza
+  - given: Chokri
+    family: Mraidha
+  - given: Sebastien
+    family: Gerard
+  - given: Patrick
+    family: Tessier
+  - given: Remi
+    family: Schnekenburger
+  - given: Hubert
+    family: Dubois
+  - given: François
+    family: Terrier
+  container-title: Proc. of the Fifth European Conference on Model-Driven Architecture
+    Foundations and Applications (ECMDA-FA 2009)
+  type: paper-conference
+  id: lanusse2009papyrus
+  citation-label: lanusse2009papyrus
+  issued:
+    date-parts:
+    - - 2009
+  page: 1-4
+  publisher: Citeseer
+  title: 'Papyrus UML: an open source toolset for MDA'
+- author:
+  - given: Waseem
+    family: Raslan
+  - given: Ahmed
+    family: Sameh
+  container-title: Integrated Circuits, 2007. ISIC'07. International Symposium on
+  type: paper-conference
+  id: raslan2007system
+  citation-label: raslan2007system
+  issued:
+    date-parts:
+    - - 2007
+  page: 504-507
+  publisher: IEEE
+  title: System-level modeling and design using SysML and SystemC
+- author:
+  - given: Jannis
+    family: Stoppe
+  - given: Robert
+    family: Wille
+  - given: Rolf
+    family: Drechsler
+  container-title: IEEE Computer Society Annual Symposium on VLSI (ISVLSI)
+  type: paper-conference
+  id: stoppe2013data
+  citation-label: stoppe2013data
+  issued:
+    date-parts:
+    - - 2013
+  page: 26-31
+  publisher: IEEE
+  title: Data extraction from SystemC designs using debug symbols and the SystemC
+    API
+- container-title: ACM SIGPLAN Notices
+  author:
+  - given: Friedrich L
+    family: Bauer
+  - given: Manfred
+    family: Broy
+  - given: Rupert
+    family: Gnatz
+  - given: Wolfgang
+    family: Hesse
+  - given: Bernd
+    family: Krieg-Brückner
+  - given: Helmuth
+    family: Partsch
+  - given: Peter
+    family: Pepper
+  - given: Hans
+    family: Wössner
+  type: article-journal
+  id: bauer1978towards
+  citation-label: bauer1978towards
+  issue: '12'
+  issued:
+    date-parts:
+    - - 1978
+  page: 15-24
+  publisher: ACM
+  title: Towards a wide spectrum language to support program specification and program
+    development
+  volume: '13'
+- container-title: Electronic Notes in Theoretical Computer Science
+  author:
+  - given: Manuel
+    family: Clavel
+  - given: Steven
+    family: Eker
+  - given: Patrick
+    family: Lincoln
+  - given: José
+    family: Meseguer
+  type: article-journal
+  id: clavel1996principles
+  citation-label: clavel1996principles
+  issued:
+    date-parts:
+    - - 1996
+  page: 65-89
+  publisher: Elsevier
+  title: Principles of maude
+  volume: '4'
+- author:
+  - given: Monika
+    family: Solanki
+  - given: Antonio
+    family: Cau
+  - given: Hussein
+    family: Zedan
+  container-title: Proceedings of the 15th international conference on World Wide
+    Web
+  type: paper-conference
+  id: solanki2006asdl
+  citation-label: solanki2006asdl
+  issued:
+    date-parts:
+    - - 2006
+  page: 687-696
+  publisher: ACM
+  title: 'Asdl: A wide spectrum language for designing web services'
+- author:
+  - given: Jean-Raymond
+    family: Abrial
+  - given: Jean-Raymond
+    family: Abrial
+  - given: A
+    family: Hoare
+  type: book
+  id: Abrial2005
+  citation-label: Abrial2005
+  issued:
+    date-parts:
+    - - 2005
+  publisher: Cambridge University Press
+  title: 'The B-book: assigning programs to meanings'
+- author:
+  - given: B.
+    family: Dion
+  - given: J.
+    family: Gartner
+  container-title: 'VDI 12th International Conference: Electronic Systems for Vehicles'
+  type: paper-conference
+  id: DionGartner05
+  citation-label: DionGartner05
+  issued:
+    date-parts:
+    - - 2005
+  page: 1427-1436
+  publisher: VDI
+  title: Efficient Development of Embedded Automotive Software with IEC 61508 Objectives
+    using SCADE Drive
+- author:
+  - given: L.
+    family: Benvenuti
+  - given: A.
+    family: Ferrari
+  - given: E.
+    family: Mazzi
+  - given: A. L. Sangiovanni
+    family: Vincentelli
+  container-title: 'Hybrid Systems: Computation and Control: 11th International Workshop.
+    Proceedings'
+  DOI: 10.1007/978-3-540-78929-1\_5
+  editor:
+  - given: Magnus
+    family: Egerstedt
+  - given: Bud
+    family: Mishra
+  type: chapter
+  id: Benvenuti2008
+  citation-label: Benvenuti2008
+  ISBN: 978-3-540-78929-1
+  issued:
+    date-parts:
+    - - 2008
+  page: 58-71
+  publisher: Springer
+  title: Contract-Based Design for Computation and Verification of a Closed-Loop Hybrid
+    System
+  URL: http://dx.doi.org/10.1007/978-3-540-78929-1%5C_5
+- container-title: Computer
+  author:
+  - given: B.
+    family: Meyer
+  DOI: 10.1109/2.161279
+  type: article-journal
+  id: Meyer1992
+  citation-label: Meyer1992
+  ISSN: '0018-9162'
+  issue: '10'
+  issued:
+    date-parts:
+    - - 1992
+      - 10
+  page: 40-51
+  title: Applying 'design by contract'
+  volume: '25'
+- author:
+  - given: Patrice
+    family: Chalin
+  - given: Joseph R.
+    family: Kiniry
+  - given: Gary T.
+    family: Leavens
+  - given: Erik
+    family: Poll
+  container-title: 'Formal Methods for Components and Objects: 4th International Symposium,
+    FMCO 2005.'
+  DOI: 10.1007/11804192_16
+  editor:
+  - given: Frank S.
+    family: Boer
+    non-dropping-particle: de
+  - given: Marcello M.
+    family: Bonsangue
+  - given: Susanne
+    family: Graf
+  - given: Willem-Paul
+    family: Roever
+    non-dropping-particle: de
+  type: chapter
+  id: Chalin2006
+  citation-label: Chalin2006
+  ISBN: 978-3-540-36750-5
+  issued:
+    date-parts:
+    - - 2006
+  page: 342-363
+  publisher: Springer
+  title: 'Beyond Assertions: Advanced Specification and Verification with JML and
+    ESC/Java2'
+  URL: http://dx.doi.org/10.1007/11804192%5C_16
+- author:
+  - given: Patrick
+    family: Baudin
+  - given: Pascal
+    family: Cuoq
+  - given: Jean-Christophe
+    family: Filliâtre
+  - given: Claude
+    family: Marché
+  - given: Benjamin
+    family: Monate
+  - given: Yannick
+    family: Moy
+  - given: Virgile
+    family: Prevosto
+  type: book
+  id: ACSL
+  citation-label: ACSL
+  publisher: INRIA
+  title: 'ACSL: ANSI/ISO C Specification Language Version 1.11'
+  URL: http://frama-c.com/download/acsl.pdf
+- container-title: International journal on software tools for technology transfer
+  author:
+  - given: Jean-Raymond
+    family: Abrial
+  - given: Michael
+    family: Butler
+  - given: Stefan
+    family: Hallerstede
+  - given: Thai Son
+    family: Hoang
+  - given: Farhad
+    family: Mehta
+  - given: Laurent
+    family: Voisin
+  type: article-journal
+  id: Abrial2010Rodin
+  citation-label: Abrial2010Rodin
+  issue: '6'
+  issued:
+    date-parts:
+    - - 2010
+  page: 447-466
+  publisher: Springer
+  title: 'Rodin: an open toolset for modelling and reasoning in Event-B'
+  volume: '12'
+- author:
+  - family: IBM
+  type: book
+  id: DOORS
+  citation-label: DOORS
+  publisher: http://www-03.ibm.com/software/products/en/ratidoor
+  title: Rational DOORS
+  URL: http://www-03.ibm.com/software/products/en/ratidoor
+- container-title: Communication of the ACM
+  author:
+  - given: M.
+    family: Jarke
+  type: article-journal
+  id: Jarke98
+  citation-label: Jarke98
+  issue: '12'
+  issued:
+    date-parts:
+    - - 1998
+  title: Requirements Tracing
+  volume: '41'
+- author:
+  - given: H.
+    family: Broeders
+  - given: R.
+    family: Leuken
+    non-dropping-particle: van
+  container-title: Design Automation Conference (DAC), 2011 48th ACM/EDAC/IEEE
+  DOI: ''
+  type: paper-conference
+  id: Broeders2011
+  citation-label: Broeders2011
+  ISSN: '0738-100x'
+  issue: ''
+  issued:
+    date-parts:
+    - - 2011
+      - 6
+  keyword: GCC plug-in;GDB debugger;SHaBE;SystemC front-end;SystemC hierarchy;abstract
+    syntax trees;abstraction level;dynamic parameters;dynamically generated module
+    hierarchy;extracting behavior;hierarchical information;modeling language;static
+    single assignment form;static verification;computational linguistics;high level
+    languages;program debugging;program verification;
+  page: 357 -362
+  title: Extracting behavior and dynamically generated hierarchy from SystemC models
+  volume: ''
+- author:
+  - family: Microsoft
+  type: book
+  id: Microsoft2010
+  citation-label: Microsoft2010
+  issued:
+    date-parts:
+    - - 2010
+  note: "\\\\http://msdn.microsoft.com/de-de/library/x93ctkx8%28v=vs.100%29.aspx"
+  title: Debug Interface Access SDK
+- author:
+  - family: Microsoft
+  type: book
+  id: Microsoft2010a
+  citation-label: Microsoft2010a
+  issued:
+    date-parts:
+    - - 2010
+  note: "\\\\http://msdn.microsoft.com/en-us/library/yd4f8bd1%28v=vs.100%29.aspx"
+  title: Program Database Files (C++)
+- container-title: Seventeenth IEEE International Workshop on Rapid System Prototyping
+    (RSP'06)
+  author:
+  - given: M.
+    family: Metzger
+  - given: F.
+    family: Bastien
+  - given: F.
+    family: Rousseau
+  - given: J.
+    family: Vachon
+  - given: E.M.
+    family: Aboulhamid
+  DOI: 10.1109/RSP.2006.22
+  type: article-journal
+  id: Metzger2006
+  citation-label: Metzger2006
+  ISBN: 0-7695-2580-6
+  issued:
+    date-parts:
+    - - 2006
+  page: 91-97
+  publisher: Ieee
+  title: Introspection Mechanisms for Semi-Formal Verification in a System-Level Design
+    Environment
+  URL: http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=1630755
+- author:
+  - given: Giovanni
+    family: Beltrame
+  - given: Donatella
+    family: Sciuto
+  - given: Christina
+    family: Silvano
+  - given: Damien
+    family: Lyonnard
+  - given: Chuck
+    family: Pilkington
+  container-title: Design, Automation and Test in Europe, 2006. DATE '06. Proceedings
+  DOI: 10.1109/DATE.2006.244004
+  type: paper-conference
+  id: Beltrame2006
+  citation-label: Beltrame2006
+  ISSN: ''
+  issue: ''
+  issued:
+    date-parts:
+    - - 2006
+      - 3
+  keyword: Analytical models;Application software;Communication channels;Communication
+    switching;Design optimization;Hardware;Kernel;Runtime;Software engineering;System-on-a-chip;circuit
+    simulation;integrated circuit modelling;multiprocessing systems;system-on-chip;multi-processor
+    system-on-chip;object introspection;system-level simulation;transaction level
+    modeling;
+  page: 1 -6
+  title: Exploiting TLM and Object Introspection for System-Level Simulation
+  volume: '1'
+- container-title: Computer-Aided Design of Integrated Circuits and Systems, IEEE
+    Transactions on
+  author:
+  - given: Giovanni
+    family: Beltrame
+  - given: Luca
+    family: Fossati
+  - given: Donatella
+    family: Sciuto
+  DOI: 10.1109/TCAD.2009.2030268
+  type: article-journal
+  id: Beltrame2009
+  citation-label: Beltrame2009
+  ISSN: '0278-0070'
+  issue: '12'
+  issued:
+    date-parts:
+    - - 2009
+  keyword: Application software;Emulation;Field programmable gate arrays;Hardware;Observability;Operating
+    systems;Real time systems;Reflection;Space exploration;hardware description languages;logic
+    CAD;logic simulation;operating systems (computers);real-time systems;system-on-chip;OpenMP
+    programming;POSIX thread;POSIX-compliant real-time operating system;Python;SystemC;design
+    space exploration;fine-grained simulation control;hardware/software configuration;multiprocessor
+    systems-on-a-chip;nonintrusive transaction-level reflective MPSoC simulation platform;reflective
+    simulation platform;Design exploration;Python;SystemC;multiprocessor;system-level
+    design;system-on-a-chip;
+  page: 1857 -1869
+  title: 'ReSP: A Nonintrusive Transaction-Level Reflective MPSoC Simulation Platform
+    for Design Space Exploration'
+  volume: '28'
+- container-title: 4th IEEE International Workshop on System-on-Chip for Real-Time
+    Applications
+  author:
+  - given: L.
+    family: Charest
+  - given: E.M.
+    family: Aboulhamid
+  - given: G.
+    family: Bois
+  DOI: 10.1109/IWSOC.2004.1319847
+  type: article-journal
+  id: Charest2004
+  citation-label: Charest2004
+  ISBN: 0-7695-2182-7
+  issued:
+    date-parts:
+    - - 2004
+  page: 45-50
+  publisher: IEEE Comput. Soc
+  title: Using design patterns for type unification and introspection in SystemC
+  URL: http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=1319847
+- container-title: Proceedings 13th International Symposium on System Synthesis
+  author:
+  - given: V.
+    family: Sinha
+  - given: F.
+    family: Doucet
+  - given: C.
+    family: Siska
+  - given: R.
+    family: Gupta
+  - given: S.
+    family: Liao
+  - given: a.
+    family: Ghosh
+  DOI: 10.1109/ISSS.2000.874023
+  type: article-journal
+  id: Sinha2000
+  citation-label: Sinha2000
+  ISBN: 0-7695-0765-4
+  issued:
+    date-parts:
+    - - 2000
+  page: 9-14
+  publisher: IEEE Comput. Soc
+  title: 'YAML: a tool for hardware design visualization and capture'
+  URL: http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=874023
+- author:
+  - given: Daniel
+    family: Große
+  - given: Rolf
+    family: Drechsler
+  - given: Lothar
+    family: Linhard
+  - given: Gerhard
+    family: Angst
+  container-title: Forum on Specification & Design Languages
+  type: paper-conference
+  id: Grosse2003
+  citation-label: Grosse2003
+  issued:
+    date-parts:
+    - - 2003
+  page: 646-658
+  title: Efficient Automatic Visualization of SystemC Designs
+- container-title: Proceedings of IEEE International Conference on Computer Aided
+    Design (ICCAD) ICCAD-97
+  author:
+  - given: Rachid
+    family: Helaihel
+  - given: Kunle
+    family: Olukotun
+  DOI: 10.1109/ICCAD.1997.643613
+  type: article-journal
+  id: Helaihel1997
+  citation-label: Helaihel1997
+  ISBN: 0-8186-8200-0
+  issued:
+    date-parts:
+    - - 1997
+  page: 690-697
+  publisher: Ieee
+  title: Java as a specification language for hardware-software systems
+  URL: http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=643613
+- container-title: ACM SIGPLAN Notices
+  author:
+  - given: James
+    family: Lapalme
+  - given: El Mostapha
+    family: Aboulhamid
+  - given: Gabriela
+    family: Nicolescu
+  - given: Luc
+    family: Charest
+  - given: Francois R.
+    family: Boyer
+  - given: Jean Pierre
+    family: David
+  - given: Guy
+    family: Bois
+  type: article-journal
+  id: Lapalme2004b
+  citation-label: Lapalme2004b
+  ISBN: '1581138067'
+  issue: '7'
+  issued:
+    date-parts:
+    - - 2004
+  keyword: attribute programming,c,chip,cil,component-based programming,esys,framework,hdls,java,net,system
+    on,systemc,systemverilog,verilog,vhdl
+  page: 107-114
+  publisher: ACM
+  title: 'ESys. Net: a new solution for embedded systems modeling and simulation'
+  URL: http://dl.acm.org/citation.cfm?id=997179
+  volume: '39'
+- container-title: Proceedings. IEEE Symposium on FPGAs for Custom Computing Machines
+    (Cat. No.98TB100251)
+  author:
+  - given: P.
+    family: Bellows
+  - given: B.
+    family: Hutchings
+  DOI: 10.1109/FPGA.1998.707895
+  type: article-journal
+  id: Bellows
+  citation-label: Bellows
+  ISBN: 0-8186-8900-5
+  page: 175-184
+  publisher: IEEE Comput. Soc
+  title: JHDL-an HDL for reconfigurable systems
+  URL: http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=707895
+- author:
+  - given: Görschwin
+    family: Fey
+  - given: Daniel
+    family: Große
+  - given: Tim
+    family: Cassens
+  - given: Christian
+    family: Genz
+  - given: Tim
+    family: Warode
+  - given: Rolf
+    family: Drechsler
+  container-title: Workshop on Synthesis And System Integration of Mixed Information
+    technologies
+  type: paper-conference
+  id: Fey2004
+  citation-label: Fey2004
+  issued:
+    date-parts:
+    - - 2004
+  page: 148-154
+  title: 'ParSyC: an efficient SystemC parser'
+  URL: http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.72.7049
+- author:
+  - given: Carsten
+    family: Schulz-Key
+  - given: Markus
+    family: Winterholer
+  - given: Thomas
+    family: Schweizer
+  - given: Tommy
+    family: Kuhn
+  - given: Wolfgang
+    family: Rosentiel
+  container-title: Asia and South Pacific Design Automation Conference
+  type: paper-conference
+  id: Schulz-Key2004
+  citation-label: Schulz-Key2004
+  issued:
+    date-parts:
+    - - 2004
+  page: 238-243
+  title: Object-oriented modeling and synthesis of SystemC specifications
+  URL: http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=1337573
+- container-title: 2007 IEEE International Symposium on Circuits and Systems
+  author:
+  - given: Christian
+    family: Genz
+  - given: Rolf
+    family: Drechsler
+  - given: Gerhard
+    family: Angst
+  - given: Lothar
+    family: Linhard
+  DOI: 10.1109/ISCAS.2007.378551
+  type: article-journal
+  id: Genz2007
+  citation-label: Genz2007
+  ISBN: 1-4244-0920-9
+  issue: '01'
+  issued:
+    date-parts:
+    - - 2007
+      - 5
+  page: 413-416
+  publisher: Ieee
+  title: Visualization of SystemC Designs
+  URL: http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=4252659
+- container-title: Design, Automation and Test in Europe Conference and Exhibition,
+    1999. Proceedings (Cat. No. PR00078)
+  author:
+  - given: G.
+    family: De Micheli
+  DOI: 10.1109/DATE.1999.761150
+  type: article-journal
+  id: DeMicheli
+  citation-label: DeMicheli
+  ISBN: 0-7695-0078-1
+  page: 382-383
+  publisher: IEEE Comput. Soc
+  title: Hardware synthesis from C/C++ models
+  URL: http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=761150
+- container-title: Proceedings of SPIE
+  author:
+  - given: Steven a.
+    family: Guccione
+  DOI: 10.1117/12.327023
+  type: article-journal
+  id: Guccione1998
+  citation-label: Guccione1998
+  ISSN: '0277786X'
+  issued:
+    date-parts:
+    - - 1998
+  keyword: fpga,java,reconfiguration
+  page: 97-102
+  publisher: Spie
+  title: 'XBI: a Java-based interface to FPGA hardware'
+  URL: http://link.aip.org/link/?PSI/3526/97/1%5C&Agg=doi
+  volume: '3526'
+- container-title: Design Automation for Embedded Systems
+  author:
+  - given: Matthieu
+    family: Moy
+  - given: Florence
+    family: Maraninchi
+  - given: Laurent
+    family: Maillet-Contoz
+  type: article-journal
+  id: Moy2006
+  citation-label: Moy2006
+  issue: 2-3
+  issued:
+    date-parts:
+    - - 2006
+  page: 73-104
+  title: 'LusSy: An open tool for the analysis of systems-on-a-chip at the transaction
+    level'
+  URL: http://www.springerlink.com/index/10.1007/s10617-006-9044-6
+  volume: '10'
+- publisher-place: London
+  abstract: A quick introduction to Mendeley. Learn how Mendeley creates your personal
+    digital library, how to organize and annotate documents, how to collaborate and
+    share with colleagues, and how to generate citations and bibliographies.
+  author:
+  - family: The Mendeley Support Team
+  container-title: Mendeley Desktop
+  type: book
+  id: TheMendeleySupportTeam2011
+  citation-label: TheMendeleySupportTeam2011
+  issued:
+    date-parts:
+    - - 2011
+  keyword: Mendeley,how-to,user manual
+  page: 1-16
+  publisher: Mendeley Ltd.
+  title: Getting Started with Mendeley
+  URL: http://www.mendeley.com
+- author:
+  - given: James
+    family: Lapalme
+  - given: El Mostapha
+    family: Aboulhamid
+  - given: Gabriela
+    family: Nicolescu
+  - given: Luc
+    family: Charest
+  - given: Francois R.
+    family: Boyer
+  - given: Jean Pierre
+    family: David
+  - given: Guy
+    family: Bois
+  container-title: Design, Automation and Test in Europe Conference
+  type: paper-conference
+  id: Lapalme2004a
+  citation-label: Lapalme2004a
+  issued:
+    date-parts:
+    - - 2004
+  page: 732-733
+  title: ".NET framework - a solution for the next generation tools for system-level
+    modeling and simulation"
+  URL: http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=1268952
+- container-title: Proceedings 32nd Annual Simulation Symposium
+  author:
+  - given: R.L.
+    family: Smeliansky
+  - family: Bakhmurov
+    non-dropping-particle: a.G.
+  - family: Kapitonova
+    non-dropping-particle: a.P.
+  DOI: 10.1109/SIMSYM.1999.766454
+  type: article-journal
+  id: Smeliansky1999
+  citation-label: Smeliansky1999
+  ISBN: 0-7695-0128-1
+  issue: '98'
+  issued:
+    date-parts:
+    - - 1999
+  page: 50-57
+  publisher: IEEE Comput. Soc
+  title: 'DYANA: an environment for embedded system design and analysis'
+  URL: http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=766454
+- container-title: IEEE Transactions on Very Large Scale Integration (VLSI) Systems
+  author:
+  - given: M.
+    family: Leeser
+  DOI: 10.1109/92.820756
+  type: article-journal
+  id: Leeser2000
+  citation-label: Leeser2000
+  ISSN: 1063-8210
+  issue: '1'
+  issued:
+    date-parts:
+    - - 2000
+      - 2
+  page: 1-8
+  title: HML, a novel hardware description language and its translation to VHDL
+  URL: http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=820756
+  volume: '8'
+- container-title: Design Automation Conference (
+  author:
+  - given: Harry
+    family: Broeders
+  type: article-journal
+  id: Broeders2011
+  citation-label: Broeders2011
+  ISBN: '9781450306362'
+  issued:
+    date-parts:
+    - - 2011
+  page: 357-362
+  title: Extracting behavior and dynamically generated hierarchy from SystemC models
+  URL: http://ieeexplore.ieee.org/xpls/abs%5C_all.jsp?arnumber=5981956
+- container-title: IEEE Design & Test of Computers
+  author:
+  - given: J.M.P.
+    family: Cardoso
+  - given: H.C.
+    family: Neto
+  DOI: 10.1109/MDT.2003.1188264
+  type: article-journal
+  id: Cardoso2003
+  citation-label: Cardoso2003
+  ISSN: 0740-7475
+  issue: '2'
+  issued:
+    date-parts:
+    - - 2003
+      - 3
+  page: 65-75
+  title: Compilation for FPGA-based reconfigurable hardware
+  URL: http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=1188264
+  volume: '20'
+- author:
+  - given: Kevin
+    family: Marquet
+  - given: Matthieu
+    family: Moy
+  - given: Bageshri
+    family: Karkare
+  container-title: Forum on Specification and Design Languages
+  type: paper-conference
+  id: Marquet2010b
+  citation-label: Marquet2010b
+  issued:
+    date-parts:
+    - - 2010
+  page: 124-129
+  title: A theoretical and experimental review of SystemC front-ends
+- abstract: 'The C++ language has only a limited runtime type information system,
+    which doesn''t provide full reflection capabilities. We present a general mechanism
+    to support reflection, exploiting template metaprogramming techniques. Two solutions
+    are presented: a static one where metaclass information is only available at compile
+    time to produce class specific code; and a dynamic one where metaclass objects
+    exist at runtime. As a case study of technique we show how to build an object
+    interface to relational database tables. By just annotating a class definition
+    with meta information, such as storage attributes or index properties of fields,
+    a programmer can define objects that can be stored, fetched or searched in a database
+    table. This approach has been used in building a high-performance, full text search
+    engine.'
+  author:
+  - given: Giuseppe
+    family: Attardi
+  - given: Antonio
+    family: Cisternino
+  container-title: Proceedings of the Third International Conference on Generative
+    and Component-Based Software Engineering
+  type: paper-conference
+  id: Attardi2001
+  citation-label: Attardi2001
+  issued:
+    date-parts:
+    - - 2001
+  page: 118-127
+  title: Reflection support by means of template metaprogramming
+- author:
+  - given: FZI
+    family: Karlsruhe
+  type: book
+  id: Karlsruhe2012
+  citation-label: Karlsruhe2012
+  issued:
+    date-parts:
+    - - 2012
+  note: "\\\\http://www.fzi.de/index.php/de/component/content/article/238-ispe-sim/4350-kascpar-karlsruhe-systemc-parser-suite"
+  title: KaSCPar - Karlsruhe SystemC Parser Suite
+- author:
+  - given: David
+    family: Berner
+  - given: Jean-Pierre
+    family: Talpin
+  - given: Hiren
+    family: Patel
+  - given: Deepak Abraham
+    family: Mathaikutty
+  - given: Sandeep
+    family: Shukla
+  container-title: Proceedings of the Forum on Specification and Design Languages
+  type: paper-conference
+  id: Berner2005
+  citation-label: Berner2005
+  issued:
+    date-parts:
+    - - 2005
+  page: 405-409
+  title: 'SystemCXML: An extensible SystemC front end using XML'
+  URL: http://i-tecs.fr/ecsi/libraryV1/uploads/6-CSD21%5C_paper.pdf
+- container-title: 19th International Conference on VLSI Design held jointly with
+    5th International Conference on Embedded Systems Design (VLSID'06)
+  author:
+  - given: I.
+    family: Radojevic
+  - given: Z.
+    family: Salcic
+  - given: P.
+    family: Roop
+  DOI: 10.1109/VLSID.2006.67
+  type: article-journal
+  id: Radojevic2006
+  citation-label: Radojevic2006
+  ISBN: 0-7695-2502-4
+  issued:
+    date-parts:
+    - - 2006
+  page: 4 pp.
+  publisher: Ieee
+  title: Design of heterogeneous embedded systems using DFCharts model of computation
+  URL: http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=1581493
+- container-title: IEEE Computer Society
+  author:
+  - family: O.S.C. Initiative
+  type: article-journal
+  id: OSCInitiative2006
+  citation-label: OSCInitiative2006
+  ISBN: '0738148717'
+  issued:
+    date-parts:
+    - - 2006
+  title: IEEE Standard SystemC Language Reference Manual
+- author:
+  - given: Grant
+    family: Martin
+  - given: Brian
+    family: Bailey
+  - given: Andrew
+    family: Piziali
+  type: book
+  id: Martin2007
+  citation-label: Martin2007
+  ISBN: 978-0123735515
+  issued:
+    date-parts:
+    - - 2007
+  publisher: Morgan Kaufmann
+  title: 'ESL Design and Verification: A Prescription for Electronic System Level
+    Methodology'
+- author:
+  - given: Christian
+    family: Genz
+  - given: Rolf
+    family: Drechsler
+  container-title: Proceedings of the Conference on Design, Automation and Test in
+    Europe
+  type: paper-conference
+  id: Genz2009
+  citation-label: Genz2009
+  issued:
+    date-parts:
+    - - 2009
+  page: 590-593
+  title: Overcoming limitations of the SystemC data introspection
+  URL: http://dl.acm.org/citation.cfm?id=1874764
+- container-title: 2006 IEEE North-East Workshop on Circuits and Systems
+  author:
+  - given: Olivier
+    family: Brassard
+  - given: Frederic
+    family: Rousseau
+  - given: Jean
+    family: David
+  - given: Mathieu
+    family: Kastle
+  - given: El
+    family: Aboulhamid
+  DOI: 10.1109/NEWCAS.2006.250904
+  type: article-journal
+  id: Brassard2006
+  citation-label: Brassard2006
+  ISBN: 1-4244-0416-9
+  issued:
+    date-parts:
+    - - 2006
+      - 6
+  page: 165-168
+  publisher: Ieee
+  title: Automatic Generation of Embedded Systems with .NET Framework Based Tools
+  URL: http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=4016935
+- author:
+  - given: Matthieu
+    family: Moy
+  - given: Florence
+    family: Maraninchi
+  - given: Laurent
+    family: Maillet-Contoz
+  container-title: Conference on Embedded software
+  type: paper-conference
+  id: Moy2005
+  citation-label: Moy2005
+  ISBN: '1595930914'
+  issued:
+    date-parts:
+    - - 2005
+  keyword: dynamic,elaboration,front-end,parser,static,systemc
+  page: 317-324
+  title: 'Pinapa: An extraction tool for systemc descriptions of systems-on-a-chip'
+  URL: http://dl.acm.org/citation.cfm?id=1086286
+- container-title: Computer Applications in Engineering Education
+  author:
+  - given: Veselko
+    family: Gu?tin
+  DOI: 10.1002/cae.1009
+  type: article-journal
+  id: Gu?tin2001
+  citation-label: Gu?tin2001
+  ISSN: 1061-3773
+  issue: '2'
+  issued:
+    date-parts:
+    - - 2001
+  page: 87-92
+  title: Designing the microprocessor with Abel-HDL
+  URL: http://doi.wiley.com/10.1002/cae.1009
+  volume: '9'
+- author:
+  - given: John
+    family: Hopf
+  - given: G. Stewart
+    family: Itzstein
+  - given: David
+    family: Kearney
+  container-title: International Conference on Field-Programmable Technology
+  type: paper-conference
+  id: Hopf2002
+  citation-label: Hopf2002
+  issued:
+    date-parts:
+    - - 2002
+  page: 344-347
+  title: 'Hardware Join Java: a high level language for reconfigurable hardware development'
+- container-title: Proceedings 1999 Design Automation Conference (Cat. No. 99CH36361)
+  author:
+  - given: T.
+    family: Kuhn
+  - given: W.
+    family: Rosenstiel
+  - given: U.
+    family: Kebschull
+  DOI: 10.1109/DAC.1999.782130
+  type: article-journal
+  id: Kuhn1999
+  citation-label: Kuhn1999
+  ISBN: 1-58113-092-9
+  issued:
+    date-parts:
+    - - 1999
+  page: 790-793
+  publisher: Ieee
+  title: Description and simulation of hardware/software systems with Java
+  URL: http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=782130
+- container-title: Systems Engineering
+  author:
+  - given: Terry
+    family: Bahill
+  - given: Jesse
+    family: Daniels
+  DOI: 10.1002/sys.10033
+  type: article-journal
+  id: Bahill2003
+  citation-label: Bahill2003
+  ISSN: 1098-1241
+  issue: '1'
+  issued:
+    date-parts:
+    - - 2003
+      - 1
+  keyword: design,engineering communi-,object-oriented design,object-oriented systems
+    engineering,tools,uml,unified modeling language,unified systems engineering process
+  page: 28-48
+  title: 'Using objected-oriented and UML tools for hardware design: A case study'
+  URL: http://doi.wiley.com/10.1002/sys.10033
+  volume: '6'
+- container-title: 4th IEEE International Workshop on System-on-Chip for Real-Time
+    Applications
+  author:
+  - given: J.P.
+    family: David
+  - given: E.
+    family: Bergeron
+  DOI: 10.1109/IWSOC.2004.1319875
+  type: article-journal
+  id: David
+  citation-label: David
+  ISBN: 0-7695-2182-7
+  page: 183-188
+  publisher: IEEE Comput. Soc
+  title: A step towards intelligent translation from high-level design to RTL
+  URL: http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=1319875
+- container-title: IEEE Transactions on Education
+  author:
+  - family: Sagahyroon
+    non-dropping-particle: a.a.
+  DOI: 10.1109/13.883357
+  type: article-journal
+  id: Sagahyroon2000
+  citation-label: Sagahyroon2000
+  ISSN: '00189359'
+  issue: '4'
+  issued:
+    date-parts:
+    - - 2000
+  page: 449-454
+  title: 'From AHPL to VHDL: a course in hardware description languages'
+  URL: http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=883357
+  volume: '43'
+- container-title: Proceedings 1998 Design and Automation Conference. 35th DAC. (Cat.
+    No.98CH36175)
+  author:
+  - given: J.S.
+    family: Young
+  - given: J.
+    family: MacDonald
+  - given: M.
+    family: Shilman
+  - given: a.
+    family: Tabbara
+  - given: P.
+    family: Hilfinger
+  - family: Newton
+    non-dropping-particle: a.R.
+  DOI: 10.1109/DAC.1998.724442
+  type: article-journal
+  id: Young1998
+  citation-label: Young1998
+  ISBN: 0-89791-964-5
+  issued:
+    date-parts:
+    - - 1998
+  page: 70-75
+  publisher: Ieee
+  title: Design and specification of embedded systems in Java using successive, formal
+    refinement
+  URL: http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=724442
+- author:
+  - given: Olaf
+    family: Spinczyk
+  - given: Daniel
+    family: Lohmann
+  - given: Matthias
+    family: Urban
+  container-title: 'Proceeding of the 2005 conference on New Trends in Software Methodologies,
+    Tools and Techniques: Proceedings of the fourth SoMeT\backslash_W05'
+  type: paper-conference
+  id: Spinczyk2005
+  citation-label: Spinczyk2005
+  issued:
+    date-parts:
+    - - 2005
+  keyword: aop,aspectc,c,programming languages
+  page: 33-53
+  publisher: IOS Press
+  title: Advances in AOP with AspectC++
+  URL: http://dl.acm.org/citation.cfm?id=1563301
+- author:
+  - given: Carlo
+    family: Brandolese
+  - given: Paolini
+    family: Di Felice
+  - given: Luigi
+    family: Pomante
+  - given: Daniele
+    family: Scarpazza
+  container-title: IADIS International Conference on Applied Computing
+  type: paper-conference
+  id: Brandolese2006
+  citation-label: Brandolese2006
+  issued:
+    date-parts:
+    - - 2006
+  keyword: open-source,parser,systemc
+  page: 706-709
+  title: 'Parsing SystemC: an open-source, easy-to-extend parser'
+- author:
+  - given: Kevin
+    family: Marquet
+  - given: Matthieu
+    family: Moy
+  container-title: Proceedings of the tenth ACM international conference on Embedded
+    software
+  type: paper-conference
+  id: Marquet2010a
+  citation-label: Marquet2010a
+  issued:
+    date-parts:
+    - - 2010
+  keyword: modelisation,system on chip,systemc,validation
+  page: 79-88
+  publisher: ACM
+  title: 'PinaVM: a SystemC Front-End Based on an Executable Intermediate Representation'
+  URL: http://dl.acm.org/citation.cfm?id=1879032
+- container-title: Latin American Applied Research
+  author:
+  - given: Javier
+    family: Castillo
+  - given: Pablo
+    family: Huerta
+  - given: Jose Ignacio
+    family: Martinez
+  type: article-journal
+  id: Castillo2007
+  citation-label: Castillo2007
+  issue: '1'
+  issued:
+    date-parts:
+    - - 2007
+  keyword: equivalent description in verilog,synthesis,systemc,this verilog descrip-,tion
+    can be synthesized,translation,using any standard rt,verilog
+  page: 53-58
+  publisher: SciELO Argentina
+  title: An open-source tool for SystemC to Verilog automatic translation
+  URL: http://www.scielo.org.ar/scielo.php?script=sci%5C_arttext%5C&amp;pid=S0327-07932007000100011
+  volume: '37'
+- container-title: Proceedings. Second ACM and IEEE International Conference on Formal
+    Methods and Models for Co-Design, 2004. MEMOCODE '04.
+  author:
+  - given: N.
+    family: Dave
+  DOI: 10.1109/MEMCOD.2004.1459823
+  type: article-journal
+  id: Dave2004
+  citation-label: Dave2004
+  ISBN: 0-7803-8509-8
+  issued:
+    date-parts:
+    - - 2004
+  page: 93-102
+  publisher: Ieee
+  title: Designing a reorder buffer in bluespec
+  URL: http://ieeexplore.ieee.org/lpdocs/epic03/wrapper.htm?arnumber=1459823
+- author:
+  - given: Thorsten
+    family: Schubert
+  - given: Wolfgang
+    family: Nebel
+  container-title: FDL
+  type: paper-conference
+  id: Schubert2006
+  citation-label: Schubert2006
+  ISBN: 978-3-00-019710-9
+  issued:
+    date-parts:
+    - - 2009
+      - 3
+      - 4
+  keyword: dblp
+  page: 135-143
+  publisher: ECSI
+  title: 'The Quiny SystemC Front End: Self-Synthesising Designs.'
+  URL: http://dblp.uni-trier.de/db/conf/fdl/fdl2006.html#SchubertN06
+- author:
+  - given: Nicolas
+    family: Blanc
+  - given: Daniel
+    family: Kroening
+  - given: Natasha
+    family: Sharygina
+  container-title: Tools and Algorithms for the Construction and Analysis of Systems
+  collection-title: Lecture Notes in Computer Science
+  editor:
+  - given: C.
+    family: Ramakrishnan
+  - given: Jakob
+    family: Rehof
+  type: chapter
+  id: Blanc2008
+  citation-label: Blanc2008
+  ISBN: 978-3-540-78799-0
+  issued:
+    date-parts:
+    - - 2008
+  page: 467-470
+  publisher: Springer Berlin / Heidelberg
+  title: 'Scoot: A Tool for the Analysis of SystemC Models'
+  volume: '4963'
+- author:
+  - given: C.
+    family: Lüth
+  - given: M.
+    family: Ring
+  - given: R.
+    family: Drechsler
+  container-title: 2017 6th International Conference on Reliability, Infocom Technologies
+    and Optimization (Trends and Future Directions) (ICRITO)
+  DOI: 10.1109/ICRITO.2017.8342390
+  type: paper-conference
+  id: Selfie1
+  citation-label: Selfie1
+  ISSN: ''
+  issue: ''
+  issued:
+    date-parts:
+    - - 2017
+  keyword: formal verification;program verification;electronic systems;incremental
+    refinements;selfverification;system engineers
+  page: 11-15
+  title: Towards a methodology for self-verification
+  volume: ''
+- author:
+  - given: M.
+    family: Ring
+  - given: F.
+    family: Bornebusch
+  - given: C.
+    family: Lüth
+  - given: R.
+    family: Wille
+  - given: R.
+    family: Drechsler
+  container-title: 2019 Design, Automation Test in Europe Conference Exhibition (DATE)
+  DOI: 10.23919/DATE.2019.8714967
+  type: paper-conference
+  id: Selfie2
+  citation-label: Selfie2
+  ISSN: 1558-1101
+  issued:
+    date-parts:
+    - - 2019
+      - 3
+  keyword: Unified modeling language;Switches;Hardware;Delays;Embedded systems;Tools
+  page: 890-895
+  title: Better Late Than Never — Verification of Embedded Systems After Deployment
+- author:
+  - family: IEEE
+  type: report
+  genre: techreport
+  id: IEEE:Verification
+  citation-label: IEEE:Verification
+  issued:
+    date-parts:
+    - - 2016
+  publisher: IEEE
+  title: IEEE Std 1012-2016, IEEE standard for software verification and validation
+- container-title: The Journal of Logic and Algebraic Programming
+  abstract: In this paper, a brief account of the field of runtime verification is
+    given. Starting with a definition of runtime verification, a comparison to well-known
+    verification techniques like model checking and testing is provided, and applications
+    in which runtime verification brings out its distinguishing features are pointed
+    out. Moreover, extensions of runtime verification such as monitor-oriented programming,
+    and monitor-based runtime reflection are sketched and their similarities and differences
+    are discussed. Finally, the use of runtime verification for contract enforcement
+    is briefly pointed out.
+  accessed:
+    date-parts:
+    - - 2018
+      - 7
+      - 4
+  author:
+  - given: Martin
+    family: Leucker
+  - given: Christian
+    family: Schallhart
+  collection-title: The 1st Workshop on Formal Languages and Analysis of Contract-Oriented
+    Software (FLACOS'07)
+  DOI: 10.1016/j.jlap.2008.08.004
+  type: article-journal
+  id: LeuckerSchallhart
+  citation-label: LeuckerSchallhart
+  ISSN: 1567-8326
+  issue: '5'
+  issued:
+    date-parts:
+    - - 2009
+      - 5
+  keyword: Assertion checking,Monitoring,Testing,Verification
+  page: 293-303
+  title: A brief account of runtime verification
+  volume: '78'
+- accessed:
+    date-parts:
+    - - 2019
+      - 5
+      - 20
+  author:
+  - given: J.-R.
+    family: Abrial
+  type: webpage
+  id: Abrial
+  citation-label: Abrial
+  issued:
+    date-parts:
+    - - 1999
+  title: 'System study: Method and example'
+  URL: http://atelierb.eu/ressources/PORTES/Texte/porte.anglais.ps.gz
+- accessed:
+    date-parts:
+    - - 2019
+      - 5
+      - 20
+  author:
+  - given: Anders
+    family: Hejlsberg
+  type: webpage
+  id: TypeScript
+  citation-label: TypeScript
+  issued:
+    date-parts:
+    - - 2012
+  title: TypeScript
+  URL: https://www.typescriptlang.org
+- author:
+  - family: OMG
+  type: book
+  id: SysML
+  citation-label: SysML
+  issued:
+    date-parts:
+    - - 2017
+      - 5
+  publisher: Object Management Group
+  title: Systems Modeling Language (SysML), Version 1.5
+  URL: http://www.omg.org/spec/SysML/1.5/
+- author:
+  - family: OMG
+  type: book
+  id: OCL
+  citation-label: OCL
+  issued:
+    date-parts:
+    - - 2014
+      - 2
+  publisher: Object Management Group
+  title: Object Constraint Language (OCL), Version 2.4
+  URL: http://www.omg.org/spec/OCL/2.4/
+- author:
+  - given: Fritjof
+    family: Bornebusch
+  - given: Robert
+    family: Wille
+  - given: Rolf
+    family: Drechsler
+  container-title: 7th International Symposium on Embedded Computing and System Design
+    (ISED)
+  type: paper-conference
+  id: light-weight-SAT-solving
+  citation-label: light-weight-SAT-solving
+  issued:
+    date-parts:
+    - - 2017
+  publisher: IEEE
+  title: Towards Lightweight Satisfiability Solvers for Self-Verification
+- author:
+  - given: Buse
+    family: Ustaoglu
+  - given: Sebastian
+    family: Huhn
+  - given: Daniel
+    family: Große
+  - given: Rolf
+    family: Drechsler
+  container-title: 28th ACM Great Lakes Symposium on VLSI (GLVLSI)
+  type: paper-conference
+  id: hardware-SAT-solving
+  citation-label: hardware-SAT-solving
+  issued:
+    date-parts:
+    - - 2018
+  title: 'SAT-Lancer: A Hardware SAT-Solver for Self-Verification'
+- publisher-place: United States
+  author:
+  - given: C.P.R.
+    family: Baaij
+  - given: Matthijs
+    family: Kooijman
+  - given: Jan
+    family: Kuper
+  - given: W.A.
+    family: Boeijink
+  - given: Marco Egbertus Theodorus
+    family: Gerards
+  container-title: 'Proceedings of the 13th EUROMICRO Conference on Digital System
+    Design: Architectures, Methods and Tools'
+  DOI: 10.1109/DSD.2010.21
+  type: paper-conference
+  id: ClaSH
+  citation-label: ClaSH
+  ISBN: 978-0-7695-4171-6
+  issued:
+    date-parts:
+    - - 2010
+      - 9
+  language: English
+  page: 714-721
+  publisher: IEEE Computer Society
+  title: 'ClaSH: Structural Descriptions of Synchronous Hardware using Haskell'
+- abstract: The Object Constraint Language OCL is part of the Unified Modeling Language
+    UML. Within software engineering, UML is regarded today as an important step towards
+    development of high-quality object-oriented systems. OCL allows to describe system
+    structure by invariants and system behavior by pre- and postconditions. This paper
+    explains the functionality of the UML Specification Environment USE which allows
+    to validate and verify UML and OCL descriptions. The paper also uses a new approach
+    to handle UML statecharts by OCL pre- and postconditions.
+  author:
+  - given: Martin
+    family: Gogolla
+  - given: Mark
+    family: Richters
+  container-title: Proc. 1st Eurasian Conf. Information and Communication Technology (EURASIA'2002)
+  editor:
+  - given: Hassan
+    family: Shafazand
+  - given: A Min
+    family: Tjoa
+  type: paper-conference
+  id: USE
+  citation-label: USE
+  issued:
+    date-parts:
+    - - 2002
+  page: 228-238
+  publisher: Springer, Berlin, LNCS 2510
+  title: Development of UML Descriptions with USE
+- author:
+  - given: Leonardo
+    family: Moura
+    non-dropping-particle: de
+  - given: Nikolaj
+    family: Bjørner
+  container-title: ''
+  collection-title: ''
+  editor:
+  - given: C. R.
+    family: Ramakrishnan
+  - given: Jakob
+    family: Rehof
+  type: paper-conference
+  id: Z3
+  citation-label: Z3
+  issued:
+    date-parts:
+    - - 2008
+  page: 337-340
+  publisher: Springer
+  title: 'Z3: An Efficient SMT Solver'
+- author:
+  - family: Object Management Group
+  edition: Version 2.4
+  type: report
+  genre: techreport
+  id: OCL-spec
+  citation-label: OCL-spec
+  issued:
+    date-parts:
+    - - 2012
+  number: formal/2014-02-03
+  publisher: OMG
+  title: Object Constraint Language
+- container-title: 2017 7th International Symposium on Embedded Computing and System
+    Design (ISED)
+  author:
+  - given: Fritjof
+    family: Bornebusch
+  - given: Robert
+    family: Wille
+  - given: Rolf
+    family: Drechsler
+  type: article-journal
+  id: Bornebusch2017TowardsLS
+  citation-label: Bornebusch2017TowardsLS
+  issued:
+    date-parts:
+    - - 2017
+  page: 1-5
+  title: Towards lightweight satisfiability solvers for self-verification
+- author:
+  - given: Ulrich
+    family: Kühne
+  - given: Sven
+    family: Beyer
+  - given: Jörg
+    family: Bormann
+  - given: John
+    family: Barstow
+  container-title: Formal Methods in Computer-Aided Design
+  type: paper-conference
+  id: KBB+:2010
+  citation-label: KBB+:2010
+  issued:
+    date-parts:
+    - - 2010
+  page: 129-136
+  title: Automated formal verification of processors based on architectural models
+  volume: '9'
+- author:
+  - given: Hoang M.
+    family: Le
+  - given: Daniel
+    family: Große
+  - given: Vladimir
+    family: Herdt
+  - given: Rolf
+    family: Drechsler
+  container-title: Design Automation Conference
+  type: paper-conference
+  id: LGHD:13
+  citation-label: LGHD:13
+  issued:
+    date-parts:
+    - - 2013
+  page: '116'
+  title: Verifying SystemC using an intermediate verification language and symbolic
+    simulation
+- container-title: 'IET Cyper-Phys. Syst.: Theory & Appl.'
+  author:
+  - given: Nils
+    family: Przigoda
+  - given: Mathias
+    family: Soeken
+  - given: Robert
+    family: Wille
+  - given: Rolf
+    family: Drechsler
+  type: article-journal
+  id: DBLP:journals/iet-cps/PrzigodaSWD16
+  citation-label: DBLP:journals/iet-cps/PrzigodaSWD16
+  issue: '1'
+  issued:
+    date-parts:
+    - - 2016
+  page: 49-59
+  title: Verifying the structure and behavior in UML/OCL models using satisfiability
+    solvers
+  volume: '1'
+- author:
+  - given: Buse
+    family: Ustaoglu
+  - given: Sebastian
+    family: Huhn
+  - given: Daniel
+    family: Große
+  - given: Rolf
+    family: Drechsler
+  container-title: 28th ACM Great Lakes Symposium on VLSI (GLVLSI)
+  type: paper-conference
+  id: dfki9553
+  citation-label: dfki9553
+  issued:
+    date-parts:
+    - - 2018
+  publisher: ACM
+  title: 'SAT-Lancer: A Hardware SAT-Solver for Self-Verification'
+- author:
+  - given: Teodor
+    family: Ivan
+  - given: El Mostapha
+    family: Aboulhamid
+  container-title: Euromicro Conference on Digital System Design (DSD)
+  type: paper-conference
+  id: DBLP:conf/dsd/IvanA13
+  citation-label: DBLP:conf/dsd/IvanA13
+  issued:
+    date-parts:
+    - - 2013
+  page: 209-216
+  publisher: IEEE
+  title: An Efficient Hardware Implementation of a SAT Problem Solver on FPGA
+- author:
+  - given: Arkadiusz
+    family: Koczor
+  - given: Lukasz
+    family: Matoga
+  - given: Piotr
+    family: Penkala
+  - given: Adam
+    family: Pawlak
+  container-title: Int.\ Symp.\ on Design and Diagnostics of Electronic Circuits &
+    Systems (DDECS)
+  type: paper-conference
+  id: DBLP:conf/ddecs/KoczorMPP16
+  citation-label: DBLP:conf/ddecs/KoczorMPP16
+  issued:
+    date-parts:
+    - - 2016
+  page: 169-174
+  title: Verification approach based on emulation technology
+- author:
+  - given: Adrian
+    family: Balint
+  - given: Uwe
+    family: Schöning
+  container-title: Algorithm Engineering — Selected Results and Surveys
+  collection-title: ''
+  type: chapter
+  id: DBLP:series/lncs/BalintS16
+  citation-label: DBLP:series/lncs/BalintS16
+  issued:
+    date-parts:
+    - - 2016
+  page: 1-18
+  publisher: Springer
+  title: Engineering a Lightweight and Efficient Local Search SAT Solver
+  volume: '9220'
+- container-title: The Journal of Logic and Algebraic Programming
+  accessed:
+    date-parts:
+    - - 2018
+      - 7
+      - 4
+  author:
+  - given: Martin
+    family: Leucker
+  - given: Christian
+    family: Schallhart
+  collection-title: The 1st Workshop on Formal Languages and Analysis of Contract-Oriented
+    Software (FLACOS’07)
+  type: article-journal
+  id: Leucker:2009
+  citation-label: Leucker:2009
+  ISSN: 1567-8326
+  issue: '5'
+  issued:
+    date-parts:
+    - - 2009
+      - 5
+  keyword: Assertion checking,Monitoring,Testing,Verification
+  page: 293-303
+  title: A brief account of runtime verification
+  volume: '78'
+- author:
+  - given: R.
+    family: Drechsler
+  - given: M.
+    family: Fränzle
+  - given: R.
+    family: Wille
+  container-title: ''
+  type: paper-conference
+  id: DFW:2015
+  citation-label: DFW:2015
+  issued:
+    date-parts:
+    - - 2015
+  title: Envisioning Self-Verification of Electronic Systems
+- author:
+  - given: Niklas
+    family: Eén
+  - given: Niklas
+    family: Sörensson
+  container-title: ''
+  collection-title: ''
+  type: paper-conference
+  id: ES:2003
+  citation-label: ES:2003
+  issued:
+    date-parts:
+    - - 2003
+  page: 502-518
+  publisher: Springer
+  title: An Extensible SAT-solver
+  volume: '2919'
+- author:
+  - given: Edmund M.
+    family: Clarke
+    suffix: Jr.
+  - given: Orna
+    family: Grumberg
+  - given: Doron A.
+    family: Peled
+  type: book
+  id: Clarke:2000
+  citation-label: Clarke:2000
+  issued:
+    date-parts:
+    - - 1999
+  publisher: MIT Press
+  title: Model Checking
+- author:
+  - given: Jun
+    family: Yuan
+  - given: Carl
+    family: Pixley
+  - given: Adnan
+    family: Aziz
+  type: book
+  id: Simulation
+  citation-label: Simulation
+  issued:
+    date-parts:
+    - - 2006
+  publisher: Springer
+  title: Constraint-Based Verification
+- author:
+  - given: M.
+    family: Bozzano
+  - given: R.
+    family: Bruttomesso
+  - given: A.
+    family: Cimatti
+  - given: T.
+    family: Junttila
+  - given: P.v.
+    family: Rossum
+  - given: S.
+    family: Schulz
+  - given: R.
+    family: Sebastiani
+  container-title: ''
+  collection-title: ''
+  editor:
+  - given: R.
+    family: Niewenhuis
+  type: paper-conference
+  id: BBC+:2005
+  citation-label: BBC+:2005
+  issued:
+    date-parts:
+    - - 2005
+  publisher: Springer
+  title: The MathSAT 3 System
+  volume: '3632'
+- author:
+  - given: H.D.
+    family: Foster
+  container-title: Int'l Conf. on Computer-Aided Design
+  type: paper-conference
+  id: Foster:13
+  citation-label: Foster:13
+  issued:
+    date-parts:
+    - - 2013
+  page: 581-584
+  title: Why the design productivity gap never happened
+- author:
+  - given: Rolf
+    family: Drechsler
+  - given: Mathias
+    family: Soeken
+  - given: Robert
+    family: Wille
+  container-title: Forum on Specfication and Design Languages
+  type: paper-conference
+  id: DSW:12
+  citation-label: DSW:12
+  issued:
+    date-parts:
+    - - 2012
+  page: 53-58
+  title: 'Formal Specification Level: Towards verification-driven design based on
+    natural language processing'
+- author:
+  - given: Grant
+    family: Martin
+  - given: Brian
+    family: Bailey
+  - given: Andrew
+    family: Piziali
+  type: book
+  id: MBP:07
+  citation-label: MBP:07
+  issued:
+    date-parts:
+    - - 2007
+  publisher: Morgan Kaufmann
+  title: 'ESL Design and Verification: A Prescription for Electronic System Level
+    Methodology'
+- author:
+  - given: Bruno
+    family: Dutertre
+  container-title: ''
+  collection-title: ''
+  editor:
+  - given: Armin
+    family: Biere
+  - given: Roderick
+    family: Bloem
+  type: paper-conference
+  id: Dutertre:2014
+  citation-label: Dutertre:2014
+  issued:
+    date-parts:
+    - - 2014
+      - 7
+  page: 737-744
+  publisher: Springer
+  title: Yices 2.2
+  volume: '8559'
+- abstract: The Object Constraint Language OCL allows to formally specify constraints
+    on a UML model. We present a formal syntax and semantics for OCL based on set
+    theory including expressions, invariants and pre- and postconditions. A formal
+    foundation for OCL makes the meaning of constraints precise and helps to eliminate
+    ambiguities and inconsistencies. A precise language definition is also a prerequisite
+    for implementing Case tools providing enhanced support for UML models and OCL
+    constraints. We give a survey of some OCL tools and discuss one of the tools in
+    some more detail. The design and implementation of the USE tool supporting the
+    validation of UML models and OCL constraints is based on the formal approach presented
+    in this paper.
+  accessed:
+    date-parts:
+    - - 2015
+      - 5
+      - 20
+  author:
+  - given: Mark
+    family: Richters
+  - given: Martin
+    family: Gogolla
+  container-title: Object Modeling with the OCL
+  collection-title: ''
+  editor:
+  - given: Tony
+    family: Clark
+  - given: Jos
+    family: Warmer
+  type: chapter
+  id: RichtersGogolla:2002
+  citation-label: RichtersGogolla:2002
+  ISBN: 978-3-540-43169-5, 978-3-540-45669-8
+  issued:
+    date-parts:
+    - - 2002
+  keyword: Management of Computing and Information Systems,Software engineering
+  language: en
+  page: 42-68
+  publisher: Springer
+  title-short: OCL
+  title: 'OCL: Syntax, Semantics, and Tools'
+  volume: '2263'
+- annote: http://www.omg.org/spec/OCL/2.4/
+  author:
+  - family: Object Management Group
+  edition: Version 2.4
+  type: report
+  genre: techreport
+  id: OCL-spec
+  citation-label: OCL-spec
+  issued:
+    date-parts:
+    - - 2012
+  number: formal/2014-02-03
+  publisher: OMG
+  title: Object Constraint Language
+- author:
+  - given: Ulrich
+    family: Kühne
+  - given: Sven
+    family: Beyer
+  - given: Jörg
+    family: Bormann
+  - given: John
+    family: Barstow
+  container-title: Formal Methods in Computer-Aided Design
+  type: paper-conference
+  id: KBB+:2010
+  citation-label: KBB+:2010
+  issued:
+    date-parts:
+    - - 2010
+  page: 129-136
+  title: Automated formal verification of processors based on architectural models
+  volume: '9'
+- author:
+  - given: Hoang M.
+    family: Le
+  - given: Daniel
+    family: Große
+  - given: Vladimir
+    family: Herdt
+  - given: Rolf
+    family: Drechsler
+  container-title: Design Automation Conference
+  type: paper-conference
+  id: LGHD:13
+  citation-label: LGHD:13
+  issued:
+    date-parts:
+    - - 2013
+  page: '116'
+  title: Verifying SystemC using an intermediate verification language and symbolic
+    simulation
+- container-title: 'IET Cyper-Phys. Syst.: Theory & Appl.'
+  author:
+  - given: Nils
+    family: Przigoda
+  - given: Mathias
+    family: Soeken
+  - given: Robert
+    family: Wille
+  - given: Rolf
+    family: Drechsler
+  DOI: 10.1049/iet-cps.2016.0022
+  type: article-journal
+  id: DBLP:journals/iet-cps/PrzigodaSWD16
+  citation-label: DBLP:journals/iet-cps/PrzigodaSWD16
+  issue: '1'
+  issued:
+    date-parts:
+    - - 2016
+  page: 49-59
+  title: Verifying the structure and behavior in UML/OCL models using satisfiability
+    solvers
+  URL: https://doi.org/10.1049/iet-cps.2016.0022
+  volume: '1'
+- author:
+  - given: Martin
+    family: Ring
+  - given: Jannis Ulrich
+    family: Stoppe
+  - given: Christoph
+    family: Lüth
+  - given: Rolf
+    family: Drechsler
+  container-title: Forum on Specification & Design Languages FDL 2016
+  type: paper-conference
+  id: Chimpanc
+  citation-label: Chimpanc
+  issued:
+    date-parts:
+    - - 2016
+  publisher: ECSI — European Electronic Chips  
+  title: Change Impact Analysis for Hardware Designs
+- container-title: Complexity
+  author:
+  - given: David B.
+    family: Fogel
+  type: article-journal
+  id: DBLP:journals/complexity/Fogel97
+  citation-label: DBLP:journals/complexity/Fogel97
+  issue: '4'
+  issued:
+    date-parts:
+    - - 1997
+  page: 26-27
+  title: Evolutionary algorithms in theory and practice
+  volume: '2'
+- author:
+  - given: Leonardo Mendonça
+    family: Moura
+    non-dropping-particle: de
+  - given: Nikolaj
+    family: Bjørner
+  container-title: ''
+  collection-title: ''
+  type: paper-conference
+  id: Moura2008Z3AE
+  citation-label: Moura2008Z3AE
+  issued:
+    date-parts:
+    - - 2008
+  publisher: Springer
+  title: 'Z3: An Efficient SMT Solver'
+  volume: '4963'
+- author:
+  - given: Barbara
+    family: Korousic-Seljak
+  - given: Jurij
+    family: Silc
+  - given: Gregor
+    family: Papa
+  container-title: Handbook of Bioinspired Algorithms and Applications
+  type: paper-conference
+  id: KorousicSeljak2005AnEA
+  citation-label: KorousicSeljak2005AnEA
+  issued:
+    date-parts:
+    - - 2005
+  publisher: Chapman and Hall/CRC
+  title: An Evolutionary Approach to Problems in Electrical Engineering Design
+- container-title: IEEE Transactions on Evolutionary Computation
+  author:
+  - given: Renzhi
+    family: Chen
+  - given: Ke
+    family: Li
+  - given: Xin
+    family: Yao
+  type: article-journal
+  id: Chen2018DynamicMO
+  citation-label: Chen2018DynamicMO
+  issued:
+    date-parts:
+    - - 2018
+  page: 157-171
+  title: Dynamic Multiobjectives Optimization With a Changing Number of Objectives
+  volume: '22'
+- container-title: CoRR
+  author:
+  - given: Dario
+    family: Izzo
+  - given: Christopher
+    family: Sprague
+  - given: Dharmesh
+    family: Tailor
+  type: article-journal
+  id: Izzo2018MachineLA
+  citation-label: Izzo2018MachineLA
+  issued:
+    date-parts:
+    - - 2018
+  title: Machine learning and evolutionary techniques in interplanetary trajectory
+    design
+  volume: abs/1802.00180
+- container-title: ''
+  author:
+  - given: Armin
+    family: Biere
+  type: article-journal
+  id: Biere2008PicoSATE
+  citation-label: Biere2008PicoSATE
+  issued:
+    date-parts:
+    - - 2008
+  page: 75-97
+  title: PicoSAT Essentials
+  volume: '4'
+- author:
+  - given: Robert
+    family: Brummayer
+  - given: Armin
+    family: Biere
+  container-title: ''
+  collection-title: ''
+  type: paper-conference
+  id: Brummayer2009BoolectorAE
+  citation-label: Brummayer2009BoolectorAE
+  issued:
+    date-parts:
+    - - 2009
+  publisher: Springer
+  title: 'Boolector: An Efficient SMT Solver for Bit-Vectors and Arrays'
+  volume: '5505'
+- author:
+  - given: Robert
+    family: Wille
+  - given: Görschwin
+    family: Fey
+  - given: Daniel
+    family: Große
+  - given: Stephan
+    family: Eggersglüß
+  - given: Rolf
+    family: Drechsler
+  container-title: ''
+  type: paper-conference
+  id: Wille2007SWORDAS
+  citation-label: Wille2007SWORDAS
+  issued:
+    date-parts:
+    - - 2007
+  publisher: IEEE
+  title: 'SWORD: A SAT like prover using word level information'
+- container-title: Evolutionary Computation
+  author:
+  - given: Zbigniew
+    family: Michalewicz
+  - given: Marc
+    family: Schoenauer
+  type: article-journal
+  id: DBLP:journals/ec/MichalewiczS96
+  citation-label: DBLP:journals/ec/MichalewiczS96
+  issue: '1'
+  issued:
+    date-parts:
+    - - 1996
+  title: Evolutionary Algorithms for Constrained Parameter Optimization Problems
+  volume: '4'
+- author:
+  - given: Kalyanmoy
+    family: Deb
+  container-title: Handbook of Computational Intelligence
+  type: paper-conference
+  id: Deb2015MultiObjectiveEA
+  citation-label: Deb2015MultiObjectiveEA
+  issued:
+    date-parts:
+    - - 2015
+  publisher: Springer
+  title: Multi-Objective Evolutionary Algorithms
+- container-title: IEEE Transactions on Evolutionary Computation
+  author:
+  - given: Zdenek
+    family: Vasícek
+  - given: Lukás
+    family: Sekanina
+  type: article-journal
+  id: Vascek2015EvolutionaryAT
+  citation-label: Vascek2015EvolutionaryAT
+  issued:
+    date-parts:
+    - - 2015
+  title: Evolutionary Approach to Approximate Digital Circuits Design
+  volume: '19'
+- author:
+  - given: Tong
+    family: Zhang
+  - given: Daniel G.
+    family: Saab
+  - given: Jacob A.
+    family: Abraham
+  container-title: ''
+  type: paper-conference
+  id: DBLP:conf/isvlsi/ZhangSA17
+  citation-label: DBLP:conf/isvlsi/ZhangSA17
+  issued:
+    date-parts:
+    - - 2017
+  page: 471-476
+  publisher: IEEE Computer Society
+  title: Automatic Assertion Generation for Simulation, Formal Verification and Emulation
+- author:
+  - given: Yoshiki
+    family: Kuwabara
+  - given: Tetsuya
+    family: Yokotani
+  - given: Hiroaki
+    family: Mukai
+  container-title: ''
+  type: paper-conference
+  id: DBLP:conf/apcc/KuwabaraYM17
+  citation-label: DBLP:conf/apcc/KuwabaraYM17
+  issued:
+    date-parts:
+    - - 2017
+  page: 1-6
+  title: Hardware emulation of IoT devices and verification of application behavior
+- author:
+  - family: SMT-LIB-benchmarks
+  type: book
+  id: SMTLIB
+  citation-label: SMTLIB
+  issued:
+    date-parts:
+    - - 2018
+  note: 'Accessed: 2018-11-27'
+  publisher: https://clc-gitlab.cs.uiowa.edu:2443/SMT-LIB-benchmarks
+  title: Official SMT-LIB repository
+  URL: https://clc-gitlab.cs.uiowa.edu:2443/SMT-LIB-benchmarks
+- author:
+  - given: Robert
+    family: Wille
+  - given: Daniel
+    family: Große
+  - given: Finn
+    family: Haedicke
+  - given: Rolf
+    family: Drechsler
+  container-title: ''
+  type: paper-conference
+  id: Wille2009
+  citation-label: Wille2009
+  issued:
+    date-parts:
+    - - 2009
+  page: 1-6
+  publisher: IEEE
+  title: SMT-based stimuli generation in the SystemC Verification library
+- author:
+  - given: Martin
+    family: Ring
+  - given: Fritjof
+    family: Bornebusch
+  - given: Christoph
+    family: Lüth
+  - given: Robert
+    family: Wille
+  - given: Rolf
+    family: Drechsler
+  container-title: Design, Automation & Test in Europe (DATE)
+  type: paper-conference
+  id: DATE2019
+  citation-label: DATE2019
+  issued:
+    date-parts:
+    - - 2019
+  title: 'Better Late Than Never: Verification of Embedded Systems After Deployment'
+- publisher-place: Lübeck, Germany
+  author:
+  - given: P.
+    family: Parizek
+  - given: F.
+    family: Plasil
+  container-title: euromicro
+  type: paper-conference
+  id: Parizek2007
+  citation-label: Parizek2007
+  ISSN: 1089-6503
+  issued:
+    date-parts:
+    - - 2007
+      - 8
+  keyword: Java;object-oriented programming;program verification;partial verification;software
+    component;code model checking;environment construction;state explosion problem;Java
+    PathFinder;static analysis;Protocols;Object oriented modeling;Java;Explosions;State-space
+    methods;Concurrent computing;Software engineering;Parallel processing;Mathematics;Physics;software
+    components;model checking;concurrency errors;Java PathFinder;static analysis
+  page: 75-82
+  publisher: IEEE Computer Society
+  title: 'Partial Verification of Software Components: Heuristics for Environment
+    Construction'
+- container-title: International Journal on Software Tools for Technology Transfer
+  abstract: 'Model checking of software programs has two goals – the verification
+    of correct software and the discovery of errors in faulty software. Some techniques
+    for dealing with the most crucial problem in model checking, the state space explosion
+    problem, concentrate on the first of these goals. In this paper we present an
+    array of heuristic model checking techniques for combating the state space explosion
+    when searching for errors. Previous work on this topic has mostly focused on property-specific
+    heuristics closely related to particular kinds of errors. We present structural
+    heuristics that attempt to explore the structure (branching structure, thread
+    interdependency structure, abstraction structure) of a program in a manner intended
+    to expose errors efficiently. Experimental results show the utility of this class
+    of heuristics. In contrast to these very general heuristics, we also present very
+    lightweight techniques for introducing program-specific heuristic guidance. '
+  author:
+  - given: Alex
+    family: Groce
+  - given: Willem
+    family: Visser
+  type: article-journal
+  id: Groce2004
+  citation-label: Groce2004
+  ISSN: 1433-2787
+  issue: '4'
+  issued:
+    date-parts:
+    - - 2004
+      - 8
+  page: 260-276
+  title: Heuristics for model checking Java programs
+  volume: '6'
+- number-of-pages: '18'
+  author:
+  - given: Ioannis
+    family: Caragiannis
+  - given: Edith
+    family: Elkind
+  - given: Mario
+    family: Szegedy
+  - given: Lan
+    family: Yu
+  container-title: ACM Conference on Electronic Commerce
+  collection-title: ec
+  type: paper-conference
+  id: Caragiannis2012
+  citation-label: Caragiannis2012
+  issued:
+    date-parts:
+    - - 2012
+  page: 266-283
+  publisher: ACM
+  title: 'Mechanism Design: From Partial to Probabilistic Verification'
+- container-title: Autonomous Agents and Multi-Agent Systems
+  abstract: In the case of mechanism design with partial verification, where agents
+    have restrictions on misreporting, the Revelation Principle does not always hold.
+    Auletta et al. (J Auton Agent Multi-Agent Syst, to appear) proposed a characterization
+    of correspondences for which the Revelation Principle holds, i.e., they described
+    restrictions on misreporting under which a social choice function is implementable
+    if and only if it is truthfully implementable. In this paper, we demonstrate that
+    the characterization proposed in [1] is incorrect, and, building on their work,
+    give a correct characterization. We also provide an example that demonstrates
+    that our characterization is different from that of Auletta et al.
+  author:
+  - given: Lan
+    family: Yu
+  type: article-journal
+  id: Yu2011
+  citation-label: Yu2011
+  ISSN: 1573-7454
+  issue: '1'
+  issued:
+    date-parts:
+    - - 2011
+  page: 217-223
+  title: Mechanism design with partial verification and revelation principle
+  volume: '22'
+- publisher-place: Berlin, Heidelberg
+  abstract: 'In this paper we present two new practical and pragmatic algorithms for
+    solving the two key on-the-fly model-checking problems for linear temporal logic:
+    on demand construction of an automaton for a temporal logic formula; and on-the-fly
+    checking for whether the automata resulting from the product of the program and
+    the property is empty.'
+  author:
+  - given: Jean-Michel
+    family: Couvreur
+  container-title: FM'99 — Formal Methods
+  editor:
+  - given: Jeannette M.
+    family: Wing
+  - given: Jim
+    family: Woodcock
+  - given: Jim
+    family: Davies
+  type: paper-conference
+  id: Couvruer99
+  citation-label: Couvruer99
+  ISBN: 978-3-540-48119-5
+  issued:
+    date-parts:
+    - - 1999
+  page: 253-271
+  publisher: Springer Berlin Heidelberg
+  title: On-the-fly Verification of Linear Temporal Logic
+- publisher: ETH Zürich
+  author:
+  - given: Valentin
+    family: Wüstholz
+  type: thesis
+  genre: phdthesis
+  id: Wuestholz
+  citation-label: Wuestholz
+  issued:
+    date-parts:
+    - - 2015
+  title: Partial Verification Results
+- author:
+  - given: Dirk
+    family: Beyer
+  container-title: 'Leveraging Applications of Formal Methods, Verification and Validation:
+    Foundational Techniques'
+  collection-title: Lecture Notes in Computer Science (LNCS)
+  type: paper-conference
+  id: Beyer2016
+  citation-label: Beyer2016
+  issued:
+    date-parts:
+    - - 2016
+  publisher: Springer
+  title: Partial Verification and Intermediate Results as a Solution to Combine Automatic
+    and Interactive Verification Techniques
+  volume: '9952'
+- number-of-pages: '11'
+  author:
+  - given: Dirk
+    family: Beyer
+  - given: Thomas A.
+    family: Henzinger
+  - given: M. Erkan
+    family: Keremoglu
+  - given: Philipp
+    family: Wendler
+  container-title: fse
+  type: paper-conference
+  id: Beyer2012
+  citation-label: Beyer2012
+  issued:
+    date-parts:
+    - - 2012
+  page: 57:1 - 57:11
+  publisher: ACM
+  title: 'Conditional Model Checking: A Technique to Pass Information Between Verifiers'
+...

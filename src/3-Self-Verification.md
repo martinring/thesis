@@ -1,6 +1,6 @@
-# Principles of Self-Verification
+# Principles of [Self-Verification]{.nobr}
 
-Based on the original work [@Selfie2]
+*Based on the original work [@Selfie2]*
 
 ## General Idea
 
@@ -22,7 +22,7 @@ Marking a variable as a configuration variable means that
 its value rarely changes, and entails that we can substitute actual
 values before verification post-deployment. By marking variables of $n$ bits as
 configuration variables, we reduce the search space we need to explore for
-verification by $2^n$ --- turning the exponential growth into an exponential
+verification by $2^n$ -- turning the exponential growth into an exponential
 reduction.
 
 The idea and its benefits are illustrated by the following (running)
@@ -30,7 +30,7 @@ example, which has been deliberately kept simple in order to keep the focus on t
 
 ![Bringing light into darkness: The light controller is connected
 to a luminosity sensor, and switches a light on or off when it becomes
-too dark or bright.](light-sensor-sketch.svg){#fig:sketch}
+too dark or bright.](light-sensor-sketch.svg){#fig:sketch .small}
 
 :::example
   The simple light controller system sketched in [](#fig:sketch)
@@ -47,6 +47,9 @@ too dark or bright.](light-sensor-sketch.svg){#fig:sketch}
   configuration variables, and can be changed post-deployment.
 :::
 
+:::{#refs}
+:::
+
 Systems like these are designed in a flexible fashion, so that they
 can be applied in various contexts. For the light controller, the threshold levels and delay are not fixed at
 design or production time but will be set post-deployment.  Hence, in order to verify the correctness of the system, we need to take into account
@@ -56,13 +59,13 @@ checked during verification which may never be applied during the system's
 lifetime. Hence, if we instantiate the configuration variables after
 deployment and keep only the variables of the system which change frequently arbitrary, we get a much smaller search space to explore.
 
-:::example continued
+:::example continue
 Consider again the running example. If we assume a width of
 8 bit for the input values (the luminosity sensor and
 subsequently for the upper and lower bounds) and the time delay,
 and one bit for the light switch status
 (these are lower bounds for a realistic system), we get the following
-search space (where *cnt* is a variable counting up to delay):
+search space (where $cnt$ is a variable counting up to delay):
 
 <!-- TODO EQ -->
   
@@ -99,10 +102,10 @@ formal development of the running example considered in the previous section.
 
 The design flow starts with a *modelling phase*, where the structure
 and behaviour of the system is modelled at an abstract level without
-referring to any implementation details (see \FigRef{fig:design-flow}). In
+referring to any implementation details (see [](#fig:design-flow)). In
 our case, we use SysML [@SysML] and OCL [@RichtersGogolla:2002] to
 specify the structure and formalize constraints on its behaviour as well as the
-functional hardware description language Clash [@CLaSH] for a uniform,
+functional hardware description language Clash [@ClaSH] for a uniform,
 executable and synthesizeable model of the system.
 
 The actual specification and implementation languages are of no
@@ -118,7 +121,7 @@ implementation. Moreover, we want to *verify* that the generated
 system behaves as specified. In order to do so, we generate a list of
 *verification conditions* from the executable system model and the
 specification which have to be shown in order to guarantee this.
-%
+
 Specifically, we translate both the Clash model and the constraints from
 the OCL specification into *bit-vector logic* (i.e. first-order logic
 with bit-vectors). Trying to show these in an SMT prover such as
@@ -133,3 +136,11 @@ By this, verification of all properties becomes possible. Recall that this
 instantiation cannot be done at the design time, because at that point the
 instantiating values are still unknown. Therefore, the proofs must be rerun
 if the values of the configuration variables are changed.
+
+![Design flow for verification after deployment. We start with modelling
+the system behaviour, then derive an implementation and 
+verification conditions. By proving the verification conditions we make sure
+the system behaves as specified. Due to the large search space, the
+proofs are not possible pre-deployment. But instantiation
+of the configuration variables reduces the size of the search space
+significantly and makes proofs possible post-deployment.](design-flow.svg){#fig:design-flow}

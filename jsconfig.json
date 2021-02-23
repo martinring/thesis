@@ -2,7 +2,8 @@
   "compilerOptions": {
     "module": "esnext",
     "moduleResolution": "node",
-    "target": "esnext"
+    "target": "esnext",
+    "resolveJsonModule": true
   },
   "typeAcquisition": {
     "enable": true

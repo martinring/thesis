@@ -1,0 +1,18 @@
+@font-face {
+  font-family: vollkorn;
+  font-weight: normal;
+  src: url('./vollkorn/Vollkorn-Regular.woff2');
+}
+
+@font-face {
+  font-family: vollkorn;
+  font-weight: normal;
+  font-style: italic;
+  src: url('./vollkorn/Vollkorn-Italic.woff2');
+}
+
+@font-face {
+  font-family: vollkorn;
+  font-weight: bold;
+  src: url('./vollkorn/Vollkorn-Bold.woff2');
+}

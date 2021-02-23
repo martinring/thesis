@@ -1,43 +1,55 @@
-@import 'katex/dist/katex.css';
+@import url('./fonts/vollkorn.css');
 
-@font-face {
-  font-family: serif;
-  src: url('fonts/texgyrepagella-regular.woff');
+.nobr {
+  white-space: nowrap;
 }
 
-@font-face {
-  font-family: serif;
-  src: url('fonts/texgyrepagella-italic.woff');
-  font-style: italic;
-}
-
-@font-face {
-  font-family: serif;
-  src: url('fonts/texgyrepagella-bold.woff');
-  font-weight: bold;
-}
-
-@font-face {
-  font-family: serif;
-  src: url('fonts/texgyrepagella-bolditalic.woff');
-  font-weight: bold;
-  font-style: italic;
-}
-
-body {
-  font-family: serif;
+:root {
+  --font-body: vollkorn;
+  --font-headings: vollkorn;
+  font-size: 11pt;
+  font-family: var(--font-body);
   counter-reset: chapter section subsection figure example;
   line-height: 1.5;
   text-align: justify;
+  word-wrap: break-word;
+}
+
+body {
   padding-left: 5rem;
 }
 
-h1,h2,h2,h4,h5,h6 {
+h1,h2,h3,h4,h5,h6 {
   text-align: left;
+  font-family: var(--font-headings);
 }
 
 a[href^="#fig:"]::before {
   content: 'Figure ' target-counter(attr(href),chapter) '.' target-counter(attr(href), figure)
+}
+
+div.example {
+  background-color: #eee;
+  padding: 1rem 1rem;
+  margin: 0 -1rem;
+}
+
+div.example:not(.continue) {
+  counter-increment: example;
+}
+
+div.example::before {
+  margin-top: 0;
+  content: 'Example ' counter(chapter) '.' counter(example) ' ';
+  font-weight: bold;
+}
+
+div.example.continue::before {
+  content: 'Example ' counter(chapter) '.' counter(example) ' (continued)';
+}
+
+div.example :last-child {
+  margin-bottom: 0;
 }
 
 figure {
@@ -46,16 +58,14 @@ figure {
   counter-increment: figure;
 }
 
-div.example {
-  background-color: #eee;
-  counter-increment: example;
-  padding: 1rem
+figure > img {
+  width: 100%;
 }
 
-div.example::before {
-  content: 'Example ' counter(chapter) '.' counter(example) ' ';
-  font-weight: bold;
+figure > img.small {
+  width: 66.7%;
 }
+
 
 figure > figcaption {
   margin-top: 0.5rem;
@@ -76,7 +86,7 @@ h1 {
   margin-bottom: 2.5rem;
 }
 
-h1::before {
+h1:not(.unnumbered)::before {
   position: absolute;
   left: -5rem;
   counter-increment: chapter;
@@ -120,29 +130,45 @@ hr {
     margin-left: 5rem;
   }
 
-  figure {
-    float: right;
+  figure {    
     position: absolute;
-    left: 40rem;
-    width: 25rem;
+    left: 40rem;    
+    width: 25rem;    
+  }
+
+  h1 {
+    color: white;
+  }
+
+  h1::after {
+    position: absolute;        
+    left: -10rem;
+    z-index: -1;
+    content: '';
+    background-color: #003366;    
+    width: 100vw;    
+    top: -1rem;
+    bottom: -1rem;
   }
 }
 
 @media print {
+  :root {
+    color-adjust: exact;
+  }
+
   @page {
     size: A4;
-    margin: 3cm;
-    margin-inside: 4cm;
+    margin: 2cm 3.5cm;
+    margin-inside: 5cm;    
     @bottom {
       content: counter(page);
     }
-  }
+  }  
 
   span.katex > .katex-html {
     display: none;
   }
-
-
 
   h1 {
     page-break-before: always;
@@ -152,4 +178,23 @@ hr {
   hr {
     page-break-after: always;
   }
+}
+
+.bibliography > li > span.title {
+  font-style: italic;
+}
+
+.csl-entry {
+  display: table-row;
+  margin-left: 3rem;
+  margin-bottom: 1rem;
+}
+
+.csl-left-margin {
+  display: table-cell;
+  width: 3rem;
+} 
+
+.csl-right-inline {
+  display: table-cell;
 }
