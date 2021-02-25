@@ -12,11 +12,10 @@
   },
   "author": "Martin Ring <martin.ring@dfki.de>",
   "devDependencies": {
+    "@citeproc-rs/wasm": "canary",
     "@fontsource/jetbrains-mono": "4.2.1",
     "@fontsource/open-sans": "4.2.1",
     "@fontsource/vollkorn": "4.2.1",
-    "ajv": "7.1.1",
-    "citeproc": "2.4.59",
     "esbuild": "0.8.49",
     "markdown-it": "12.0.4",
     "markdown-it-attrs": "4.0.0",
@@ -24,9 +23,8 @@
     "markdown-it-container": "3.0.0",
     "markdown-it-header-sections": "1.0.0",
     "mathjax-full": "^3.1.2",
-    "node-fetch": "2.6.1",
     "prince": "1.8.6",
-    "sync-request": "6.1.0",
+    "xml2js": "0.4.23",
     "yaml": "1.10.0"
   }
 }

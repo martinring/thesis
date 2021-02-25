@@ -2,18 +2,10 @@
 // @ts-check
 import prince from 'prince';
 import fs from 'fs/promises';
-import md from 'markdown-it';
-import md_spans from 'markdown-it-bracketed-spans';
-import md_attrs from 'markdown-it-attrs';
-import md_figures from './scripts/images.js';
-import md_cite from './scripts/citations.js';
-import md_containers from './scripts/containers.js';
-import md_math from './scripts/math.js';
-import md_metadata from './scripts/metadata.js';
+import md from './scripts/markdown.js';
 import esbuild from './scripts/esbuild.js';
 import html from './scripts/html.js';
 import yaml from 'yaml';
-import fetch from 'node-fetch';
 
 const src = 
   fs.readdir('src',{ withFileTypes: true })
@@ -36,15 +28,22 @@ const meta = {}
 
 const markdown = Promise.all([bib,style]).then(([bib,style]) => md({
     typographer: true,
-    html: true  
-  })
+    html: true,
+    csl: {
+      bib,
+      style
+    }
+  }))
+/*  .use(md_counters)
   .use(md_spans)
   .use(md_attrs)
   .use(md_containers)
   .use(md_math)
   .use(md_figures)
+  .use(md_crossrefs)
+  .use(md_listings)
   .use(md_metadata, meta)
-  .use(md_cite, bib, style))
+  .use(md_cite, bib, style))*/
 
 const render = Promise.all([src,markdown]).then(([src,md]) => meta.body = md.render(src))
 

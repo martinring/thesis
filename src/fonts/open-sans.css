@@ -1,0 +1,25 @@
+@font-face {
+  font-family: open-sans;
+  font-weight: normal;
+  src: url('./open-sans/open-sans-regular.woff2');
+}
+
+@font-face {
+  font-family: open-sans;
+  font-weight: normal;
+  font-style: italic;
+  src: url('./open-sans/open-sans-italic.woff2');
+}
+
+@font-face {
+  font-family: open-sans;
+  font-weight: bold;
+  src: url('./open-sans/open-sans-bold.woff2');
+}
+
+@font-face {
+  font-family: open-sans;
+  font-weight: bold;
+  font-style: italic;
+  src: url('./open-sans/open-sans-bold-italic.woff2');
+}

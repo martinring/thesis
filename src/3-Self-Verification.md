@@ -1,8 +1,8 @@
 # Principles of [Self-Verification]{.nobr}
 
-*Based on the original work [@Selfie2]*
+*This chapter is based on the original work "Better Late Than Never: Verification of Embedded Systems After Deployment" [@Selfie2]*
 
-## General Idea
+## General Idea {#sec:selfie-general-idea}
 
 The key idea of the proposed approach presented here is to defer part of the
 verification until *after* deployment. At first sight, this seems like a rather strange
@@ -102,7 +102,7 @@ formal development of the running example considered in the previous section.
 
 The design flow starts with a *modelling phase*, where the structure
 and behaviour of the system is modelled at an abstract level without
-referring to any implementation details (see [](#fig:design-flow)). In
+referring to any implementation details (see [#fig:design-flow]). In
 our case, we use SysML [@SysML] and OCL [@RichtersGogolla:2002] to
 specify the structure and formalize constraints on its behaviour as well as the
 functional hardware description language Clash [@ClaSH] for a uniform,
@@ -137,6 +137,8 @@ instantiation cannot be done at the design time, because at that point the
 instantiating values are still unknown. Therefore, the proofs must be rerun
 if the values of the configuration variables are changed.
 
+### The Design Process At Work
+
 ![Design flow for verification after deployment. We start with modelling
 the system behaviour, then derive an implementation and 
 verification conditions. By proving the verification conditions we make sure
@@ -144,3 +146,36 @@ the system behaves as specified. Due to the large search space, the
 proofs are not possible pre-deployment. But instantiation
 of the configuration variables reduces the size of the search space
 significantly and makes proofs possible post-deployment.](design-flow.svg){#fig:design-flow}
+
+In the following, we apply the design flow to the simple example from [#sec:selfie-general-idea].
+
+#### Specification (top of [#fig:design-flow])
+
+The specification of the system is provided in terms of a SysML block definition
+diagram as shown in [#fig:design-spec].  The structure is composed of the
+controller as the central block, with one luminosity sensor, and one light
+switch (actuator) connected. The variables specifying the
+lower and upper threshold of luminosity and the delay when switching off
+are in a separate block marking them as configuration variables.
+
+![SysML specification of the light controller](sysml-spec.svg){#fig:design-spec}
+
+````{.ocl #fig:ocl-spec caption="OCL specification of the behaviour of the light controller"}
+context Controller
+  def e: sensor.value
+  def off: e > config.e_hi
+  def on: e < config.e_lo
+  def off_s: cnt>=config.delay
+
+context Controller::tick()
+  post a1: not off implies cnt=0
+  post a2: off implies cnt=cnt@pre+ 1
+  post a3: on implies light.status
+  post a4: off_s implies not light.status
+  post a5: not (on or off_s) implies
+            light.status=light.status@pre
+````
+The behaviour is provided in OCL as shown in [#fig:ocl-spec]. We model state 
+transitions by an explicit operation `tick()`; The pre- and postcondition of the
+state transition are denoted as pre- and postconditions of this operation.
+

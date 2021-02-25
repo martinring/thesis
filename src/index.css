@@ -1,4 +1,6 @@
 @import url('./fonts/vollkorn.css');
+@import url('./fonts/open-sans.css');
+@import url('./fonts/jetbrains-mono.css');
 
 .nobr {
   white-space: nowrap;
@@ -9,10 +11,10 @@
   --font-headings: vollkorn;
   font-size: 11pt;
   font-family: var(--font-body);
-  counter-reset: chapter section subsection figure example;
   line-height: 1.5;
   text-align: justify;
   word-wrap: break-word;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -22,10 +24,7 @@ body {
 h1,h2,h3,h4,h5,h6 {
   text-align: left;
   font-family: var(--font-headings);
-}
-
-a[href^="#fig:"]::before {
-  content: 'Figure ' target-counter(attr(href),chapter) '.' target-counter(attr(href), figure)
+  page-break-after: avoid;
 }
 
 div.example {
@@ -38,23 +37,30 @@ div.example:not(.continue) {
   counter-increment: example;
 }
 
-div.example::before {
+.active {
+  color: fuchsia;
+}
+
+/*div.example::before {
   margin-top: 0;
   content: 'Example ' counter(chapter) '.' counter(example) ' ';
   font-weight: bold;
+  page-break-inside: avoid;
 }
 
 div.example.continue::before {
-  content: 'Example ' counter(chapter) '.' counter(example) ' (continued)';
-}
+  content: 'Example ' counter(chapter) '.' counter(example) ' (continued)';  
+}*/
 
 div.example :last-child {
   margin-bottom: 0;
 }
 
 figure {
+  --before-text: 'Figure ' attr(data-chapter) '.' attr(data-figure);
   text-align: center;
   display: block;  
+  padding: 0 1rem;
   counter-increment: figure;
 }
 
@@ -67,53 +73,53 @@ figure > img.small {
 }
 
 
-figure > figcaption {
+figure > figcaption {  
   margin-top: 0.5rem;
   text-align: justify;
   font-style: italic;
 }
 
 figure > figcaption::before {
-  content: 'Figure ' counter(chapter) '.' counter(figure) ' ';
+  content: var(--before-text) ' ';
   font-weight: bold;
 }
 
+section {
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
 h1 {
-  counter-reset: section figure;
+  position: sticky;
+  top: 1rem;
+  z-index: 1;
   font-size: 3.5rem;  
   line-height: 1.2;
-  position: relative;
   margin-bottom: 2.5rem;
+  page-break-after: avoid;
 }
 
-h1:not(.unnumbered)::before {
-  position: absolute;
-  left: -5rem;
-  counter-increment: chapter;
-  content: counter(chapter);
-}
-
-h2 {
-  counter-reset: subsection;  
+h2, h3 {
   position: relative;
+  page-break-after: avoid;
 }
 
-h2::before {
-  content: counter(chapter) '.' counter(section) ' ';
-  counter-increment: section;
+h1::before, h2::before, h3::before {
   position: absolute;
   left: -5rem;
 }
 
-h3 {
-  position: relative;
+h1:not(.unnumbered):before {
+  content: attr(data-chapter)
 }
 
-h3::before {
-  content: counter(chapter) '.' counter(section) '.' counter(subsection);
-  counter-increment: subsection;
-  position: absolute;
-  left: -5rem;
+h2:not(.unnumbered)::before {
+  content: attr(data-chapter) '.' attr(data-section)
+}
+
+h3:not(.unnumbered)::before {
+  content: attr(data-chapter) '.' attr(data-section) '.' attr(data-subsection)
 }
 
 a {
@@ -122,6 +128,11 @@ a {
 
 hr {
   visibility: hidden;
+}
+
+p {
+  widows: 2;
+  orphans: 2;
 }
 
 @media screen {
@@ -159,8 +170,8 @@ hr {
 
   @page {
     size: A4;
-    margin: 2cm 3.5cm;
-    margin-inside: 5cm;    
+    margin: 2cm 3cm;
+    margin-inside: 4cm;    
     @bottom {
       content: counter(page);
     }
@@ -180,21 +191,32 @@ hr {
   }
 }
 
-.bibliography > li > span.title {
-  font-style: italic;
+.csl-entry {
+  display: block;
+  display: relative;
+  padding-bottom: .2rem;
 }
 
-.csl-entry {
-  display: table-row;
-  margin-left: 3rem;
-  margin-bottom: 1rem;
+.csl-entry:target {
+  font-weight: bold;
 }
 
 .csl-left-margin {
-  display: table-cell;
-  width: 3rem;
+  position: absolute;
+  left: 1rem;
+  text-align: right;
 } 
 
 .csl-right-inline {
   display: table-cell;
+}
+
+.sticky {
+  position: sticky;
+}
+
+pre, code {
+  text-align: left;
+  font-family: jetbrains-mono;
+  font-size: 10pt;
 }
