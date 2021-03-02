@@ -1,18 +1,10 @@
-import md_container from 'markdown-it-container';
+import container from 'markdown-it-container'
+
+const rex = /^\s*(\w+|\{(([.#]\w+|\w+\s*\=\s*("[^"]*"|'[^']'|\w+))\s*)*\})\s*$/
 
 /** @type { import("markdown-it").PluginSimple } */
 export default function (md) {
-  md.use(md_container,'classes', {
-    validate(params) {
-      return true
-    },
-    render(tokens, idx) {
-        const classes = tokens[idx].info.trim().split(/\s+/)
-        if (tokens[idx].nesting === 1) {
-            return `<div class="${classes.join(' ')}">\n`;
-        } else {
-            return '</div>\n';
-        }
-    }
-  })    
+  container(md,'generic',{
+    validate(params) { return rex.test(params) }
+  })
 }

@@ -36,7 +36,7 @@ export default function (md) {
   })
   
   md.core.ruler.push('crossrefs',(state) => {
-    state.env.refs = {}
+    state.env.refs = state.env.refs || {}
     state.tokens.forEach(t => {      
       let id
       if (id = t.attrGet('id')) {
@@ -48,7 +48,7 @@ export default function (md) {
           state.env.refs[id] = t.attrGet('data-name')
         }
       })
-    })
+    })    
   })
 
   md.renderer.rules['crossref'] = (tks,idx,opts,env,self) => {

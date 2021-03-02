@@ -1,10 +1,19 @@
+import md_container from 'markdown-it-container';
+
 /** @type { import("markdown-it").PluginSimple } */
 export default function (md) {
-  md.core.ruler.after('inline','counters',(state) => {
+  const rex = /^\s*(\w+)\s*\*((?:\s+\w+)*)\s*$/
+  md_container(md,'counter',{    
+    validate: (info) => {
+      return rex.test(info)            
+    }
+  })
+  md.core.ruler.after('inline','structure',(state) => {
     let chapter = 0
     let section = 0
     let subsection = 0
-    let figure = 0    
+    let figure = 0
+    let containers = { }
     state.tokens.forEach(block => {      
       switch (block.type) {
         case 'heading_open':
@@ -14,6 +23,7 @@ export default function (md) {
               figure = 0;
               section = 0;
               subsection = 0;
+              containers = {};
               block.attrSet('data-chapter',chapter);
               block.attrSet('data-name', `Chapter ${chapter}`);
               break;
@@ -38,7 +48,23 @@ export default function (md) {
           block.attrSet('data-chapter',chapter);
           block.attrSet('data-figure',figure);
           block.attrSet('data-name',`Figure ${chapter}.${figure}`)
-          break;  
+          break;
+        case 'container_counter_open':
+          const match = block.info.match(rex)
+          const name = match[1]
+          const id = name.toLowerCase()
+          const classes = match[2].trim().split(/\s+/)          
+          containers[id] = containers[id] || 0
+          if (classes.indexOf('continued') < 0)
+            containers[id] += 1          
+          const i = containers[id]
+          block.attrSet('data-chapter',chapter);
+          block.attrSet('data-' + id, i);
+          block.attrSet('data-name', `${name} ${chapter}.${i}`)
+          block.attrJoin('class',id)
+          if (classes.length > 0)
+            block.attrJoin('class',classes.join(' '));
+          break;
         default:        
           block.children?.forEach(token => {
             switch (token.type) {
@@ -47,7 +73,7 @@ export default function (md) {
                 token.attrSet('data-chapter',chapter);
                 token.attrSet('data-figure', figure);
                 token.attrSet('data-name',`Figure ${chapter}.${figure}`);
-                break;              
+                break;
             }
           })
       }      

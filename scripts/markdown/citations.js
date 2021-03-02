@@ -60,10 +60,10 @@ export default function (md) {
       return true;
     }
     return false
-  })
+  })  
 
   md.core.ruler.push('bibliography',(state) => {    
-    if (!state.tokens.find((tk) => tk.type == 'bibliography'))
+    if (!state.inlineMode && !state.tokens.find((tk) => tk.type == 'bibliography'))
       state.tokens.push(new state.Token('bibliography','div'))    
   })  
 

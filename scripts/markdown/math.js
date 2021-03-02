@@ -1,6 +1,6 @@
 import { mathjax } from 'mathjax-full/js/mathjax.js';
 import { TeX } from 'mathjax-full/js/input/tex.js';
-import { SVG } from 'mathjax-full/js/output/svg.js';
+import { CHTML } from 'mathjax-full/js/output/chtml.js';
 import { liteAdaptor } from 'mathjax-full/js/adaptors/liteAdaptor.js';
 import { RegisterHTMLHandler } from 'mathjax-full/js/handlers/html.js';
 import { AllPackages } from 'mathjax-full/js/input/tex/AllPackages.js';
@@ -16,22 +16,69 @@ export default function (md) {
     const nxt = str[end + 1] && str[end + 1].charCodeAt(0);
     return !nxt || nxt < 0x30 || nxt > 0x39;   // no decimal digit .. after closing '$'
   }
-  let rex = /\$((?:\S)|(?:\S.*?\S))\$/gy
+
+  const block_rex = /\${2}([^$]+?)\${2}/gmy
+  
+  md.block.ruler.before('fence','display-math', function block(state, begLine, endLine, silent) {
+    const pos = state.bMarks[begLine] + state.tShift[begLine];
+    const str = state.src;
+    const pre = str.startsWith('$$', block_rex.lastIndex = pos)
+    const match = pre && block_rex.exec(str);
+    const res = !!match
+      && pos < block_rex.lastIndex 
+
+    if (res && !silent) {    // match and valid post-condition ...
+        const endpos = block_rex.lastIndex - 1;
+        let curline;
+
+        for (curline = begLine; curline < endLine; curline++)
+            if (endpos >= state.bMarks[curline] + state.tShift[curline] && endpos <= state.eMarks[curline]) // line for end of block math found ...
+                break;
+
+        // "this will prevent lazy continuations from ever going past our end marker"
+        // s. https://github.com/markdown-it/markdown-it-container/blob/master/index.js
+        const lineMax = state.lineMax;
+        const parentType = state.parentType;
+        state.lineMax = curline;
+        state.parentType = 'math';
+
+        if (parentType === 'blockquote') // remove all leading '>' inside multiline formula
+            match[1] = match[1].replace(/(\n*?^(?:\s*>)+)/gm,'');
+        // begin token
+        let token = state.push('display-math', 'math', 1);  // 'math_block'
+        token.block = true;
+        token.markup = "$$";
+        token.content = match[1];
+        token.info = match[match.length-1];    // eq.no
+        token.map = [ begLine, curline ];
+        // end token
+        token = state.push('display-math_end', 'math', -1);
+        token.block  = true;
+        token.markup = "$$";
+
+        state.parentType = parentType;
+        state.lineMax = lineMax;
+        state.line = curline+1;
+    }
+    return res;
+  })
+
+  const inline_rex = /\$((?:\S)|(?:\S.*?\S))\$/gy
 
   md.inline.ruler.before('escape', 'inline-math', function (state, silent) {
     const pos = state.pos;
     const str = state.src;
-    const pre = str.startsWith("$", rex.lastIndex = pos) && ($_pre(str, pos));  // valid pre-condition ...
-    const match = pre && rex.exec(str);
-    const res = !!match && pos < rex.lastIndex && ($_post(str, rex.lastIndex - 1));
+    const pre = str.startsWith("$", inline_rex.lastIndex = pos) && ($_pre(str, pos));  // valid pre-condition ...
+    const match = pre && inline_rex.exec(str);
+    const res = !!match && pos < inline_rex.lastIndex && ($_post(str, inline_rex.lastIndex - 1));
 
     if (res) {
       if (!silent) {
         const token = state.push('inline-math', 'math', 0);
-        token.content = match[1];
+        token.meta = match[1]; // TODO: this is hacky. when using content this conflicts with markdown-it-atts if content ends with curlies
         token.markup = '$';
       }
-      state.pos = rex.lastIndex;
+      state.pos = inline_rex.lastIndex;
     }
     return res;
   })
@@ -39,15 +86,26 @@ export default function (md) {
   const adaptor = liteAdaptor()  
   RegisterHTMLHandler(adaptor)
 
-  const tex = new TeX({packages: AllPackages})
-  const svg = new SVG({fontCache: 'none'})
-  const html = mathjax.document('',{InputJax:tex,OutputJax:svg})  
+  const tex = new TeX({packages: AllPackages, tags: 'ams'})
+  const chtml = new CHTML({fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'})
+  const html = mathjax.document('',{InputJax:tex,OutputJax:chtml})
 
-  md.renderer.rules['inline-math'] = (tokens, idx) => {
-    const node = html.convert(tokens[idx].content, {
+  md.renderer.rules['inline-math'] = (tokens, idx, opts, env) => {
+    console.log(tokens[idx].meta)
+    const node = html.convert(tokens[idx].meta, {
       display: false,
-      em: 15
+      em: 16
+    })    
+    env.css = adaptor.textContent(chtml.styleSheet(html))    
+    return adaptor.outerHTML(node)
+  }
+
+  md.renderer.rules['display-math'] = (tokens,idx, opts, env) => {
+    const node = html.convert(tokens[idx].content, {
+      display: true,
+      em: 16
     })
+    env.css = adaptor.textContent(chtml.styleSheet(html))  
     return adaptor.outerHTML(node)
   }
 }

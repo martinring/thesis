@@ -32,22 +32,19 @@ example, which has been deliberately kept simple in order to keep the focus on t
 to a luminosity sensor, and switches a light on or off when it becomes
 too dark or bright.](light-sensor-sketch.svg){#fig:sketch .small}
 
-:::example
-  The simple light controller system sketched in [](#fig:sketch)
-  works as the running example in the following. This system
-  connects a controller to a luminosity sensor and a light switch. The
-  controller should turn on the light if the sensor $e$ drops below a given
-  level $e_{lo}$, and turn it off if it exceeds a given level $e_{hi}$. To
-  avoid a flickering effect when the luminosity varies close to a given
-  threshold, the lower and upper threshold levels are not equal
-  (hysteresis), and the system should switch off the light only with a
-  certain delay $d$.
+:::Example *
+The simple light controller system sketched in [#fig:sketch]
+works as the running example in the following. This system
+connects a controller to a luminosity sensor and a light switch. The
+controller should turn on the light if the sensor $e$ drops below a given
+level $e_{lo}$, and turn it off if it exceeds a given level $e_{hi}$. To
+avoid a flickering effect when the luminosity varies close to a given
+threshold, the lower and upper threshold levels are not equal
+(hysteresis), and the system should switch off the light only with a
+certain delay $d$.
 
-  The threshold levels $e_{lo}, e_{hi}$ and the delay $d$ are
-  configuration variables, and can be changed post-deployment.
-:::
-
-:::{#refs}
+The threshold levels $e_{lo}, e_{hi}$ and the delay $d$ are
+configuration variables, and can be changed post-deployment.
 :::
 
 Systems like these are designed in a flexible fashion, so that they
@@ -59,7 +56,7 @@ checked during verification which may never be applied during the system's
 lifetime. Hence, if we instantiate the configuration variables after
 deployment and keep only the variables of the system which change frequently arbitrary, we get a much smaller search space to explore.
 
-:::example continue
+:::Example * continued blub 
 Consider again the running example. If we assume a width of
 8 bit for the input values (the luminosity sensor and
 subsequently for the upper and lower bounds) and the time delay,
@@ -67,13 +64,26 @@ and one bit for the light switch status
 (these are lower bounds for a realistic system), we get the following
 search space (where $cnt$ is a variable counting up to delay):
 
+$$
+\begin{array}{}
+\underbrace{\begin{array}{}
+e_{lo} & e_{hi} & d\\
+8 & 8 & 8
+\end{array}{}}_{configuration} &
+\begin{array}{}
+e & cnt & status & & total\\
+8 & 8 & 1 & = & 41
+\end{array}
+\end{array}
+$$
+
 <!-- TODO EQ -->
   
 Thus, we need to check an overall search space of $2^{41}$ states to verify the
 system, a huge search space for a very simple example.
 
 In contrast, once the system is deployed and applied in the field, the
-values for $e_{lo}$, $e_{hi}$ and $d$ rarely change (once when
+values for $e_{lo} $, $e_{hi}$ and $d$ rarely change (once when
 the system is deployed, and afterwards only if the user actively changes
 the configuration), as opposed to the values of $e$, $cnt$ and
 $status$ which vary constantly. Thus, we can mark $e_{lo}$, $e_{hi}$
@@ -179,3 +189,161 @@ The behaviour is provided in OCL as shown in [#fig:ocl-spec]. We model state
 transitions by an explicit operation `tick()`; The pre- and postcondition of the
 state transition are denoted as pre- and postconditions of this operation.
 
+#### Model (middle of [#fig:design-flow])
+
+Based on the specification, a Clash model is derived.
+
+Clash is a strongly typed domain-specific language to model hardware. It
+is embedded into the functional programming language Haskell, and describes
+the hardware as functions of the language. The strong type system guarantees
+that everything we can describe in Clash is still synthesizeable, and
+allows us to model the hardware at an abstract but still executable level.
+
+The model describes the hardware by combinators (higher-order functions),
+building up complicated circuits by composing elementary
+ones. [#fig:clash] shows the model, essentially a
+finite-state machine (a Mealy automaton) with the luminosity values
+(*Unsigned 8*) and the configuration as input, the light switch
+(*Bool*) as output, and an internal state (*ControllerState*)
+which keeps track of the light switch and a counter to implement the delay
+when switching off. The function *controllerT* (definition omitted
+for brevity) is the state transition function of the automation, taking the
+state and the input, and returning a tuple of new state and output.
+
+````haskell {#fig:clash caption="Clash model of the light controller (excerpt)"}
+type ControllerState = (Bool,Unsigned 8)
+
+controllerT :: ControllerState
+  -> (Configuration, Unsigned 8)
+  -> (ControllerState, Bool)
+
+controller :: Signal (Configuration, Unsigned 8)
+  -> Signal Bool
+controller = mealy controllerT (False,0)
+````
+
+
+#### Implementation (left-hand side of [#fig:design-flow])
+
+From the Clash model, we generate Verilog, which is
+then compiled onto the FPGA by the proprietary tool chain of the FPGA vendor
+(in our case, Xilinx). Thus, the Clash model is the foundation of the
+verification after deployment.
+
+#### Verification (right-hand side of [#fig:design-flow])
+
+To prove the verification conditions, we translate them into
+CNF, which is suitable as input for reasoning engines such as SAT solvers. 
+This translation proceeds in two steps. We first translate both the Clash model 
+and the specification into bit-vector logic, which in the second step can be 
+translated into CNF by Yices. The translation from Clash is done with an 
+extension of the Clash compiler we have developed for this work; the 
+translation of OCL is done by the tool-chain described in [#chap:specific].
+
+[#fig:bv-spec] shows a small excerpt of the bit-vector representation
+of the model from [#fig:clash]. We are modelling the state transition
+explicitly, so for each state variable (e.g. *switch*, *cnt*) we have a
+variable to model the pre-state (here, *preSwitch*, *preCnt*).
+[#fig:bv-spec] asserts that the state switches to *true*
+if the luminosity value drops below *e_lo* and it switches to
+*false* if the luminosity is above the threshold and
+*cnt* is larger or equal to the configured *delay*.
+
+````smt-lib {#fig:bv-spec caption="Implementation modelled in bit-vector logic (excerpt)"}
+(define preSwitch :: bool) ; light switch before
+(define switch :: bool)    ; light switch after
+(assert
+  (= switch
+     (ite (bv-lt e e_lo)
+       true
+       (ite (and (bv-gt e e_hi) (bv-ge preCnt delay))
+         false
+         preSwitch
+) )  ) )
+````
+
+To verify the implementation, we translate the specification from OCL
+ into bit-vector logic; for example, the two
+clauses *a4* and *a5* from [#fig:ocl-spec] become:
+
+````smt-lib
+(=> off_s (not switch))))
+(=> (not (or on off_s)) (= switch preSwitch))))
+````
+
+We generate a CNF formula from the negated conjunction of all five clauses
+(and the invariants) in [#fig:ocl-spec], together with the model from
+[#fig:bv-spec]. This formula is satisfiable iff the specification is
+violated (because we assert the negated specification).
+
+Because we explore the complete search space (there is no state abstraction
+involved), this procedure is not only sound but also complete; if we cannot
+find a counter-example, the verification condition holds.
+
+#### Instantiation after Deployment (bottom of [#fig:design-flow])
+
+````cnf {#fig:cnf-simple caption="CNF in DIMACS format for a very simple assertion. Lines starting with $c$ are comments; the line starting with $p$ states the number of variables and clauses; the following lines are the clauses, each line containing one conjunct consisting of a disjunction of variable $i$ or its negation $-i$ (terminated by $0$). A suitable representation of this format is used post-deployment."}
+c   e_hi --> [5 6]
+c   e --> [3 4]
+p cnf 7 6
+-3 7 0
+4 -6 0
+4 7 0
+5 7 0
+-6 7 0
+3 -5 -7 0
+````
+
+Finally, the configuration variables are instantiated in order to reduce
+the search space.  This is directly conducted in the obtained CNF. In
+order to give an impression of the generated CNF, we just consider the very
+simple assertion $e \leq e_\text{hi}$, which translates into
+bit-vector logic as the assertion:
+
+````smt-lib
+(assert (not (bv-lt e e_hi))).
+````
+
+Using only two bits for $e$ and $e_\text{hi}$, Yices generates the CNF as shown in
+[#fig:cnf-simple], which represents
+these bit-vectors as variables, corresponding to the formula.Here, $x$ is an auxiliary
+variable. $e_1$ and $e_2$ denotes the first respectively the second bit of the bit-vector $e$. The same notation applies to $e_\text{hi}$.:
+
+$$
+\begin{equation}
+  \label{eq:cnf-very-very-very-simple}
+  \begin{array}{l}
+   (\neg e_1 \vee x) \wedge (e_2 \vee \neg e_{hi,2}) \wedge
+   (e_2 \vee x) \wedge \\
+   (e_{hi,1} \vee x) \wedge (\neg e_{hi,_2} \vee x) \wedge
+   (e_1 \vee \neg e_{hi,1} \vee \neg x).
+  \end{array}
+\end{equation}
+$$
+
+Yices keeps track of the encoding of the variables, i.e. to instantiate the
+configuration variables, we add corresponding unit clauses, e.g. to
+instantiate $e_\text{hi}$ with the value $2$ ($10$ in binary) we add
+two unit clauses stating
+
+$$ 
+e_{hi,1} \wedge \neg e_{hi,2}. 
+$$
+
+The instantiations now significantly reduce the search space. This can be
+exploited to solve the resulting instance after deployment using a
+lightweight solver. As we can see, the actual reduction of the
+search space depends on the values we instantiate the variables
+with. 
+
+## Evaluation {#sec:eval}
+
+Table: Evaluation Results
+
+| System           | Search space | Variables | Clauses | Time     |
+|:-----------------|:------------:|----------:|--------:|---------:|
+| **simple**       | $2^{41}$     | 161       | 539     | $< 0.1s$ |
+| **average**      | $2^{177}$    | 11807     | 40086   | $131.0s$ |
+| **weighted_avg** | $2^{545}$    | 43569     | 146642  | $> 24h$  |
+| **smart**        | $2^{9504}$   | 1421153   | 4761633 | $> 24h$  |
+| **multiplier**   | $2^{32}$     | 1177      | 6096    | $> 24h$  |

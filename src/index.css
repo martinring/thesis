@@ -1,15 +1,18 @@
 @import url('./fonts/vollkorn.css');
 @import url('./fonts/open-sans.css');
 @import url('./fonts/jetbrains-mono.css');
+@import url('./fonts/eb-garamond.css');
 
 .nobr {
   white-space: nowrap;
 }
 
 :root {
+  hyphens: auto;
   --font-body: vollkorn;
   --font-headings: vollkorn;
-  font-size: 11pt;
+  --font-code: jetbrains-mono;
+  font-size: 12pt;
   font-family: var(--font-body);
   line-height: 1.5;
   text-align: justify;
@@ -25,63 +28,57 @@ h1,h2,h3,h4,h5,h6 {
   text-align: left;
   font-family: var(--font-headings);
   page-break-after: avoid;
+  hyphens: none;
 }
 
-div.example {
+div.counter {
   background-color: #eee;
   padding: 1rem 1rem;
   margin: 0 -1rem;
-}
-
-div.example:not(.continue) {
-  counter-increment: example;
 }
 
 .active {
   color: fuchsia;
 }
 
-/*div.example::before {
+div.counter::before {
   margin-top: 0;
-  content: 'Example ' counter(chapter) '.' counter(example) ' ';
+  content: attr(data-name);
   font-weight: bold;
   page-break-inside: avoid;
 }
 
-div.example.continue::before {
-  content: 'Example ' counter(chapter) '.' counter(example) ' (continued)';  
-}*/
+div.counter.continued::before {
+  content: attr(data-name) ' (continued)';  
+}
 
 div.example :last-child {
   margin-bottom: 0;
 }
 
-figure {
-  --before-text: 'Figure ' attr(data-chapter) '.' attr(data-figure);
+figure {  
   text-align: center;
-  display: block;  
-  padding: 0 1rem;
   counter-increment: figure;
 }
 
-figure > img {
+figure > img, figure > object {
   width: 100%;
 }
 
-figure > img.small {
+figure.small > img, figure.small > object {
   width: 66.7%;
 }
 
-
 figure > figcaption {  
+  font-size: 80%;
   margin-top: 0.5rem;
   text-align: justify;
   font-style: italic;
 }
 
-figure > figcaption::before {
-  content: var(--before-text) ' ';
+figure > figcaption > .name {  
   font-weight: bold;
+  margin-right: 0.5em;
 }
 
 section {
@@ -170,12 +167,12 @@ p {
 
   @page {
     size: A4;
-    margin: 2cm 3cm;
+    margin: 3cm 3cm;
     margin-inside: 4cm;    
     @bottom {
       content: counter(page);
     }
-  }  
+  }
 
   span.katex > .katex-html {
     display: none;
@@ -183,7 +180,11 @@ p {
 
   h1 {
     page-break-before: always;
-    padding-top: 4rem;  
+    padding-top: 4rem;
+  }
+
+  a {
+    color: black;
   }
 
   hr {
@@ -193,7 +194,7 @@ p {
 
 .csl-entry {
   display: block;
-  display: relative;
+  position: relative;
   padding-bottom: .2rem;
 }
 
@@ -203,7 +204,7 @@ p {
 
 .csl-left-margin {
   position: absolute;
-  left: 1rem;
+  left: -2rem;
   text-align: right;
 } 
 
@@ -217,6 +218,36 @@ p {
 
 pre, code {
   text-align: left;
-  font-family: jetbrains-mono;
-  font-size: 10pt;
+  font-family: var(--font-code);
+  font-size: 9pt;
+  line-height: 1.3;
+}
+
+pre {
+  counter-reset: line-number;  
+  display: table;
+  border-collapse: separate;
+  border-spacing: 0.5rem 0;
+}
+
+pre > .line {
+  display: table-row;  
+}
+
+pre > .line::before {
+  display: table-cell;
+  counter-increment: line-number;
+  content: counter(line-number);
+  text-align: right;
+  padding-right: 0.5rem;
+  border-right: 2px solid #ccc;
+  color: #237896;
+}
+
+pre > .line:first-child:last-child::before {
+  content: ' ';
+}
+
+pre > .line .keyword {
+  font-weight: bold;
 }
