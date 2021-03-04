@@ -336,7 +336,7 @@ lightweight solver. As we can see, the actual reduction of the
 search space depends on the values we instantiate the variables
 with. 
 
-## Evaluation {#sec:eval}
+## Evaluation and Discussion {#sec:eval}
 
 Table: Evaluation Results
 
@@ -347,3 +347,172 @@ Table: Evaluation Results
 | **weighted_avg** | $2^{545}$    | 43569     | 146642  | $> 24h$  |
 | **smart**        | $2^{9504}$   | 1421153   | 4761633 | $> 24h$  |
 | **multiplier**   | $2^{32}$     | 1177      | 6096    | $> 24h$  |
+
+{.headerColumn}
+
+So far, the proposed methodology has been illustrated by means of an
+intentionally rather limited example. Moving on from that, we have applied
+the idea of verification after deployment, and the proposed verification as
+described in [#sec:impl], to more sophisticated home automation
+controller in order to demonstrate its applicability.
+
+The home controller has been realized on top of a ZedBoard, which comprises an
+ARMv7 core running Linux to control a Xilinx FPGA, and which for the
+purposes of verification has been equipped with a lightweight SAT
+solver [@Bornebusch2017TowardsLS]. The obtained results are summarized
+in this section. Furthermore, we also discuss possible ramifications which
+have to be considered when utilizing the proposed methodology in practice.
+
+### Evaluation
+
+The proposed methodology has been evaluated on a set of 
+systems which are natural extensions of the light controller considered
+above to highly versatile home automation controllers as follows:
+
+**simple**
+
+: The simple light controller 
+  with one light and one luminosity sensor (as considered in the running
+  example).
+
+**average**
+
+: An extended version of the controller which
+  includes up to 16 sensors to be connected and controls one actuator by
+  averaging the values obtained by those sensors. Input and output are
+  generic, i.e. we can control any kind of actuator and read from any kind
+  of sensor as long as it gives us integer values.
+
+**weighted_avg**
+
+: A similar version with 32 sensors that allows
+  to add a configurable weight to each sensor when computing the average.
+
+**smart**
+
+: A smart home controller, which allows up to 32
+  sensor inputs to be connected to up to 32 actuator outputs. Each input
+  can be connected with each output, making the controller very versatile
+  and resulting in a huge search space. The smart home controller can be
+  used e.g. to control lights, heating and blinds for a number of rooms in
+  an office setting.
+
+**multiplier**
+
+: A 16 bit multiplier component, used to apply the
+  weights in *weighted_avg* and *smart*. Can be verified
+  with a constant factor once the configuration is set.
+
+For all these systems, we have specified their intended behaviour in OCL,
+similar to the specification of the simple light controller in
+[#fig:ocl-spec], and have verified that the implementation satisfies
+this specification.
+
+[#tab:exp] lists the results. Column *System* gives the name
+of the considered system. The remaining columns summarize the results in
+two groups: the first group for verification according to the established
+verification flow (i.e. verifying all properties at design time) and the
+second group for the verification methodology proposed here (using the
+lightweight solver on the target system). For each group, we
+give the size of the search space (i.e. the number of possible solutions to
+be checked); the number of variables; the number of clauses of the
+resulting CNF; and the runtime (in seconds).  The runtime is measured on
+systems which would typically be used for verification, so they are
+directly comparable: for the established verification flow, a compute
+server (Intel Xeon E3-1270 v3, eight cores, 16 GB memory) and, for the proposed
+verification flow, the ZedBoard (ARMv7, 1GB memory).
+
+The obtained results clearly show the benefits of the proposed
+approach. Typical embedded systems (as the ones considered here)
+allow for a huge variety of configurations. As shown in
+Table [#tab:exp], this results in a rather large search space and SAT
+instance for the verification, which takes a significant amount of time to
+solve (in some cases, the corresponding verification task could not be
+solved within the given time-limit of one day). In contrast, after deployment,
+configuration variables can be instantiated with their actual values, as
+discussed  in [#sec:gen_idea]. This substantially reduces
+the search space and allows to solve the verification task even on
+the limited resources of an embedded system. 
+
+Of course, the search space is only one complexity indicator: as the
+multiplier system shows, even a comparatively small search space may
+require a long time to be verified, because of its inherent
+complexity. However, the proposed verification flow reduces the runtime
+significantly in this example as well, and thus allows us to verify a system
+which was previously out of reach for established tools.
+
+### Practical Exploitation
+
+Our approach may be applied in various ways. In the following we illustrate a possible 
+practical application to the design of a smart home controller as described above.
+
+Requirements and properties are established during design time, and checked with 
+contemporary verification tools. 
+Refinements are tracked and verified down to the electronic system level.
+All properties which cannot be automatically 
+checked during design time are then collected. Some of these properties might be 
+provable with interactive theorem provers. The effort has to be weighted up with the 
+win here. Those properties which cannot be economically be proven are then
+prepared for self-verification using our approach.
+
+In the deployed system, a verification controller is constantly watching
+the values of the configuration variables and triggers a
+proof if a value change is requested. For example, if a light is
+connected to the smart home controller, the configuration is updated and
+the proofs have to be re-run. Since the system would now be in an
+unverified state, it will either stop operating or defer the value change
+until the proofs have successfully finished; this way, it continues
+operating with guaranteed safety. (If the risk is considered acceptable, the 
+system might instantly change the value and continue to operate while the 
+proofs are running.)
+
+This results in a transient state where the
+system is unverified for the time it takes to conduct the proof. There are
+three possible ways to cope with this. First, for acceptable risks, the
+system can just continue operating. Second, we can delay the change of the
+variable and ignore the connected light until correctness has been proven.
+Third, we can stop operation and only continue after the system is proven
+safe again. To avoid any of these situations the verification controller
+might use statistical observations for the prediction of future
+variable-states and verify them during idle-time. If any of these states
+occurs, the system can instantaneously continue operating with guaranteed
+safety.
+
+If a proof fails for the resulting configuration, the
+system informs the user about the failed proof.  The user can disconnect
+the sensor again or try a different configuration until the proof succeeds
+and the change results in a safe state. This especially means that the
+system can still operate safely even though some functionality is
+missing. Furthermore, the manufacturer is informed about the failed
+configuration, and can use this information to take appropriate measures.
+
+### Discussion
+
+The results obtained by the conducted cases studies summarized above
+clearly show the promises of the proposed verification methodology.
+However, some obvious ramifications have to be discussed when evaluating
+the general applicability of this methodology.
+
+The proposed methodology obviously requires the embedded system to be
+equipped with on-board verification tools to conduct the
+verification tasks. Since the considered systems are substantially less
+powerful than usual desktop systems or verification servers, this requires
+lightweight but still efficient versions of those tools. Here, recent
+developments on lightweight methods [@Bornebusch2017TowardsLS]
+[@DBLP:series/lncs/BalintS16] as well as endeavours towards efficient
+hardware solvers [@DBLP:conf/dsd/IvanA13] [@dfki9553] provide promising
+platforms for this purpose. Besides, it should be noted that 
+the proposed verification methodology yields an exponential reduction in
+the search space, so even less powerful verification tools might be able
+to cope. 
+
+Our approach differs from *runtime verification*, which is concerned
+with "checking whether a *run* of a system under scrutiny satisfies or
+violates a given correctness property" [@Leucker:2009]. The
+central notion of runtime verification is the trace (or run) of a system,
+and central questions are how to derive monitors checking a concrete run
+against an abstract specification. The logics employed are typically
+temporal or modal logics. In our work, we are not concerned with monitoring
+the system at all, we instead *specialize* given variables in an
+abstract specifications if they do not change often.
+

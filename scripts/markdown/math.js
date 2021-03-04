@@ -90,8 +90,7 @@ export default function (md) {
   const chtml = new CHTML({fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'})
   const html = mathjax.document('',{InputJax:tex,OutputJax:chtml})
 
-  md.renderer.rules['inline-math'] = (tokens, idx, opts, env) => {
-    console.log(tokens[idx].meta)
+  md.renderer.rules['inline-math'] = (tokens, idx, opts, env) => {    
     const node = html.convert(tokens[idx].meta, {
       display: false,
       em: 16

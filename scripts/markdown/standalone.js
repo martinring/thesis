@@ -3,7 +3,7 @@ export default function (md) {
   const old = md.renderer.render
   md.renderer.render = function (tokens,options,env) {  
     const body = old.bind(md.renderer,tokens,options,env)()  
-    const meta = env.meta
+    const meta = env.meta || {}
     const html = ['<!DOCTYPE html>']
     html.push(
       `<html lang="${meta.lang || 'en'}">`,

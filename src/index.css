@@ -57,8 +57,12 @@ div.example :last-child {
 }
 
 figure {  
+  -prince-float-defer-page: 1;
+  -prince-float: snap unless-fit;
   text-align: center;
   counter-increment: figure;
+  break-inside: avoid;
+  padding: 0.5rem 0 0.5rem 5rem;  
 }
 
 figure > img, figure > object {
@@ -196,6 +200,7 @@ p {
   display: block;
   position: relative;
   padding-bottom: .2rem;
+  break-inside: avoid;
 }
 
 .csl-entry:target {
@@ -250,4 +255,22 @@ pre > .line:first-child:last-child::before {
 
 pre > .line .keyword {
   font-weight: bold;
+}
+
+table {
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+thead {
+  border-bottom: 3px double black;
+}
+
+th, td {
+  padding: 0.4rem;
+}
+
+table.headerColumn th:first-child,table.headerColumn td:first-child {
+  border-right: 1px solid black;
 }
