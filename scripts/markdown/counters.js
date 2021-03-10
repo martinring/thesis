@@ -13,6 +13,7 @@ export default function (md) {
     let section = 0
     let subsection = 0
     let figure = 0
+    let table = 0 
     let containers = { }
     state.tokens.forEach(block => {      
       switch (block.type) {
@@ -21,6 +22,7 @@ export default function (md) {
             case 'h1':
               chapter += 1;
               figure = 0;
+              table = 0;
               section = 0;
               subsection = 0;
               containers = {};
@@ -65,17 +67,25 @@ export default function (md) {
           if (classes.length > 0)
             block.attrJoin('class',classes.join(' '));
           break;
+        case 'caption_open':          
+          table += 1;
+          block.attrSet('data-chapter',chapter);
+          block.attrSet('data-table',table);
+          block.attrSet('data-name',`Table ${chapter}.${table}`)
+          break;
         default:        
-          block.children?.forEach(token => {
-            switch (token.type) {
-              case 'image':                
-                figure += 1;
-                token.attrSet('data-chapter',chapter);
-                token.attrSet('data-figure', figure);
-                token.attrSet('data-name',`Figure ${chapter}.${figure}`);
-                break;
-            }
-          })
+          if (block.children) {
+            block.children.forEach(token => {
+              switch (token.type) {
+                case 'image':                
+                  figure += 1;
+                  token.attrSet('data-chapter',chapter);
+                  token.attrSet('data-figure', figure);
+                  token.attrSet('data-name',`Figure ${chapter}.${figure}`);
+                  break;
+              }
+            })
+          }
       }      
     })
   })

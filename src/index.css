@@ -17,11 +17,12 @@
   line-height: 1.5;
   text-align: justify;
   word-wrap: break-word;
-  scroll-behavior: smooth;
+  scroll-behavior: smooth;  
 }
 
 body {
   padding-left: 5rem;
+  overflow-x: visible;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -57,12 +58,12 @@ div.example :last-child {
 }
 
 figure {  
-  -prince-float-defer-page: 1;
-  -prince-float: snap unless-fit;
-  text-align: center;
+  margin-left: auto; 
+  margin-right: auto; 
   counter-increment: figure;
   break-inside: avoid;
-  padding: 0.5rem 0 0.5rem 5rem;  
+  text-align: center;
+  /*padding: 0.5rem 0 0.5rem 5rem;  */
 }
 
 figure > img, figure > object {
@@ -70,20 +71,55 @@ figure > img, figure > object {
 }
 
 figure.small > img, figure.small > object {
-  width: 66.7%;
+  width: 66.7%;  
 }
 
 figure > figcaption {  
   font-size: 80%;
   margin-top: 0.5rem;
   text-align: justify;
-  font-style: italic;
 }
 
 figure > figcaption > .name {  
   font-weight: bold;
   margin-right: 0.5em;
 }
+
+
+table {  
+  font-size: 80%;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+caption {  
+  margin-bottom: 1rem;
+}
+
+caption::before {
+  font-weight: bold;
+  margin-right: 0.5rem;
+  content: attr(data-name);  
+}
+
+table {
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  margin-bottom: 2rem;  
+}
+
+thead {
+  border-bottom: 1px solid black;
+  font-weight: normal;
+}
+
+th, td {
+  padding: 0.25rem;
+  font-weight: normal;
+}
+
+
 
 section {
   margin: 0;
@@ -95,7 +131,7 @@ h1 {
   position: sticky;
   top: 1rem;
   z-index: 1;
-  font-size: 3.5rem;  
+  font-size: 3rem;  
   line-height: 1.2;
   margin-bottom: 2.5rem;
   page-break-after: avoid;
@@ -164,15 +200,29 @@ p {
   }
 }
 
+div.example {
+  page-break-inside: avoid;
+}
+
 @media print {
+  figure.standalone {
+    margin: auto
+  }
+
+  table, figure {
+    -prince-float-defer-page: 1;
+    -prince-float: snap unless-fit;
+    -prince-float-policy: in-order;
+  }
+
   :root {
     color-adjust: exact;
   }
 
   @page {
     size: A4;
-    margin: 3cm 3cm;
-    margin-inside: 4cm;    
+    margin: 2.7cm;
+    margin-inside: 3.7cm;    
     @bottom {
       content: counter(page);
     }
@@ -255,22 +305,4 @@ pre > .line:first-child:last-child::before {
 
 pre > .line .keyword {
   font-weight: bold;
-}
-
-table {
-  border-collapse: collapse;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-thead {
-  border-bottom: 3px double black;
-}
-
-th, td {
-  padding: 0.4rem;
-}
-
-table.headerColumn th:first-child,table.headerColumn td:first-child {
-  border-right: 1px solid black;
 }

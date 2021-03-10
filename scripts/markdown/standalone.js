@@ -27,5 +27,4 @@ export default function (md) {
     )
     return(html.join('\n'))
   }
-  
 }

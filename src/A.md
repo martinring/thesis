@@ -3,4 +3,5 @@
 :::{#refs}
 :::
 
-Something after
+
+# Tables {.appendix}

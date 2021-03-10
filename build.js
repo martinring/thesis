@@ -71,11 +71,11 @@ const es = task('building javascript and css', esbuild())
 
 const out = html.then((html) => task('write html output',fs.writeFile('build/index.html', html, { encoding: 'utf-8' })))
 
-await Promise.all([es,out]).then(() => {    
+await Promise.all([es,out]).then(() => 
   task('building pdf', prince()  
     .inputs("build/index.html")
     .output("build/index.pdf")
     .execute())
-})
+)
 
 console.log(`\x1b[32m[success]\x1b[0m after ${Date.now() - t0}ms`)

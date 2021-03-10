@@ -56,7 +56,7 @@ checked during verification which may never be applied during the system's
 lifetime. Hence, if we instantiate the configuration variables after
 deployment and keep only the variables of the system which change frequently arbitrary, we get a much smaller search space to explore.
 
-:::Example * continued blub 
+:::Example * continued 
 Consider again the running example. If we assume a width of
 8 bit for the input values (the luminosity sensor and
 subsequently for the upper and lower bounds) and the time delay,
@@ -206,24 +206,65 @@ finite-state machine (a Mealy automaton) with the luminosity values
 (*Unsigned 8*) and the configuration as input, the light switch
 (*Bool*) as output, and an internal state (*ControllerState*)
 which keeps track of the light switch and a counter to implement the delay
-when switching off. The function *controllerT* (definition omitted
-for brevity) is the state transition function of the automation, taking the
+when switching off. The function *controllerT* is the state transition 
+function of the automation, taking the
 state and the input, and returning a tuple of new state and output.
 
-````haskell {#fig:clash caption="Clash model of the light controller (excerpt)"}
-type ControllerState = (Bool,Unsigned 8)
+````{.haskell #fig:clash caption="Clash model of the light controller" .standalone}
+data Configuration = Configuration {
+  e_lo :: Unsigned 8,
+  e_hi :: Unsigned 8,
+  delay :: Unsigned 8
+} deriving Show
 
-controllerT :: ControllerState
-  -> (Configuration, Unsigned 8)
-  -> (ControllerState, Bool)
+configurationControllerT :: Configuration 
+  -> (Bool, Configuration) 
+  -> (Configuration,Configuration)
+configurationControllerT oldConfig (enable,config) = 
+  if enable then (config,config) else (oldConfig,oldConfig)
 
-controller :: Signal (Configuration, Unsigned 8)
+configurationController :: Signal (Bool, Configuration) 
+  -> Signal Configuration
+configurationController = 
+  mealy configurationControllerT (Configuration 63 191 127)
+
+data ControllerState = ControllerState {
+  switchState :: Bool,
+  cnt :: Unsigned 8
+} deriving Show
+
+data ControllerInput = ControllerInput {
+  configuration :: Configuration,
+  e :: Unsigned 8
+} deriving Show
+
+controllerT :: ControllerState 
+  -> ControllerInput 
+  -> (ControllerState,Bool)
+controllerT 
+  (ControllerState switchState cnt) 
+  (ControllerInput (Configuration e_lo e_hi delay) e)
+  | e < e_lo                 = (ControllerState True cntn,True)
+  | e > e_hi && cnt >= delay = (ControllerState False cntn,False)
+  | otherwise                = (ControllerState switchState cntn,switchState)
+    where 
+      cntn = if e > e_hi then if cnt < delay then cnt + 1 else cnt else 0
+
+controller :: Signal ControllerInput -> Signal Bool
+controller = mealy controllerT (ControllerState False 0)
+
+configuredController :: Signal (Bool,Configuration,Unsigned 8) 
   -> Signal Bool
-controller = mealy controllerT (False,0)
+configuredController input = 
+  controller (fmap (uncurry ControllerInput) $ bundle (cfgOut,sensor))
+  where (enable,config,sensor) = unbundle input
+        cfgOut = configurationController (bundle (enable,config))
+
+topEntity = configuredController
+
 ````
 
-
-#### Implementation (left-hand side of [#fig:design-flow])
+#### Implementation (left-hand side of [#fig:design-flow]) {#sec:impl data-name="the paragraph Implementation"}
 
 From the Clash model, we generate Verilog, which is
 then compiled onto the FPGA by the proprietary tool chain of the FPGA vendor
@@ -336,9 +377,9 @@ lightweight solver. As we can see, the actual reduction of the
 search space depends on the values we instantiate the variables
 with. 
 
-## Evaluation and Discussion {#sec:eval}
+## Evaluation {#sec:eval}
 
-Table: Evaluation Results
+Table: Evaluation Results (Pre-Deployment) {#tab:exp-pre}
 
 | System           | Search space | Variables | Clauses | Time     |
 |:-----------------|:------------:|----------:|--------:|---------:|
@@ -348,7 +389,15 @@ Table: Evaluation Results
 | **smart**        | $2^{9504}$   | 1421153   | 4761633 | $> 24h$  |
 | **multiplier**   | $2^{32}$     | 1177      | 6096    | $> 24h$  |
 
-{.headerColumn}
+Table: Evaluation Results (Post-Deployment) {#tab:exp-post}
+
+| System           | Search space | Variables | Clauses | Time     |
+|:-----------------|:------------:|----------:|--------:|---------:|
+| **simple**       | $2^{17}$     | 131       | 539     | $< 0.1s$ |
+| **average**      | $2^{137}$    | 8181      | 40086   | $1.4s$   |
+| **weighted_avg** | $2^{265}$    | 31374     | 146642  | $28.5s$  |
+| **smart**        | $2^{544}$    | 1421153   | 2704606 | $1.5s$   |
+| **multiplier**   | $2^{16}$     | 809       | 2467    | $418.0s$ |
 
 So far, the proposed methodology has been illustrated by means of an
 intentionally rather limited example. Moving on from that, we have applied
@@ -408,7 +457,7 @@ similar to the specification of the simple light controller in
 [#fig:ocl-spec], and have verified that the implementation satisfies
 this specification.
 
-[#tab:exp] lists the results. Column *System* gives the name
+[#tab:exp-pre] and [#tab:exp-post] list the results. Column *System* gives the name
 of the considered system. The remaining columns summarize the results in
 two groups: the first group for verification according to the established
 verification flow (i.e. verifying all properties at design time) and the
@@ -424,15 +473,15 @@ verification flow, the ZedBoard (ARMv7, 1GB memory).
 
 The obtained results clearly show the benefits of the proposed
 approach. Typical embedded systems (as the ones considered here)
-allow for a huge variety of configurations. As shown in
-Table [#tab:exp], this results in a rather large search space and SAT
+allow for a huge variety of configurations. As shown in [#tab:exp-pre], 
+this results in a rather large search space and SAT
 instance for the verification, which takes a significant amount of time to
 solve (in some cases, the corresponding verification task could not be
-solved within the given time-limit of one day). In contrast, after deployment,
+solved within the given time-limit of one day). In contrast, after deployment, 
 configuration variables can be instantiated with their actual values, as
-discussed  in [#sec:gen_idea]. This substantially reduces
+discussed in [#sec:selfie-general-idea]. This substantially reduces
 the search space and allows to solve the verification task even on
-the limited resources of an embedded system. 
+the limited resources of an embedded system as shown in [#tab:exp-post]. 
 
 Of course, the search space is only one complexity indicator: as the
 multiplier system shows, even a comparatively small search space may
@@ -452,7 +501,7 @@ Refinements are tracked and verified down to the electronic system level.
 All properties which cannot be automatically 
 checked during design time are then collected. Some of these properties might be 
 provable with interactive theorem provers. The effort has to be weighted up with the 
-win here. Those properties which cannot be economically be proven are then
+win here. Those properties which cannot economically be proven are then
 prepared for self-verification using our approach.
 
 In the deployed system, a verification controller is constantly watching
@@ -468,14 +517,20 @@ proofs are running.)
 
 This results in a transient state where the
 system is unverified for the time it takes to conduct the proof. There are
-three possible ways to cope with this. First, for acceptable risks, the
-system can just continue operating. Second, we can delay the change of the
-variable and ignore the connected light until correctness has been proven.
-Third, we can stop operation and only continue after the system is proven
-safe again. To avoid any of these situations the verification controller
+three possible ways to cope with this:
+
+1. For acceptable risks, the system can just continue operating while the 
+   verification is running in parallel.
+2. We can delay the change of the variable and ignore the connected light until 
+   correctness has been proven. This sacrifices function for safety.
+3. We can stop operation and only continue after the system is proven safe 
+   again. This potentially violates non-functional requirements on timing but 
+   safety and function are unaffected.
+
+None of these situations is desireable and thus the verification controller
 might use statistical observations for the prediction of future
-variable-states and verify them during idle-time. If any of these states
-occurs, the system can instantaneously continue operating with guaranteed
+variable-states and proactively verify them during idle-time. If any of these 
+states occurs, the system can instantaneously continue operating with guaranteed
 safety.
 
 If a proof fails for the resulting configuration, the
@@ -486,33 +541,22 @@ system can still operate safely even though some functionality is
 missing. Furthermore, the manufacturer is informed about the failed
 configuration, and can use this information to take appropriate measures.
 
-### Discussion
+## Conclusion
 
-The results obtained by the conducted cases studies summarized above
-clearly show the promises of the proposed verification methodology.
-However, some obvious ramifications have to be discussed when evaluating
-the general applicability of this methodology.
+This Chapter introduced a general approach to Self-Verifying Systems and 
+showed it's feasibility by means of some rather simple examples. In order to 
+scale the approach to real-world systems we need to answer a couple of important 
+questions regarding the boundary between pre- and post-deployment verification:
 
-The proposed methodology obviously requires the embedded system to be
-equipped with on-board verification tools to conduct the
-verification tasks. Since the considered systems are substantially less
-powerful than usual desktop systems or verification servers, this requires
-lightweight but still efficient versions of those tools. Here, recent
-developments on lightweight methods [@Bornebusch2017TowardsLS]
-[@DBLP:series/lncs/BalintS16] as well as endeavours towards efficient
-hardware solvers [@DBLP:conf/dsd/IvanA13] [@dfki9553] provide promising
-platforms for this purpose. Besides, it should be noted that 
-the proposed verification methodology yields an exponential reduction in
-the search space, so even less powerful verification tools might be able
-to cope. 
+*spacial partitioning*
 
-Our approach differs from *runtime verification*, which is concerned
-with "checking whether a *run* of a system under scrutiny satisfies or
-violates a given correctness property" [@Leucker:2009]. The
-central notion of runtime verification is the trace (or run) of a system,
-and central questions are how to derive monitors checking a concrete run
-against an abstract specification. The logics employed are typically
-temporal or modal logics. In our work, we are not concerned with monitoring
-the system at all, we instead *specialize* given variables in an
-abstract specifications if they do not change often.
+:  Which parts of a system belong to it's *Configuration* and how can we
+   systematically determine these variables? For large systems this is hard to 
+   decide manually.
 
+*temporal partitioning*
+
+:  When exactly should the verification take place and what are the consequences
+   of late vs. early verification? 
+
+The following two chapters will address these questions respectively. 

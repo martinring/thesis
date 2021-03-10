@@ -1,4 +1,45 @@
 ---
+- id: Timing
+  type: paper-conference
+  container-title: Software Engineering and Formal Methods
+  event-place: Cham
+  ISBN: 978-3-030-30446-1
+  page: 454–468
+  publisher: Springer International Publishing
+  publisher-place: Cham
+  title: Let's Prove It Later—Verification at Different Points in Time
+  author:
+  - family: Ring
+    given: Martin
+  - family: Lüth
+    given: Christoph
+  editor:
+  - family: Ölveczky
+    given: Peter Csaba
+  - family: Salaün
+    given: Gwen
+  issued:
+    date-parts: [[2019]]
+- type: paper-conference
+  id: VerificationRuntime
+  citation-label: VerificationRuntime
+  author: 
+  - given: Martin
+    family: Ring
+  - given: Fritjof
+    family: Bornebusch
+  - given: Christoph
+    family: Lüth
+  - given: Robert
+    family: Wille
+  - given: Rolf
+    family: Drechsler
+  issued: 
+    date-parts: [[2020]]
+  doi: 10.23919/DATE48585.2020.9116543
+  page: 873-878
+  container-title: 2020 Design, Automation Test in Europe Conference Exhibition (DATE)
+  title: "Verification Runtime Analysis: Get the Most Out of Partial Verification"
 - type: book
   id: SystemCStandard
   citation-label: SystemCStandard
