@@ -29,6 +29,7 @@
     "markdown-it-metadata-block": "^1.0.0",
     "markdown-it-table-captions": "^1.0.4",
     "mathjax-full": "^3.1.2",
+    "normalize.css": "^8.0.1",
     "prince": "1.8.6",
     "yaml": "1.10.0"
   }

@@ -1,28 +1,20 @@
-@import url('./fonts/vollkorn.css');
-@import url('./fonts/open-sans.css');
-@import url('./fonts/jetbrains-mono.css');
-@import url('./fonts/eb-garamond.css');
+@import url('normalize.css/');
+@import url('./common/typography.css');
+@import url('./common/util.css');
+@import url('./print.css');
+@import url('./screen.css');
 
-.nobr {
-  white-space: nowrap;
+section > :not(section) {
+  margin-left: 5rem;
 }
 
-:root {
-  hyphens: auto;
-  --font-body: vollkorn;
-  --font-headings: vollkorn;
-  --font-code: jetbrains-mono;
-  font-size: 12pt;
-  font-family: var(--font-body);
-  line-height: 1.5;
-  text-align: justify;
-  word-wrap: break-word;
-  scroll-behavior: smooth;  
+ul, ol, dl {
+  margin: 0;
+  padding: 0;
 }
 
-body {
-  padding-left: 5rem;
-  overflow-x: visible;
+ul, ol {
+  padding-left: 1.5rem;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -35,7 +27,7 @@ h1,h2,h3,h4,h5,h6 {
 div.counter {
   background-color: #eee;
   padding: 1rem 1rem;
-  margin: 0 -1rem;
+  margin:  0 -1rem 0 4rem;
 }
 
 .active {
@@ -57,9 +49,11 @@ div.example :last-child {
   margin-bottom: 0;
 }
 
-figure {  
-  margin-left: auto; 
+figure {
+  padding-left: 5rem;
+  margin-left: auto !important; 
   margin-right: auto; 
+  margin-bottom: 1rem;
   counter-increment: figure;
   break-inside: avoid;
   text-align: center;
@@ -87,10 +81,12 @@ figure > figcaption > .name {
 
 
 table {  
-  font-size: 80%;
+  font-size: 80%; 
   border-collapse: collapse;
-  margin-left: auto;
+  padding-left: 5rem;
+  margin-left: auto !important;
   margin-right: auto;
+  transform: translateX(2.5rem);
 }
 
 caption {  
@@ -128,22 +124,21 @@ section {
 }
 
 h1 {
-  position: sticky;
-  top: 1rem;
   z-index: 1;
   font-size: 3rem;  
   line-height: 1.2;
   margin-bottom: 2.5rem;
-  page-break-after: avoid;
 }
 
-h2, h3 {
+h1, h2, h3, h4 {
   position: relative;
-  page-break-after: avoid;
 }
 
-h1::before, h2::before, h3::before {
+h1::before, h2::before, h3::before, h4::before {
   position: absolute;
+  display: block;
+  width: 4rem;
+  text-align: right;
   left: -5rem;
 }
 
@@ -159,6 +154,14 @@ h3:not(.unnumbered)::before {
   content: attr(data-chapter) '.' attr(data-section) '.' attr(data-subsection)
 }
 
+h4 {
+  font-style: italic;
+}
+
+h4:not(.unnumbered)::before {    
+  content: attr(data-subsubsection) '.';
+}
+
 a {
   text-decoration: none;
 }
@@ -172,78 +175,8 @@ p {
   orphans: 2;
 }
 
-@media screen {
-  body {
-    max-width: 30rem;
-    margin-left: 5rem;
-  }
-
-  figure {    
-    position: absolute;
-    left: 40rem;    
-    width: 25rem;    
-  }
-
-  h1 {
-    color: white;
-  }
-
-  h1::after {
-    position: absolute;        
-    left: -10rem;
-    z-index: -1;
-    content: '';
-    background-color: #003366;    
-    width: 100vw;    
-    top: -1rem;
-    bottom: -1rem;
-  }
-}
-
 div.example {
   page-break-inside: avoid;
-}
-
-@media print {
-  figure.standalone {
-    margin: auto
-  }
-
-  table, figure {
-    -prince-float-defer-page: 1;
-    -prince-float: snap unless-fit;
-    -prince-float-policy: in-order;
-  }
-
-  :root {
-    color-adjust: exact;
-  }
-
-  @page {
-    size: A4;
-    margin: 2.7cm;
-    margin-inside: 3.7cm;    
-    @bottom {
-      content: counter(page);
-    }
-  }
-
-  span.katex > .katex-html {
-    display: none;
-  }
-
-  h1 {
-    page-break-before: always;
-    padding-top: 4rem;
-  }
-
-  a {
-    color: black;
-  }
-
-  hr {
-    page-break-after: always;
-  }
 }
 
 .csl-entry {
@@ -259,8 +192,8 @@ div.example {
 
 .csl-left-margin {
   position: absolute;
-  left: -2rem;
-  text-align: right;
+  right: calc(100% + 1rem);    
+  font-feature-settings: "tnum", "ss11";
 } 
 
 .csl-right-inline {
@@ -273,9 +206,9 @@ div.example {
 
 pre, code {
   text-align: left;
-  font-family: var(--font-code);
-  font-size: 9pt;
-  line-height: 1.3;
+  font-family: var(--font-monospace);
+  font-size: 8pt;
+  line-height: 1.4;
 }
 
 pre {

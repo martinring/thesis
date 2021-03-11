@@ -22,16 +22,7 @@ export default function (md) {
           citations.push({
             id
           })
-          
-          /** @type { import('@citeproc-rs/wasm').Cluster } */
-          const a = {
-            cites: [
-              {
-                prefix: 
-              }
-            ]
-          }
-
+                  
           driver.insertCluster({
             id,
             cites: cluster.map(citation => ({              

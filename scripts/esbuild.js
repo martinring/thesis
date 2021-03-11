@@ -3,7 +3,7 @@ import esbuild from 'esbuild'
 // Javascript / CSS build
 export default function build() {
   return esbuild.build({
-    entryPoints: ["src/index.ts"],
+    entryPoints: ["src/scripts/index.ts"],
     bundle: true,
     outdir: "build/assets",
     platform: "browser",

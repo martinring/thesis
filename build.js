@@ -42,11 +42,11 @@ const src = task('load markdown sources',
 )
 
 let bib = task('load bibliography',
-  fs.readFile('src/bib.yaml').then(f => yaml.parse(f.toString('utf-8')))
+  fs.readFile('src/bib/bib.yaml').then(f => yaml.parse(f.toString('utf-8')))
 )
 
 const style = task('load citation style',
-  fs.readFile('src/ieee.csl').then(f => f.toString('utf-8'))
+  fs.readFile('src/bib/ieee.csl').then(f => f.toString('utf-8'))
 )
 
 const cites = [];

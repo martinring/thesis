@@ -1,0 +1,18 @@
+@import url('../fonts/vollkorn.css');
+@import url('../fonts/open-sans.css');
+@import url('../fonts/jetbrains-mono.css');
+
+:root {
+  --font-monospace: jetbrains-mono;
+  --font-serif: vollkorn;
+  --font-sans: open-sans;
+  --font-body: var(--font-serif);  
+  --font-headings: var(--font-serif);
+
+  hyphens: auto;
+  font-size: 11pt;
+  font-family: var(--font-body);
+  line-height: 1.6;
+  text-align: justify;
+  word-wrap: break-word;
+}

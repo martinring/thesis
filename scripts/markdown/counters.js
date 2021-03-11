@@ -1,6 +1,6 @@
 import md_container from 'markdown-it-container';
 
-/** @type { import("markdown-it").PluginSimple } */
+/** @type { import('markdown-it').PluginSimple } */
 export default function (md) {
   const rex = /^\s*(\w+)\s*\*((?:\s+\w+)*)\s*$/
   md_container(md,'counter',{    
@@ -12,6 +12,7 @@ export default function (md) {
     let chapter = 0
     let section = 0
     let subsection = 0
+    let subsubsection = 0
     let figure = 0
     let table = 0 
     let containers = { }
@@ -23,8 +24,9 @@ export default function (md) {
               chapter += 1;
               figure = 0;
               table = 0;
-              section = 0;
+              section = 0;              
               subsection = 0;
+              subsubsection = 0;
               containers = {};
               block.attrSet('data-chapter',chapter);
               block.attrSet('data-name', `Chapter ${chapter}`);
@@ -32,17 +34,27 @@ export default function (md) {
             case 'h2':
               section += 1;
               subsection = 0;
+              subsubsection = 0;
               block.attrSet('data-chapter',chapter);
               block.attrSet('data-section',section);
               block.attrSet('data-name', `Section ${chapter}.${section}`);
               break;
             case 'h3':
               subsection += 1;
+              subsubsection = 0;
               block.attrSet('data-chapter',chapter);
               block.attrSet('data-section',section);
               block.attrSet('data-subsection',subsection);
               block.attrSet('data-name', `Section ${chapter}.${section}.${subsection}`);
               break;
+            case 'h4':
+              subsubsection += 1;              
+              const letter = String.fromCharCode('A'.charCodeAt(0) - 1 + subsubsection);
+              block.attrSet('data-chapter',chapter);
+              block.attrSet('data-section',section);
+              block.attrSet('data-subsection',subsection);
+              block.attrSet('data-subsubsection',letter);
+              block.attrSet('data-name', `Section ${chapter}.${section}.${subsection} Paragraph ${letter}`);
           }
           break;
         case 'fence':

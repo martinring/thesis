@@ -77,20 +77,26 @@ variables of $\phi$ often does not yield the desired result. Moreover, a
 straightforward enumeration is not suitable because of the following
 issues:
 
--   *Complexity*: Even if the number of variables to be fixed is given
-    as say $m$, there still would be $2^m$ possible combinations left to
-    try out.
+Complexity
 
--   *Quality*: Proving $\phi$ with all variable fixed except for one
-    certainly will be very fast, but will hardly give more insight than
-    an aborted verification process. Hence, verification engineers are
-    interested in restricting only as little variables as needed.
+: Even if the number of variables to be fixed is given
+  as say $m$, there still would be $2^m$ possible combinations left to
+  try out.
 
--   *Effectiveness*: We are particularly interested in verification
-    problems which cannot be completed due to a time-out; here, we are
-    looking for the data points which lie as much to the left in as
-    possible, but are still below the time-out. These are hard to find
-    by enumeration as one would run into time-outs a lot.
+Quality
+
+: Proving $\phi$ with all variable fixed except for one
+  certainly will be very fast, but will hardly give more insight than
+  an aborted verification process. Hence, verification engineers are
+  interested in restricting only as little variables as needed.
+
+Effectiveness
+
+: We are particularly interested in verification
+  problems which cannot be completed due to a time-out; here, we are
+  looking for the data points which lie as much to the left in as
+  possible, but are still below the time-out. These are hard to find
+  by enumeration as one would run into time-outs a lot.
 
 In summary, we are interested in finding the data points in the lower
 left corner of , which represent instances where only a small number of
@@ -160,8 +166,10 @@ above, we might guess that the smaller the set $X$, the larger the
 average verification runtime ( $\hat{T}_{\phi}(X)$ is anti-monotone over
 the size of the variable set), but this turns out not be true. Given two
 different subsets $X,Y\in\operatorname{\textit{FV}}(\phi)$, we have
+
 $$\label{eq:avgt-not-monotone}
-  |X| \leq |Y| \not\Longrightarrow \hat{T}_{\phi}(X) \geq \hat{T}_{\phi}(Y).$$
+|X| \leq |Y| \not\Longrightarrow \hat{T}_{\phi}(X) \geq \hat{T}_{\phi}(Y).
+$$
 
 In other words, increasing the number of fixed variables does not
 necessarily decrease the average verification runtime. Hence, the
@@ -195,10 +203,13 @@ with the total number of free variables
 $|\operatorname{\textit{FV}}(\phi)|$ and the average verification
 runtime $\hat{T}_{\phi}(X)$ with the proof time of the original
 proposition $T_{\phi}$. Thus, for a set $X$ of variables to be fixed,
-our cost function is $$\label{eq:quality-measure}
-  q(X) \triangleq \sqrt{\left(\frac{|X|}{\left|\operatorname{\textit{FV}}(\phi)\right|}\right)^2+\left(\frac{\log(\hat{T}_{\phi}(X))}{\log(T_{\phi})}\right)^2}.$$
+our cost function is 
 
-::: {.example}
+$$\label{eq:quality-measure}
+q(X) \triangleq \sqrt{\left(\frac{|X|}{\left|\operatorname{\textit{FV}}(\phi)\right|}\right)^2+\left(\frac{\log(\hat{T}_{\phi}(X))}{\log(T_{\phi})}\right)^2}.
+$$
+
+::: Example *
 visualizes the contours of the cost function $q$ from
 Eq. ([\[eq:quality-measure\]](#eq:quality-measure){reference-type="ref"
 reference="eq:quality-measure"}). The theoretical optimum lies at
@@ -221,7 +232,7 @@ $\tau(\phi)$ can be efficiently approximated through a binary search.
 This confines the number of data points to be considered to the ones
 which can be analyzed within acceptable runtime.
 
-::: {.example}
+::: Example *
 For the example considered above, assume an acceptable time limit
 $T_{max}$. Based on this, approximate $\tau(\phi)$ as illustrated by the
 dotted lines in . Now, only the data points between the left bottom
@@ -298,7 +309,7 @@ the average verification runtime $\hat{T}_{\phi}(X)$ remains feasible
 for the reasoning engine. With this as a basis, we can formulate the
 different EA aspects with respect to the considered problem as follows:
 
-#### Individuals {#individuals .unnumbered}
+#### Individuals {#individuals}
 
 An individual represents a potential solution $X$ as a bit vector
 $I=\Tuple{I_i}_{i=1,\ldots,|\operatorname{\textit{FV}}(\phi)|}$ of size
@@ -306,7 +317,7 @@ $|\operatorname{\textit{FV}}(\phi)|$ such that for every variable
 $x_i \in \operatorname{\textit{FV}}(\phi)$ there is a corresponding bit
 $I_i$ in $I$ which indicates whether $x_i \in X$.
 
-#### Mutation {#mutation .unnumbered}
+#### Mutation {#mutation}
 
 Based on the description of an individual, mutations are performed as
 follows: Given an individual $I$ and a mutation rate $p_m$, every bit of
@@ -323,7 +334,7 @@ $$
 \end{cases}\end{aligned}
 $$
 
-#### Recombination {#recombination .unnumbered}
+#### Recombination {#recombination}
 
 Recombinations are performed as follows: Given two individuals $I, J$
 and a recombination bias $p_c$, we combine the two bit vectors by
@@ -342,7 +353,7 @@ J_i, & \text{otherwise}
 \end{cases}\end{aligned}
 $$
 
-#### Fitness Function {#fitness-function .unnumbered}
+#### Fitness Function {#fitness-function}
 
 We employ $q$ from
 Eq. ([\[eq:quality-measure\]](#eq:quality-measure){reference-type="ref"
@@ -351,7 +362,7 @@ $T_{\phi}$ approximated as $T_{max} \cdot 2^{\tau(\phi)}$.
 $\hat{T}_{\phi}(X)$ is approximated by averaging the results of a small
 number of concrete measured times.
 
-#### Implementation Aspects[^6] {#implementation-aspects .unnumbered}
+#### Implementation Aspects[^6] {#implementation-aspects}
 
 The *initial population* is obtained by first approximating the
 threshold $\tau(\phi)$ with a binary search and then instantiating

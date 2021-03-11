@@ -1,0 +1,37 @@
+@media screen {
+  :root {
+    scroll-behavior: smooth;  
+  }
+  
+  body {  
+    overflow-x: visible;
+  }
+
+  body {
+    max-width: 60vw;
+    margin-left: 5rem;
+  }
+
+  /*figure {    
+    position: absolute;
+    left: 40rem;    
+    width: 25rem;   
+  }*/
+
+  h1 {
+    position: sticky;
+    color: white;
+    top: 1rem;  
+  }
+
+  h1::after {
+    position: absolute;        
+    left: -10rem;
+    z-index: -1;
+    content: '';
+    background-color: #003366;    
+    width: 100vw;    
+    top: -1rem;
+    bottom: -1rem;
+  }
+}

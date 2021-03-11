@@ -1,0 +1,42 @@
+@media print {
+  figure.standalone {
+    margin: auto
+  }
+
+  table, figure {
+    -prince-float-defer-page: 1;
+    -prince-float: snap unless-fit;
+    -prince-float-policy: in-order;
+  }
+
+  :root {
+    color-adjust: exact;
+  }
+
+  @page {
+    size: A4;
+    margin: 3cm 3cm;
+    margin-inside: 4cm;
+    @bottom {
+      content: counter(page);
+    }
+  }
+
+  h1 {
+    page-break-before: always;
+    padding-top: 4rem;
+  }
+
+  h1,h2,h3,h4,h5,h6 {
+    page-break-inside: avoid;
+    page-break-after: avoid;
+  }
+
+  a {
+    color: black;
+  }
+
+  hr {
+    page-break-after: always;
+  }
+}
