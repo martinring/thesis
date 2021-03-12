@@ -1,6 +1,9 @@
+@import url('./print/footnotes.css');
+
 @media print {
   figure.standalone {
-    margin: auto
+    margin: auto;
+    padding: 0;
   }
 
   table, figure {
@@ -15,11 +18,18 @@
 
   @page {
     size: A4;
-    margin: 3cm 3cm;
-    margin-inside: 4cm;
-    @bottom {
+    margin: 3cm;
+    @bottom-center {
       content: counter(page);
-    }
+    };
+  }
+
+  @page :left {
+    margin: 3cm 4cm 3cm calc(3cm + 5rem);
+  }
+  
+  @page :right {
+    margin: 3cm 3cm 3cm calc(4cm + 5rem);
   }
 
   h1 {

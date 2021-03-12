@@ -65,16 +65,18 @@ and one bit for the light switch status
 search space (where $cnt$ is a variable counting up to delay):
 
 $$
+\begin{equation}
 \begin{array}{}
 \underbrace{\begin{array}{}
 e_{lo} & e_{hi} & d\\
 8 & 8 & 8
-\end{array}{}}_{configuration} &
+\end{array}{}}_{\textit{configuration}} &
 \begin{array}{}
 e & cnt & status & & total\\
 8 & 8 & 1 & = & 41
 \end{array}
 \end{array}
+\end{equation}
 $$
 
 <!-- TODO EQ -->
@@ -83,7 +85,7 @@ Thus, we need to check an overall search space of $2^{41}$ states to verify the
 system, a huge search space for a very simple example.
 
 In contrast, once the system is deployed and applied in the field, the
-values for $e_{lo} $, $e_{hi}$ and $d$ rarely change (once when
+values for $e_{lo}$, $e_{hi}$ and $d$ rarely change (once when
 the system is deployed, and afterwards only if the user actively changes
 the configuration), as opposed to the values of $e$, $cnt$ and
 $status$ which vary constantly. Thus, we can mark $e_{lo}$, $e_{hi}$
@@ -100,7 +102,7 @@ the particular configuration (i.e. the supplied values for
 $e_{lo}, e_{hi}$ and $d$) and, thus, can principally not be done prior to deployment
 without severely reducing the flexibility and versatility of the system.
 
-## Implementation
+## Implementation {#sec:impl}
 
 The previous section illustrated the potential of conducting verification
 after deployment.  Based on that, we now describe in detail a possible
@@ -147,7 +149,7 @@ instantiation cannot be done at the design time, because at that point the
 instantiating values are still unknown. Therefore, the proofs must be rerun
 if the values of the configuration variables are changed.
 
-### The Design Process At Work
+### The Design Process At Work 
 
 ![Design flow for verification after deployment. We start with modelling
 the system behaviour, then derive an implementation and 
@@ -264,7 +266,7 @@ topEntity = configuredController
 
 ````
 
-#### Implementation (left-hand side of [#fig:design-flow]) {#sec:impl data-name="the paragraph Implementation"}
+#### Implementation (left-hand side of [#fig:design-flow])
 
 From the Clash model, we generate Verilog, which is
 then compiled onto the FPGA by the proprietary tool chain of the FPGA vendor
@@ -544,7 +546,10 @@ configuration, and can use this information to take appropriate measures.
 ## Conclusion
 
 This Chapter introduced a general approach to Self-Verifying Systems and 
-showed it's feasibility by means of some rather simple examples. In order to 
+showed it's feasibility by applying it to several case studies. We were 
+able to show the 
+
+In order to 
 scale the approach to real-world systems we need to answer a couple of important 
 questions regarding the boundary between pre- and post-deployment verification:
 

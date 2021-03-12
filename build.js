@@ -5,33 +5,11 @@ import fs from 'fs/promises';
 import md from './scripts/markdown.js';
 import esbuild from './scripts/esbuild.js';
 import yaml from 'yaml';
+import * as log from './scripts/log.js';
 
 const t0 = Date.now()
 
-function task(name,t) {
-  console.log('\x1b[32m[start]\x1b[0m ' + name)
-  const taskT0 = Date.now()
-  if (typeof t == 'function') {
-    try {
-      const res = t()
-      console.log(`\x1b[32m[done]\x1b[0m ${name} (${Date.now() - taskT0}ms)`)
-      return res
-    } catch (e) {      
-      console.log('\x1b[31m[failed]\x1b[0m ' + name + ": \n" + e)    
-      throw e
-    }
-  } else {
-    return t.then(r => {
-      console.log(`\x1b[32m[done]\x1b[0m ${name} (${Date.now() - taskT0}ms)`)
-      return r
-    },(e) => {
-      console.log('\x1b[31m[failed]\x1b[0m ' + name + ": \n" + e)
-      throw e
-    })
-  }
-}
-
-const src = task('load markdown sources',
+const src = log.timed('load markdown sources',
   fs.readdir('src',{ withFileTypes: true })
     .then(dir => 
       Promise.all(dir
@@ -41,11 +19,11 @@ const src = task('load markdown sources',
     ))
 )
 
-let bib = task('load bibliography',
+let bib = log.timed('load bibliography',
   fs.readFile('src/bib/bib.yaml').then(f => yaml.parse(f.toString('utf-8')))
 )
 
-const style = task('load citation style',
+const style = log.timed('load citation style',
   fs.readFile('src/bib/ieee.csl').then(f => f.toString('utf-8'))
 )
 
@@ -65,17 +43,17 @@ const markdown = Promise.all([bib,style]).then(([bib,style]) => {
   })
 })
 
-const html = Promise.all([src,markdown]).then(([src,md]) => task('building markdown',() => md.render(src)))
+const html = Promise.all([src,markdown]).then(([src,md]) => log.timed('building markdown',() => md.render(src)))
 
-const es = task('building javascript and css', esbuild())
+const es = log.timed('building javascript and css', esbuild())
 
-const out = html.then((html) => task('write html output',fs.writeFile('build/index.html', html, { encoding: 'utf-8' })))
+const out = html.then((html) => log.timed('write html output',fs.writeFile('build/index.html', html, { encoding: 'utf-8' })))
 
 await Promise.all([es,out]).then(() => 
-  task('building pdf', prince()  
+  log.timed('building pdf', prince()    
     .inputs("build/index.html")
-    .output("build/index.pdf")
+    .output("build/index.pdf")    
     .execute())
 )
 
-console.log(`\x1b[32m[success]\x1b[0m after ${Date.now() - t0}ms`)
+log.info(`total time ${Date.now() - t0}ms`)

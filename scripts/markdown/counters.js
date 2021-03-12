@@ -2,7 +2,7 @@ import md_container from 'markdown-it-container';
 
 /** @type { import('markdown-it').PluginSimple } */
 export default function (md) {
-  const rex = /^\s*(\w+)\s*\*((?:\s+\w+)*)\s*$/
+  const rex = /^\s*(\w+)\s*\*((?:\s+\w+)*)\s*/
   md_container(md,'counter',{    
     validate: (info) => {
       return rex.test(info)            
@@ -62,6 +62,9 @@ export default function (md) {
           block.attrSet('data-chapter',chapter);
           block.attrSet('data-figure',figure);
           block.attrSet('data-name',`Figure ${chapter}.${figure}`)
+          break;
+        case 'display-math':
+          block.attrSet('data-chapter',chapter);
           break;
         case 'container_counter_open':
           const match = block.info.match(rex)

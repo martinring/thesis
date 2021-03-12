@@ -1,12 +1,9 @@
 @import url('normalize.css/');
 @import url('./common/typography.css');
 @import url('./common/util.css');
+@import url('./common/highlight.css');
 @import url('./print.css');
 @import url('./screen.css');
-
-section > :not(section) {
-  margin-left: 5rem;
-}
 
 ul, ol, dl {
   margin: 0;
@@ -27,7 +24,7 @@ h1,h2,h3,h4,h5,h6 {
 div.counter {
   background-color: #eee;
   padding: 1rem 1rem;
-  margin:  0 -1rem 0 4rem;
+  margin:  0 -1rem;
 }
 
 .active {
@@ -49,8 +46,7 @@ div.example :last-child {
   margin-bottom: 0;
 }
 
-figure {
-  padding-left: 5rem;
+figure {  
   margin-left: auto !important; 
   margin-right: auto; 
   margin-bottom: 1rem;
@@ -82,14 +78,14 @@ figure > figcaption > .name {
 
 table {  
   font-size: 80%; 
-  border-collapse: collapse;
-  padding-left: 5rem;
-  margin-left: auto !important;
+  border-collapse: collapse;  
+  margin-left: auto;
   margin-right: auto;
-  transform: translateX(2.5rem);
 }
 
 caption {  
+  text-align: center;
+  width: 100%;
   margin-bottom: 1rem;
 }
 
@@ -137,7 +133,7 @@ h1, h2, h3, h4 {
 h1::before, h2::before, h3::before, h4::before {
   position: absolute;
   display: block;
-  width: 4rem;
+  width: 3.5rem;
   text-align: right;
   left: -5rem;
 }
@@ -154,12 +150,8 @@ h3:not(.unnumbered)::before {
   content: attr(data-chapter) '.' attr(data-section) '.' attr(data-subsection)
 }
 
-h4 {
-  font-style: italic;
-}
-
 h4:not(.unnumbered)::before {    
-  content: attr(data-subsubsection) '.';
+  content: attr(data-subsubsection);
 }
 
 a {
@@ -193,7 +185,7 @@ div.example {
 .csl-left-margin {
   position: absolute;
   right: calc(100% + 1rem);    
-  font-feature-settings: "tnum", "ss11";
+  font-variant-numeric: tabular-nums;  
 } 
 
 .csl-right-inline {
@@ -202,6 +194,18 @@ div.example {
 
 .sticky {
   position: sticky;
+}
+
+figure {
+  text-align: center;
+}
+
+figure > figcaption {
+  display: inline-block;
+}
+
+figure > pre, figure > code {
+  display: inline-block;
 }
 
 pre, code {
@@ -213,22 +217,22 @@ pre, code {
 
 pre {
   counter-reset: line-number;  
-  display: table;
-  border-collapse: separate;
-  border-spacing: 0.5rem 0;
 }
 
 pre > .line {
-  display: table-row;  
+  position: relative;
+  border-left: thin solid #ccc;
+  padding-left: 0.5rem
 }
 
 pre > .line::before {
-  display: table-cell;
+  position: absolute;
   counter-increment: line-number;
   content: counter(line-number);
+  left: -5rem;
+  width: 4.5rem;
   text-align: right;
   padding-right: 0.5rem;
-  border-right: 2px solid #ccc;
   color: #237896;
 }
 
@@ -236,6 +240,6 @@ pre > .line:first-child:last-child::before {
   content: ' ';
 }
 
-pre > .line .keyword {
-  font-weight: bold;
+section > mjx-container[jax="CHTML"][display="true"] {
+  margin: 0 0 0 5rem !important;
 }

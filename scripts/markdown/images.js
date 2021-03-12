@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import * as log from '../log.js'
 
 /** @type { import("markdown-it").PluginSimple } */
 export default function (md) {
@@ -19,7 +20,7 @@ export default function (md) {
           token.attrSet('src', uri) 
           /*}*/
       } else {
-          console.warn(`'src/figures/${src}' does not exist`)
+          log.warn(`'src/figures/${src}' does not exist`)
       }
       const name = token.attrGet('data-name')
       let figattrs = ''    

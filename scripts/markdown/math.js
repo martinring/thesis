@@ -3,6 +3,7 @@ import { TeX } from 'mathjax-full/js/input/tex.js';
 import { CHTML } from 'mathjax-full/js/output/chtml.js';
 import { liteAdaptor } from 'mathjax-full/js/adaptors/liteAdaptor.js';
 import { RegisterHTMLHandler } from 'mathjax-full/js/handlers/html.js';
+import {AssistiveMmlHandler} from 'mathjax-full/js/a11y/assistive-mml.js';
 import { AllPackages } from 'mathjax-full/js/input/tex/AllPackages.js';
 
 /** @type { import('markdown-it').PluginSimple } */
@@ -45,17 +46,12 @@ export default function (md) {
         if (parentType === 'blockquote') // remove all leading '>' inside multiline formula
             match[1] = match[1].replace(/(\n*?^(?:\s*>)+)/gm,'');
         // begin token
-        let token = state.push('display-math', 'math', 1);  // 'math_block'
+        let token = state.push('display-math', 'math', 0);  // 'math_block'
         token.block = true;
         token.markup = "$$";
         token.content = match[1];
         token.info = match[match.length-1];    // eq.no
         token.map = [ begLine, curline ];
-        // end token
-        token = state.push('display-math_end', 'math', -1);
-        token.block  = true;
-        token.markup = "$$";
-
         state.parentType = parentType;
         state.lineMax = lineMax;
         state.line = curline+1;
@@ -83,28 +79,71 @@ export default function (md) {
     return res;
   })
 
-  const adaptor = liteAdaptor()  
-  RegisterHTMLHandler(adaptor)
+  let equation = 0;
 
-  const tex = new TeX({packages: AllPackages, tags: 'ams'})
-  const chtml = new CHTML({fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'})
-  const html = mathjax.document('',{InputJax:tex,OutputJax:chtml})
+  function getMathEngine(env,chapter) {
+    if (env.chapter != (env.chapter = chapter)) equation = 0;
+    if (env.mathjax) return env.mathjax
+    const adaptor = liteAdaptor({
+      fontFamily: 'Vollkorn'
+    })  
+    RegisterHTMLHandler(adaptor)
+    
+    const tex = new TeX({
+      packages: AllPackages, 
+      tags: 'ams',
+      tagformat: {
+        number: () => env.chapter + '.' + (++equation),
+        id: (n) => n
+      }
+    })
+  
+    const chtml = new CHTML({
+      fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2',
+      mtextInheritFont: true
+    })
+  
+    const html = mathjax.document('',{
+      InputJax:tex,
+      OutputJax:chtml
+    })
+  
+    tex.postFilters.add((x) => {
+      Object.values(x.data.tags.allLabels).forEach(x => {      
+        (env.refs || (env.refs = {}))[x.id] = x.tag
+      })
+    })  
+    
+    return {
+      html, adaptor, chtml
+    }
+  }
+
+  md.core.ruler.push('display-math',(state) => {
+    state.tokens.forEach(token => {
+      if (token.type == 'display-math') {         
+        const math = getMathEngine(state.env,token.attrGet('data-chapter'))        
+        const node = math.html.convert(token.content, {
+          display: true,
+          em: 16
+        })    
+        state.env.css = math.adaptor.textContent(math.chtml.styleSheet(math.html))
+        token.content = math.adaptor.outerHTML(node)        
+      }
+    })
+  })
 
   md.renderer.rules['inline-math'] = (tokens, idx, opts, env) => {    
-    const node = html.convert(tokens[idx].meta, {
+    const math = getMathEngine(env)
+    const node = math.html.convert(tokens[idx].meta, {
       display: false,
       em: 16
     })    
-    env.css = adaptor.textContent(chtml.styleSheet(html))    
-    return adaptor.outerHTML(node)
+    env.css = math.adaptor.textContent(math.chtml.styleSheet(math.html))    
+    return math.adaptor.outerHTML(node)
   }
 
-  md.renderer.rules['display-math'] = (tokens,idx, opts, env) => {
-    const node = html.convert(tokens[idx].content, {
-      display: true,
-      em: 16
-    })
-    env.css = adaptor.textContent(chtml.styleSheet(html))  
-    return adaptor.outerHTML(node)
+  md.renderer.rules['display-math'] = (tokens,idx) => {
+    return tokens[idx].content
   }
 }

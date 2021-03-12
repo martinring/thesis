@@ -1,0 +1,16 @@
+@media print {
+  @page {
+    @footnotes {
+      border-top: solid black thin;
+      padding-top: 1rem;      
+    }
+  }
+
+  .footnote {
+    float: footnote;
+    font-size: var(--footnotesize);
+  }
+
+  /**::footnote-marker {    
+  }*/
+}

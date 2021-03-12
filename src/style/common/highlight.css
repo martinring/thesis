@@ -1,0 +1,19 @@
+.editor .source .keyword:not(.operator) {
+  color: blue;
+}
+
+.editor .source .keyword.control {
+  color: #af00db;
+}
+
+.editor .source .name.type, .editor .source .name.tag  {
+  color: #267f99;
+}
+
+.editor .source .name.function  {
+  color: #795e26;
+}
+
+.editor .source .attribute-name {
+  color: #001080;
+}
