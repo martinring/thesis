@@ -10,6 +10,7 @@ export default function (md) {
       '  <head>',
       '    <meta charset="utf-8">',
       '    <link rel="stylesheet" href="assets/index.css">',
+      '    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>',
       '    <script src="assets/index.js"></script>'
     )
     if (env.css)

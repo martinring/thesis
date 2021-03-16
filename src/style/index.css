@@ -47,7 +47,8 @@ div.example :last-child {
 }
 
 figure {  
-  margin-left: auto !important; 
+  flex-direction: column;
+  margin-left: auto;
   margin-right: auto; 
   margin-bottom: 1rem;
   counter-increment: figure;
@@ -56,8 +57,8 @@ figure {
   /*padding: 0.5rem 0 0.5rem 5rem;  */
 }
 
-figure > img, figure > object {
-  width: 100%;
+figure > img, figure > object {  
+  max-width: 100%;
 }
 
 figure.small > img, figure.small > object {
@@ -66,7 +67,8 @@ figure.small > img, figure.small > object {
 
 figure > figcaption {  
   font-size: 80%;
-  margin-top: 0.5rem;
+  line-height: 1.2;
+  margin-top: 1rem;
   text-align: justify;
 }
 
@@ -75,8 +77,11 @@ figure > figcaption > .name {
   margin-right: 0.5em;
 }
 
+figure > object, figure > img, figure > pre {
+  margin: auto
+}
 
-table {  
+table {    
   font-size: 80%; 
   border-collapse: collapse;  
   margin-left: auto;
@@ -85,7 +90,8 @@ table {
 
 caption {  
   text-align: center;
-  width: 100%;
+  margin-left: auto;
+  margin-right: auto;  
   margin-bottom: 1rem;
 }
 
@@ -123,7 +129,6 @@ h1 {
   z-index: 1;
   font-size: 3rem;  
   line-height: 1.2;
-  margin-bottom: 2.5rem;
 }
 
 h1, h2, h3, h4 {
@@ -196,22 +201,20 @@ div.example {
   position: sticky;
 }
 
-figure {
-  text-align: center;
-}
-
 figure > figcaption {
   display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 figure > pre, figure > code {
-  display: inline-block;
+  display: inline-block;  
 }
 
 pre, code {
   text-align: left;
   font-family: var(--font-monospace);
-  font-size: 8pt;
+  font-size: .8rem;
   line-height: 1.4;
 }
 
@@ -238,8 +241,4 @@ pre > .line::before {
 
 pre > .line:first-child:last-child::before {
   content: ' ';
-}
-
-section > mjx-container[jax="CHTML"][display="true"] {
-  margin: 0 0 0 5rem !important;
 }

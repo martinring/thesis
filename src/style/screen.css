@@ -1,13 +1,13 @@
 @media screen {
   :root {
     scroll-behavior: smooth;  
+    font-size: 12pt;
   }
   
   body {  
     overflow-x: visible;
-  }
-
-  section > :not(section) {
+    margin-left: 10rem;
+    margin-right: 5rem;
     max-width: 40rem;
   }
 
@@ -26,20 +26,8 @@
   }*/
 
   h1 {
-    position: sticky !important;    
-    margin: 0 !important;    
     padding: 1.5rem 2rem 1.5rem 0;
-    background-color: #003366;
-    color: white;
-    top: 0;  
   }  
-
-  h1::before {
-    position: relative !important;
-    display: inline-block !important;
-    margin-right: 1.5rem;
-    left: unset !important;
-  }
 
   section {
     margin: 0;

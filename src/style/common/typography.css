@@ -9,19 +9,8 @@
   --font-body: var(--font-serif);  
   --font-headings: var(--font-serif);
 
-  --tiny: 6pt;
-  --scriptsize: 8pt;
-  --footnotesize: 9pt;
-  --small: 10pt;
-  --normalsize: 11pt;
-  --large: 12pt;
-  --Large: 14pt;
-  --LARGE: 17pt;
-  --huge: 20pt;
-  --Huge: 25pt;
-
   hyphens: auto;
-  font-size: var(--normalsize);
+  font-size: 11pt;
   font-family: var(--font-body);
   line-height: 1.6;
   text-align: justify;

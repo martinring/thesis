@@ -11,8 +11,12 @@
     "build": "./build.js"
   },
   "author": "Martin Ring <martin.ring@dfki.de>",
+  "dependencies": {
+    "plotly.js": "^1.58.4"
+  },
   "devDependencies": {
     "@citeproc-rs/wasm": "canary",
+    "@types/plotly.js": "1.36.0",
     "esbuild": "^0.9.0",
     "highlights": "3.1.4",
     "language-haskell": "github:atom-haskell/language-haskell",
@@ -30,7 +34,7 @@
     "markdown-it-table-captions": "^1.0.4",
     "mathjax-full": "^3.1.2",
     "normalize.css": "^8.0.1",
-    "prince": "1.8.6",    
+    "prince": "1.8.6",
     "yaml": "1.10.0"
   }
 }

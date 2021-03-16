@@ -55,4 +55,4 @@ available resources; i.e. the available time (on the y-axis) determines
 the corresponding number of variables (on the x-axis).
 :::
 
-![Idealized runtime of a verification problem.](){#fig:runtime-idealized}
+![Idealized and observed runtime of a representative verification problem.](idealized-runtime.ts){#fig:runtime-idealized}

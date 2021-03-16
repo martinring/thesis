@@ -170,7 +170,7 @@ switch (actuator) connected. The variables specifying the
 lower and upper threshold of luminosity and the delay when switching off
 are in a separate block marking them as configuration variables.
 
-![SysML specification of the light controller](sysml-spec.svg){#fig:design-spec}
+![SysML specification of the light controller](sysml-spec.svg){#fig:design-spec width=80%}
 
 ````{.ocl #fig:ocl-spec caption="OCL specification of the behaviour of the light controller"}
 context Controller
