@@ -8,7 +8,7 @@
 
   .footnote {
     float: footnote;
-    font-size: var(--footnotesize);
+    font-size: 0.8rem;
   }
 
   /**::footnote-marker {    

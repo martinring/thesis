@@ -15,4 +15,11 @@
   line-height: 1.6;
   text-align: justify;
   word-wrap: break-word;
+
+  font-variant-numeric: lining-nums;
+}
+
+.footnote {
+  font-size: 0.8rem;
+  font-weight: normal;  
 }

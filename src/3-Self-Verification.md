@@ -1,6 +1,6 @@
-# Principles of [Self-Verification]{.nobr}
+# Principles of [Self-Verification]{.nobr} {#chap:selfie}
 
-*This chapter is based on the original work "Better Late Than Never: Verification of Embedded Systems After Deployment" [@Selfie2]*
+> *This chapter is based on the original work "Better Late Than Never: Verification of Embedded Systems After Deployment" [@Selfie2]*
 
 ## General Idea {#sec:selfie-general-idea}
 
@@ -114,7 +114,7 @@ formal development of the running example considered in the previous section.
 
 The design flow starts with a *modelling phase*, where the structure
 and behaviour of the system is modelled at an abstract level without
-referring to any implementation details (see [#fig:design-flow]). In
+referring to any implementation se (see [#fig:design-flow]). In
 our case, we use SysML [@SysML] and OCL [@RichtersGogolla:2002] to
 specify the structure and formalize constraints on its behaviour as well as the
 functional hardware description language Clash [@ClaSH] for a uniform,

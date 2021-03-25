@@ -1,10 +1,10 @@
 {
-  "include": ["scripts/**/*"],
+  "include": ["./build.js","./scripts/**/*"],
   "compilerOptions": {
     "lib": ["esnext"],
-    "module": "esnext",
+    "module": "system",
     "moduleResolution": "node",
-    "target": "esnext",
+    "target": "es2020",
     "resolveJsonModule": true
   },
   "typeAcquisition": {

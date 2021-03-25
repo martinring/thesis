@@ -37,7 +37,7 @@ export default function (md) {
             driver.setClusterOrder(citations)
             fullRender = driver.fullRender().unwrap()
           }          
-          return fullRender.allClusters[id]
+          return `<a href='#refs'>${fullRender.allClusters[id]}</a>`
         },
         renderBibliography() {
           if (fullRender)

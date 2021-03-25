@@ -87,11 +87,12 @@ export default function (md) {
     const adaptor = liteAdaptor({
       fontFamily: 'Vollkorn'
     })  
-    RegisterHTMLHandler(adaptor)
-    
+    RegisterHTMLHandler(adaptor)     
+
     const tex = new TeX({
       packages: AllPackages, 
       tags: 'ams',
+      macros: env.meta?.macros || {},
       tagformat: {
         number: () => env.chapter + '.' + (++equation),
         id: (n) => n
@@ -110,9 +111,9 @@ export default function (md) {
   
     tex.postFilters.add((x) => {
       Object.values(x.data.tags.allLabels).forEach(x => {      
-        (env.refs || (env.refs = {}))[x.id] = x.tag
+        (env.refs || (env.refs = {}))[x.id] = "Equation " + x.tag
       })
-    })  
+    })
     
     return {
       html, adaptor, chtml
@@ -126,9 +127,9 @@ export default function (md) {
         const node = math.html.convert(token.content, {
           display: true,
           em: 16
-        })    
+        })
         state.env.css = math.adaptor.textContent(math.chtml.styleSheet(math.html))
-        token.content = math.adaptor.outerHTML(node)        
+        token.content = math.adaptor.outerHTML(node)
       }
     })
   })

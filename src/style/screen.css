@@ -1,7 +1,22 @@
 @media screen {
   :root {
     scroll-behavior: smooth;  
-    font-size: 12pt;
+    font-size: 12pt;    
+  }
+
+  h1 {
+    counter-reset: footnote;
+  }
+
+  .footnote::before {
+    position: absoulte;    
+    counter-increment: footnote;
+    content: counter(footnote);
+  }
+
+  .footnote {
+    border: thin solid gray;
+    width: 50%;
   }
   
   body {  
@@ -9,6 +24,11 @@
     margin-left: 10rem;
     margin-right: 5rem;
     max-width: 40rem;
+  }
+
+  .standalone {
+    margin-left: -5rem;
+    min-width: calc(5rem + 100%);
   }
 
   ul, ol {

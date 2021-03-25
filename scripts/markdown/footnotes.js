@@ -9,14 +9,14 @@ export default function (md) {
     }    
 
     var labelStart = state.pos + 2;
-    var labelEnd   = state.md.helpers.parseLinkLabel(state, state.pos + 1, true);
+    var labelEnd   = state.md.helpers.parseLinkLabel(state, state.pos + 1);
 
     if (labelEnd < 0) {
       return false;
-    }
+    }    
 
     var pos = labelEnd + 1;
-    if (pos < max) {
+    if (pos <= max) {
       state.pos = labelStart;
       state.posMax = labelEnd;            
       

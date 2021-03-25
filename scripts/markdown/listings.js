@@ -36,9 +36,9 @@ export default function (md) {
     })    
     if (caption) {
       const name = token.attrGet('data-name')
-      return `<figure ${self.renderAttrs(token)}>${codeBlock}<figcaption><span class='name'>${name}</span>${md.renderInline(caption, env)}</figcaption></figure>`
+      return `<figure ${self.renderAttrs(token)}>${codeBlock}<figcaption data-name="${name}">${md.renderInline(caption, env)}</figcaption></figure>`
     } else {
-      return codeBlock
+      return `<code ${self.renderAttrs(token)}>${codeBlock}</code>`
     }
   }
 }

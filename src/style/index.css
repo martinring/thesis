@@ -11,7 +11,20 @@ ul, ol, dl {
 }
 
 ul, ol {
-  padding-left: 1.5rem;
+  padding-left: 2rem;
+  list-style: none;
+}
+
+li::before {
+  position: absolute;  
+  left: 0;
+  width: 2rem;
+  content: '-';
+  text-align: center;
+}
+
+li[data-name]::before {
+  content: attr(data-name);
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -46,33 +59,46 @@ div.example :last-child {
   margin-bottom: 0;
 }
 
-figure {  
-  flex-direction: column;
+figure {      
   margin-left: auto;
-  margin-right: auto; 
-  margin-bottom: 1rem;
-  counter-increment: figure;
-  break-inside: avoid;
-  text-align: center;
-  /*padding: 0.5rem 0 0.5rem 5rem;  */
+  margin-right: auto;
+  margin-bottom: 1rem;  
+  text-align: center;  
+}
+
+figure > .subfigures {
+  display: inline-flex;
+  width: 100%;
+  justify-content: space-evenly;
+  gap: 1rem;
+}
+
+figure > .subfigures > * {
+  width: 0;
+  flex-grow: 1;
 }
 
 figure > img, figure > object {  
   max-width: 100%;
 }
 
-figure.small > img, figure.small > object {
+figure.small {
   width: 66.7%;  
 }
 
-figure > figcaption {  
+figure[width] {
+  width: attr(width,'%');
+}
+
+figure > figcaption {
   font-size: 80%;
   line-height: 1.2;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   text-align: justify;
 }
 
-figure > figcaption > .name {  
+figure > figcaption::before {  
+  content: attr(data-name);
   font-weight: bold;
   margin-right: 0.5em;
 }
@@ -117,7 +143,9 @@ th, td {
   font-weight: normal;
 }
 
-
+th.centered, td.centered {
+  text-align: center !important;
+}
 
 section {
   margin: 0;
@@ -167,6 +195,13 @@ hr {
   visibility: hidden;
 }
 
+.js-plotly-plot .plotly .main-svg {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  pointer-events: none;
+}
+
 p {
   widows: 2;
   orphans: 2;
@@ -190,7 +225,7 @@ div.example {
 .csl-left-margin {
   position: absolute;
   right: calc(100% + 1rem);    
-  font-variant-numeric: tabular-nums;  
+  font-variant-numeric: tabular-nums lining-nums;  
 } 
 
 .csl-right-inline {
@@ -207,6 +242,10 @@ figure > figcaption {
   margin-right: auto;
 }
 
+section {
+  counter-reset: line-number;
+}
+
 figure > pre, figure > code {
   display: inline-block;  
 }
@@ -214,18 +253,19 @@ figure > pre, figure > code {
 pre, code {
   text-align: left;
   font-family: var(--font-monospace);
-  font-size: .8rem;
+  font-size: .7rem;
   line-height: 1.4;
 }
 
-pre {
-  counter-reset: line-number;  
+*:not(.continue) > pre {
+  counter-reset: line-number;
 }
 
 pre > .line {
   position: relative;
   border-left: thin solid #ccc;
-  padding-left: 0.5rem
+  padding-left: 0.5rem;  
+  margin-left: 2rem;
 }
 
 pre > .line::before {
@@ -241,4 +281,9 @@ pre > .line::before {
 
 pre > .line:first-child:last-child::before {
   content: ' ';
+}
+
+.break-out {  
+  margin-left: -5rem;  
+  min-width: calc(100% + 5rem);
 }
