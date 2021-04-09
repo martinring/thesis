@@ -59,7 +59,7 @@ export default function (md) {
     return res;
   })
 
-  const inline_rex = /\$((?:\S)|(?:\S.*?\S))\$/gy
+  const inline_rex = /\$((?:\S)|(?:\S.*?\S))\$([,.)])?/gy
 
   md.inline.ruler.before('escape', 'inline-math', function (state, silent) {
     const pos = state.pos;
@@ -70,9 +70,16 @@ export default function (md) {
 
     if (res) {
       if (!silent) {
-        const token = state.push('inline-math', 'math', 0);
+        if (match[2]) {
+          state.push('nobr_open','span',1).attrSet('class','nobr')
+        }
+        const token = state.push('inline-math', 'math', 0);        
         token.meta = match[1]; // TODO: this is hacky. when using content this conflicts with markdown-it-atts if content ends with curlies
         token.markup = '$';
+        if (match[2]) {
+          state.pending = match[2]
+          state.push('nobr_close','span',-1).attrSet('class','nobr')
+        }
       }
       state.pos = inline_rex.lastIndex;
     }
@@ -139,7 +146,7 @@ export default function (md) {
     const node = math.html.convert(tokens[idx].meta, {
       display: false,
       em: 16
-    })    
+    })
     env.css = math.adaptor.textContent(math.chtml.styleSheet(math.html))    
     return math.adaptor.outerHTML(node)
   }

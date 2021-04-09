@@ -11,6 +11,7 @@ highlighter.requireGrammarsSync({
 highlighter.requireGrammarsSync({
   modulePath: nodeModules + 'language-haskell/package.json'
 })
+highlighter.loadGrammarsSync()
 
 const scopeNames = {
   "haskell": 'source.haskell',
@@ -27,7 +28,7 @@ export default function (md) {
     const token = tokens[idx]    
     if (token.content.slice(-1) == '\n') token.content = token.content.slice(0,-1)
     let lang = token.info.split(/\s+/)[0]
-    if (lang == '') lang = token.attrGet('class').split(/\s+/)[0]
+    if (lang == '') lang = token.attrGet('class')?.split(/\s+/)?.[0]
     token.attrJoin('class', 'listing')
     const caption = token.attrGet('caption')
     const codeBlock = highlighter.highlightSync({

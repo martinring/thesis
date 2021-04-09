@@ -2,6 +2,62 @@
 
 > *This chapter is based on the original work "Better Late Than Never: Verification of Embedded Systems After Deployment" [@Selfie2]*
 
+In this chapter, we proposes a design and verification methodology which 
+conducts verification after deployment. To this end, we start with the 
+observation that contemporary systems are designed to operate in a variety of 
+operating contexts. In order to do so, *configurations* are used, i.e. parameters
+which are set post-deployment by the particular environment of the individual 
+system. While these parameters may not change frequently, they are not fixed and 
+hence verification, which, thus far, is conducted prior to deployment, has to 
+consider all possible configurations.
+
+We indicate these configurations as *quasi-static*. Consequently, designers and 
+verification engineers are faced with verifying systems with huge possible 
+search spaces, while after deployment just a fraction is used.
+
+Engineers might restrict the set of allowed configurations at design time
+in order to reduce the search space and make verification succeed, but this
+increases costly design time, and runs the risk of excluding possible
+configurations, decreasing availability, making the system less versatile
+and hence less marketable than strictly necessary.
+
+Motivated by this observation, this work proposes a design and verification
+methodology which conducts verification after deployment, \ie in the field and once the actual configuration
+is observable. 
+By this, this paper proposes a first realization of the concept of \emph{self-verification} envisioned in [@DFW:2015]. 
+Even though it results in continuous verification tasks as the
+environment keeps changing, the drastic reduction of the search space outweigh this. As a result, embedded systems
+can be verified even on a much weaker machine and with much less
+sophisticated tools, while prior to deployment verification failed due to the
+exponential complexity.
+%
+Our approach of post-deployment verification guarantees safety with maximum
+availability --- the system will never refuse to operate when it is
+actually safe to run. %% \todo{verstehe ich nicht?}
+
+In order to assess the feasibility of the proposed methodology, we have
+implemented the proposed design and verification flow and used a lightweight version
+of the SAT solver MiniSat~\cite{ES:2003,Bornebusch2017TowardsLS} to solve
+the resulting verification conditions after deployment. The evaluation of a number of case studies
+showed that, following the proposed methodology, verification problems
+which failed prior to deployment (using high-end verification tools and
+machines) could be completed after deployment using the lightweight solver on reduced hardware.
+
+In the following, we present the proposed methodology as follows: First,
+%  we
+% briefly review the current situation in the verification of circuits and
+% systems, pinpointing the core problem of today's verification
+% schemes. Afterwards, 
+we motivate and illustrate the proposed verification methodology using a
+small case study. Section~\ref{sec:impl} then describes the implementation
+of this methodology using the same case study and, by this, provides a
+detailed description for the entire flow. Section~\ref{sec:eval} summarizes
+the results of evaluating further, more sophisticated case studies
+conducted by us --- confirming the applicability and benefits of the
+proposed methodology. Besides that, this section also discusses the
+consequences of the proposed methodology to the established design flow.
+Finally, Section~\ref{sec:concl} summarizes and concludes this work.
+
 ## General Idea {#sec:selfie-general-idea}
 
 The key idea of the proposed approach presented here is to defer part of the
@@ -280,8 +336,11 @@ CNF, which is suitable as input for reasoning engines such as SAT solvers.
 This translation proceeds in two steps. We first translate both the Clash model 
 and the specification into bit-vector logic, which in the second step can be 
 translated into CNF by Yices. The translation from Clash is done with an 
-extension of the Clash compiler we have developed for this work; the 
-translation of OCL is done by the tool-chain described in [#chap:specific].
+extension of the Clash compiler we have developed for this work:
+
+[![martinring/clash-compiler - GitHub](https://gh-card.dev/repos/martinring/clash-compiler.svg?fullname=)](https://github.com/martinring/clash-compiler){.ghlink}
+
+The translation of OCL is done by the tool-chain described in [#chap:specific].
 
 [#fig:bv-spec] shows a small excerpt of the bit-vector representation
 of the model from [#fig:clash]. We are modelling the state transition
@@ -420,13 +479,13 @@ The proposed methodology has been evaluated on a set of
 systems which are natural extensions of the light controller considered
 above to highly versatile home automation controllers as follows:
 
-**simple**
+simple
 
 : The simple light controller 
   with one light and one luminosity sensor (as considered in the running
   example).
 
-**average**
+average
 
 : An extended version of the controller which
   includes up to 16 sensors to be connected and controls one actuator by
@@ -434,12 +493,12 @@ above to highly versatile home automation controllers as follows:
   generic, i.e. we can control any kind of actuator and read from any kind
   of sensor as long as it gives us integer values.
 
-**weighted_avg**
+weighted_avg
 
 : A similar version with 32 sensors that allows
   to add a configurable weight to each sensor when computing the average.
 
-**smart**
+smart
 
 : A smart home controller, which allows up to 32
   sensor inputs to be connected to up to 32 actuator outputs. Each input
@@ -448,7 +507,7 @@ above to highly versatile home automation controllers as follows:
   used e.g. to control lights, heating and blinds for a number of rooms in
   an office setting.
 
-**multiplier**
+multiplier
 
 : A 16 bit multiplier component, used to apply the
   weights in *weighted_avg* and *smart*. Can be verified

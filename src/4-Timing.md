@@ -161,7 +161,7 @@ could be done by
   do not have to traverse long sequences of rooms);
 - or by restricting the authorizations of the cards in such a way
   that a situation like above does not happen;
-- or by checking that \emph{before} a users enters a room no
+- or by checking that *before* a users enters a room no
   situation violating the safety property like above is created.
 
 ### Formal Specification
@@ -195,7 +195,7 @@ context Card
 Cards have a set of *authorizations* (rooms which the holder of the
 card is allowed to enter) and exactly one *location*, which
 determines the current location of the card, and which must always be
-contained in the set of authorizations. ^[We assume an idealized scenario where 
+contained in the set of authorizations^[We assume an idealized scenario where 
 we can reliably track the location of a card holder and can prevent that people 
 share their cards]. On the other hand, rooms have a set of *authorized* cards (those
 cards which have the room in their set of authorizations), and a set of
@@ -285,7 +285,7 @@ over all buildings and all authorizations --- the safety property does not
 hold; we can easily find counterexamples (such as
 [#fig:simple-unsafe]). If we want to show the safety property at
 design time, we have to formalize conditions which are sufficient for the
-safety property (\ie preclude unsafe buildings).
+safety property (i.e. preclude unsafe buildings).
 
 With self-verification, we can show the safety property after deployment,
 at different points in time:
@@ -473,18 +473,13 @@ prover quickly finds counter examples since our specification can easily
 be violated in general. By adding runtime information in the form of
 assertions, we refine the instance on the fly. This was realized by
 establishing a WebSocket connection between the SVG and the Z3
-prover. For this, we use the \textit{websocat} utility, which wraps a
+prover. For this, we use the *websocat* utility, which wraps a
 WebSocket server around a command-line program. This allows us to
 load the general proof and then incrementally send assertions restricting
 the state space.
 
-\begin{figure}[t]
-  \centering
-  \includegraphics[width=\linewidth]{images/screenshot}
-  \caption{The demonstrator is implemented as an interactive SVG document,
-    displayed here in a web browser.}
-  \label{fig:screenshot}
-\end{figure}
+![The demonstrator is implemented as an interactive SVG document, displayed 
+here in a web browser.](screenshot.png){#fig:screenshot}
 
 Technically, the arbitrarily mutable state of our simulation is in
 principle not compatible with the monotonous nature of adding assertions:
@@ -510,7 +505,7 @@ emergency). Through self-verification not only did we not have to characterize
 buildings, access rights or safe paths through the building, we
 even did not have to implement a path finding algorithm at all.
 
-The demonstrator is shown in Figure \ref{fig:screenshot}. It connects the
+The demonstrator is shown in [#fig:screenshot]. It connects the
 implementation to the proof engine running the SMT instance. We can
 manually choose one of the three different information levels for the proof,
 which result in different assertions being added as well as different
@@ -528,7 +523,9 @@ together with additional interactive explanation, not stand-alone, as
 situations like this will have to be constructed consciously.)
 
 The source code of the demonstrator is publicly available on
-GitHub.^[[https://github.com/DFKI-CPS/selfie-demo](https://github.com/DFKI-CPS/selfie-demo)]
+GitHub:
+
+[![martinring/clash-compiler - GitHub](https://gh-card.dev/repos/DFKI-CPS/selfie-demo.svg?fullname=)](https://github.com/DFKI-CPS/selfie-demo){.ghlink}
 
 ## When to Prove
 

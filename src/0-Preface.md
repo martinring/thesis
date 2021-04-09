@@ -1,6 +1,8 @@
 ---
-title: Self-Verifying Systems
-author: Martin Ring
+title: Self-Verification
+subtitle: Verification of Embedded and Cyber-Physical Systems [after Deployment]{.nobr}
+author: ['Martin Ring']
+date: 16.04.2021
 abstract: |
   this is the abstract
 bibliography:

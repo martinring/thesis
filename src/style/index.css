@@ -10,16 +10,25 @@ ul, ol, dl {
   padding: 0;
 }
 
+dt {
+  font-style: italic;
+}
+
+dd {
+  margin-left: 2rem;
+}
+
 ul, ol {
   padding-left: 2rem;
   list-style: none;
+  position: relative;
 }
 
 li::before {
   position: absolute;  
   left: 0;
   width: 2rem;
-  content: '-';
+  content: '•';
   text-align: center;
 }
 
@@ -32,6 +41,65 @@ h1,h2,h3,h4,h5,h6 {
   font-family: var(--font-headings);
   page-break-after: avoid;
   hyphens: none;
+}
+
+blockquote {
+  font-style: italic;
+  margin: 0;
+  margin-left: -1rem;  
+  border-left: 4px solid #267f99;
+  padding-left: 1rem;  
+  position: relative;
+}
+
+blockquote::before {
+  content: 'ℹ';
+  top: 50%;    
+  font-style: normal;
+  position: absolute;
+  left: -4rem;
+  color: #267f99;
+  font-size: 2rem;
+  width: 3.5rem;
+  text-align: right;
+  transform: translateY(-50%);
+}
+
+#TOC a {
+  display: block;
+  overflow: hidden;
+}
+
+#TOC li {
+  position: relative;
+}
+
+#TOC > ul > li > a {
+  font-weight: bold;
+}
+
+#TOC .toc-section-number {
+  left: -4rem;
+  width: 3rem;
+  font-variant-numeric: lining-nums tabular-nums;
+  text-align: right;
+  position: absolute;
+}
+
+#TOC > ul {
+  padding: 0;
+}
+
+#TOC a {  
+  color: black;
+}
+
+#TOC li::before {
+  content: '';
+}
+
+h1 + blockquote {  
+  margin-top: -1.5rem;  
 }
 
 div.counter {
@@ -67,18 +135,21 @@ figure {
 }
 
 figure > .subfigures {
-  display: inline-flex;
+  display: flex;
   width: 100%;
   justify-content: space-evenly;
   gap: 1rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-figure > .subfigures > * {
-  width: 0;
-  flex-grow: 1;
+figure > .subfigures > .subfigure {  
+  flex: 1 1 auto;
 }
 
-figure > img, figure > object {  
+figure > img, figure > object,
+figure > .subfigures > .subfigure > img,
+figure > .subfigures > .subfigure > object {
   max-width: 100%;
 }
 
@@ -91,8 +162,8 @@ figure[width] {
 }
 
 figure > figcaption {
-  font-size: 80%;
-  line-height: 1.2;
+  font-size: 0.9rem;
+  line-height: 1.4;
   margin-top: 0.5rem;
   text-align: justify;
 }
@@ -108,13 +179,15 @@ figure > object, figure > img, figure > pre {
 }
 
 table {    
-  font-size: 80%; 
+  font-size: 0.9rem; 
   border-collapse: collapse;  
   margin-left: auto;
   margin-right: auto;
 }
 
 caption {  
+  font-size: 0.9rem;
+  line-height: 1.4;
   text-align: center;
   margin-left: auto;
   margin-right: auto;  
@@ -147,20 +220,15 @@ th.centered, td.centered {
   text-align: center !important;
 }
 
-section {
-  margin: 0;
-  padding: 0;
-  position: relative;
-}
-
-h1 {
+h1 {  
   z-index: 1;
-  font-size: 3rem;  
-  line-height: 1.2;
+  font-size: 3rem; 
 }
 
 h1, h2, h3, h4 {
   position: relative;
+  line-height: 1.3;
+  counter-reset: line-number;
 }
 
 h1::before, h2::before, h3::before, h4::before {
@@ -202,7 +270,7 @@ hr {
   pointer-events: none;
 }
 
-p {
+p, dd, li {
   widows: 2;
   orphans: 2;
 }
@@ -216,6 +284,7 @@ div.example {
   position: relative;
   padding-bottom: .2rem;
   break-inside: avoid;
+  font-size: 0.9rem;
 }
 
 .csl-entry:target {
@@ -236,14 +305,15 @@ div.example {
   position: sticky;
 }
 
+figure {
+  display: flex;
+  flex-direction: column;
+}
+
 figure > figcaption {
   display: inline-block;
   margin-left: auto;
   margin-right: auto;
-}
-
-section {
-  counter-reset: line-number;
 }
 
 figure > pre, figure > code {
@@ -286,4 +356,33 @@ pre > .line:first-child:last-child::before {
 .break-out {  
   margin-left: -5rem;  
   min-width: calc(100% + 5rem);
+}
+
+.ghlink {
+  display: block;
+  text-align: center;
+}
+
+.ghlink > img {
+  max-width: 80%;
+}
+
+
+
+header::before {
+  content: 'A Thesis Submitted for the Degree of Dr.-Ing.';
+  font-variant: small-caps;
+}
+
+header p.subtitle {
+  margin-top: -2rem;
+  font-size: 1.3rem;
+  font-style: italic;
+  text-align: center;
+}
+
+header p.author::before {
+  content: 'by';
+  text-align: center;
+  display: block;
 }

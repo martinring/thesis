@@ -84,13 +84,13 @@ variables of $\phi$ often does not yield the desired result.  Moreover, a
 straightforward enumeration  is not
 suitable because of the following issues:
 
-*Complexity*
+Complexity
 
 : Even if the number of variables to be fixed is
   given as say $m$, there still would be $2^m$ possible combinations left
   to try out.
 
-*Quality*
+Quality
 
 : Proving $\phi$ with all variable fixed except for one
   certainly will be very fast, but will hardly give more insight than
@@ -98,7 +98,7 @@ suitable because of the following issues:
   interested in restricting only as little variables as needed before the
   exponential blow-up kicks in.
 
-*Effectiveness*
+Effectiveness
 
 : We are particularly interested in verification
   problems which cannot be completed due to a time-out; here, we are
@@ -266,7 +266,7 @@ good solution is derived while, at the same time, the analysis time
 remains efficient.
 :::
 
-![Contour of the cost function](cost-contour.ts)
+![Contour of the cost function](cost-contour.ts){#fig:runtime-score}
 
 Using this cost function and the threshold, any heuristic method of choice can
 be applied to determine a set $X$ such that $q(X)$ is minimized -- this
@@ -296,20 +296,20 @@ our case, which best satisfy the cost function stated in [#eq:quality-measure]).
 In order to use EAs for an optimization problem, the following aspects need to 
 be formulated with respect to the considered problem:
 
-*Individuals*
+Individuals
 
 : An individual represents a possible solution
   for a considered problem, and a set of individuals constitute a
   population representing a set of solutions. The idea of EAs is that
   these populations (and hence solutions) are improved over generations.
 
-*Mutation operation*
+Mutation operation
 
 : Each individual of a population is subjected to mutations which change the 
   solution each individual represents, and hence explore new parts of
   the search space.          
 
-*Recombination operation*
+Recombination operation
 
 : Recombinations combine the characteristics of more than one individual, 
   hoping to get the best out of them towards a better solution.
@@ -317,7 +317,7 @@ be formulated with respect to the considered problem:
   explore new parts of the search space as well, but also converge on
   existing individuals.
 
-*Fitness function*
+Fitness function
 
 : After each mutation and recombination,
   new individuals (the offspring population)
@@ -394,7 +394,11 @@ $T_{\phi}$ approximated as $T_{max} \cdot 2^{\tau(\phi)}$.  $\AvgTphi{X}$ is
 approximated by averaging the results of a small number of concrete
 measured times. 
 
-#### Implementation Aspects^[The implementation is available on GitHub at [github.com/DFKI-CPS/verification-runtime-analysis](https://github.com/DFKI-CPS/verification-runtime-analysis)]
+#### Implementation Aspects
+
+The implementation is available on GitHub:
+
+[![martinring/clash-compiler - GitHub](https://gh-card.dev/repos/DFKI-CPS/verification-runtime-analysis.svg?fullname=)](https://github.com/martinring/clash-compiler/tree/yices){.ghlink}
 
 The *initial population* is obtained by first approximating the
 threshold $\tau(\phi)$ with a binary search and then instantiating
@@ -489,7 +493,7 @@ problems because we explicitly consider hard ones).
 $\hat{T}^\text{rnd}_\phi(|X|)$ denotes the runtime when just an
 arbitrary selection of variables $Y \subset \FV{\phi}$ with the same
 size $|Y| = |X|$ is set to a fixed value, while $\AvgTphi{X}$ denotes
-the runtime when exactly the variables in~$X$ are set to a fixed
+the runtime when exactly the variables in $X$ are set to a fixed
 value.
 
 <style>

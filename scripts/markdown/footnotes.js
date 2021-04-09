@@ -20,8 +20,10 @@ export default function (md) {
       state.pos = labelStart;
       state.posMax = labelEnd;            
       
-      state.push('footnote_open', 'span', 1).attrSet('class','footnote')      
+      state.push('footnote_open', 'span', 1).attrSet('class','footnote')
+      state.push('footnote_content_open', 'span', 1).attrSet('class','footnote-content')
       state.md.inline.tokenize(state)
+      state.push('footnote_content_close','span',-1)
       state.push('footnote_close','span',-1)
           
       state.pos = pos;

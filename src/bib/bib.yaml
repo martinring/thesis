@@ -251,29 +251,6 @@
   publisher: IEEE
   title: 'Lips: An IDE for model driven engineering based on natural language processing'
 - author:
-  - given: Vivek
-    family: Sinha
-  - given: Frederic
-    family: Doucet
-  - given: Chuck
-    family: Siska
-  - given: Rajesh
-    family: Gupta
-  - given: Stan
-    family: Liao
-  - given: Abhijit
-    family: Ghosh
-  container-title: Proceedings of the 13th International Symposium on System Synthesis
-  type: paper-conference
-  id: sinha2000yaml
-  citation-label: sinha2000yaml
-  issued:
-    date-parts:
-    - - 2000
-  page: 9-14
-  publisher: IEEE
-  title: 'YAML: a tool for hardware design visualization and capture'
-- author:
   - given: Serge
     family: Autexier
   container-title: Special Issue
@@ -1889,27 +1866,6 @@
   page: '116'
   title: Verifying SystemC using an intermediate verification language and symbolic
     simulation
-- container-title: 'IET Cyper-Phys. Syst.: Theory & Appl.'
-  author:
-  - given: Nils
-    family: Przigoda
-  - given: Mathias
-    family: Soeken
-  - given: Robert
-    family: Wille
-  - given: Rolf
-    family: Drechsler
-  type: article-journal
-  id: DBLP:journals/iet-cps/PrzigodaSWD16
-  citation-label: DBLP:journals/iet-cps/PrzigodaSWD16
-  issue: '1'
-  issued:
-    date-parts:
-    - - 2016
-  page: 49-59
-  title: Verifying the structure and behavior in UML/OCL models using satisfiability
-    solvers
-  volume: '1'
 - author:
   - given: Buse
     family: Ustaoglu
@@ -2296,6 +2252,8 @@
     date-parts:
     - - 2016
   publisher: ECSI — European Electronic Chips  
+  page: 1-7
+  doi: 10.1109/FDL.2016.7880369
   title: Change Impact Analysis for Hardware Designs
 - container-title: Complexity
   author:

@@ -1,20 +1,62 @@
 @import url('./print/footnotes.css');
 
 @media print {
-  .standalone {
-    margin: auto;
+  .standalone {    
     padding: 0;
     page: standalone;
   }
 
+  header {
+    page: header;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    bottom: 0;      
+    left: 0;
+    right: 0;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header::before {
+    flex-grow: 1;
+  }
+
+  header::after {
+    content: '';
+    flex-grow: 2;
+  }
+
+  header h1 {    
+    page-break-before: avoid;
+    text-align: center;
+  }
+
+  @page header {
+    margin: 3cm;   
+    counter-reset: page;     
+
+    @bottom-center {
+      content: '';
+    };
+  }
+
   @page standalone {    
+    margin: auto;
     -prince-shrink-to-fit: auto;
   }
 
   @page rotated {
+    margin: auto;
     -prince-rotate-body: landscape;
     -prince-shrink-to-fit: auto;
   }  
+
+  #TOC a::after {
+    font-variant-numeric: tabular-nums lining-nums;
+    content: leader('⋅') ' ' target-counter(attr(href url), page);
+  }
 
   @page standalone:left, rotated:left {
     margin: 3cm 4cm 3cm 3cm;
@@ -24,19 +66,29 @@
     margin: 3cm 3cm 3cm 4cm;    
   }
 
+  #TOC {
+    page: preface;
+    counter-reset: page 1;
+  }
+
+  @page preface {
+    @bottom-center {
+      content: counter(page,lower-roman);
+    };
+  }
+
   .standalone.rotated {
       page: rotated
   }
 
-  table:not(.standalone), figure:not(.standalone) {
+  table, figure {
     -prince-float-defer-page: 1;
-    -prince-float: snap unless-fit;
+    -prince-float: snap unless-fit;    
     -prince-float-policy: in-order;
   }
 
   :root {
-    color-adjust: exact;
-    font-size: 11pt;
+    color-adjust: exact;    
   }
 
   @page {
@@ -53,6 +105,10 @@
   
   @page :right {
     margin: 3cm 3cm 3cm calc(4cm + 5rem);
+  }
+
+  h1[data-chapter]:first-of-type {
+    counter-reset: page 1;
   }
 
   h1 {

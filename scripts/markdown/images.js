@@ -9,7 +9,7 @@ export default function (md) {
   md.renderer.rules['image'] = function (tokens, idx, opts, env, slf) {
     const token = tokens[idx];
     let ext
-    let src = token.attrGet('src')
+    let src = token.attrGet('src')    
     if (src && fs.existsSync('src/figures/' + src)) {
       ext = path.parse(src).ext.slice(1)
       if (ext != 'js' && ext != 'ts') {
@@ -20,8 +20,10 @@ export default function (md) {
         token.attrSet('src', uri)
       } else {
       }
-    } else {
+    } else if (src && !src.match(/^https?:\/\//)) {
       log.warn(`'src/figures/${src}' does not exist`)
+    } else if (src) {
+      
     }
     let img
     switch (ext) {

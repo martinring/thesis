@@ -1,17 +1,15 @@
 #!/usr/bin/env node
-// @ts-check
 import prince from 'prince';
 import fs from 'fs/promises';
-import path from 'path';
-import md from './scripts/markdown.js';
-import esbuild from './scripts/esbuild.js';
+import md from './markdown.js';
+import esbuild from './esbuild.js';
 import yaml from 'yaml';
-import * as log from './scripts/log.js';
+import * as log from './log.js';
 import puppeteer from 'puppeteer-core';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { argv } from 'process';
-import { fileURLToPath } from 'url';
+import Cite from 'citation-js';
 
 const options = yargs(hideBin(argv))
   .option('pdf',{ boolean: true })
@@ -29,8 +27,10 @@ const src_ = log.timed('load markdown sources',
     ))
 )
 
+
+
 const bib_ = log.timed('load bibliography',
-  fs.readFile('src/bib/bib.yaml').then(f => yaml.parse(f.toString('utf-8')))
+  fs.readFile('src/bib/refs.bib').then(f => Cite.input(f.toString('utf-8')))
 )
 
 const style_ = log.timed('load citation style',
@@ -65,10 +65,10 @@ await es
 
 if (options.pdf) {  
   const browser = await log.timed('launch chromium',puppeteer.launch({
-    executablePath: '/opt/homebrew/bin/chromium'    
+    executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'    
   }));  
   const page = await log.timed('chromium: new page', browser.newPage())
-  await page.setViewport({ height: 500, width: 745 })
+  await page.setViewport({ height: 500, width: 800 })
   await page.setUserAgent('PDF')
   const htmlpath = await fs.realpath('build/index.html')
   await log.timed('chromium: open ' + htmlpath, page.goto('file://' + htmlpath))

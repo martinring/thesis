@@ -1,5 +1,5 @@
-{
-  "include": ["./build.js","./scripts/**/*"],
+{  
+  "include": ["scripts/**/*"],
   "compilerOptions": {
     "lib": ["esnext"],
     "module": "system",

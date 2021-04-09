@@ -1,22 +1,81 @@
 @media screen {
   :root {
     scroll-behavior: smooth;  
-    font-size: 12pt;    
+    font-size: 12pt;
   }
 
-  h1 {
-    counter-reset: footnote;
+  header {
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+    margin-left: -10rem;    
+    margin-right: -5rem;    
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    color: white;
+    background-color: #036;
   }
 
-  .footnote::before {
-    position: absoulte;    
-    counter-increment: footnote;
-    content: counter(footnote);
+  @keyframes pulse {
+    from { transform: translate(-50%,0); }
+    to { transform: translate(-50%,1rem); }
+  }
+
+  header::after {
+    position: absolute;
+    content: '∨';
+    color: gray;
+    font-size: 2rem;
+    left: 50%;
+    bottom: 10vh;
+    transform: translateX(-50%);
+    animation: 0.8s ease-in-out 0s infinite alternate pulse;
+  }
+
+  header h1 {
+    text-align: center;
   }
 
   .footnote {
-    border: thin solid gray;
-    width: 50%;
+    position: relative;
+    font-size: 0.8rem;    
+  }
+
+  .footnote::before {    
+    vertical-align: super;
+    content: "i";
+    display: inline-block;    
+    border-radius: 50%;
+    width: 0.8rem;
+    height: 0.8rem;
+    text-align: center;
+    background: #09f;
+    color: white;
+    font-weight: bold;
+    font-size: 0.55rem;
+    margin-left: 0.1rem;
+  }
+
+  .footnote > .footnote-content {
+    color: initial;
+    opacity: 0;
+    z-index: 100;
+    transition: opacity 0.3s ease;
+    position: absolute;
+    display: inline-block;
+    width: 20rem;
+    pointer-events: none;
+    background: white;
+    padding: 0.5rem;
+    box-shadow: 0.1rem 0.2rem 0.5rem gray;
+  }
+
+  .footnote:hover > .footnote-content {
+    opacity: 1;
+    pointer-events: all;
   }
   
   body {  
@@ -44,10 +103,6 @@
     left: 40rem;    
     width: 25rem;   
   }*/
-
-  h1 {
-    padding: 1.5rem 2rem 1.5rem 0;
-  }  
 
   section {
     margin: 0;

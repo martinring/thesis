@@ -33,7 +33,7 @@ export default function(elem: HTMLElement) {
     },
     margin: { t: 10, b: 45 } }, {
       responsive: true,
-      displaylogo: false      
+      displaylogo: false            
     });
   if (window.navigator.userAgent == 'PDF') plot.then(plot => {        
     Plotly.toImage(plot,{ format: "svg", width: elem.clientWidth, height: elem.clientHeight }).then(x => {                  

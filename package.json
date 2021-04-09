@@ -8,7 +8,7 @@
     "url": "https://github.com/martinring/thesis.git"
   },
   "scripts": {
-    "build": "./build.js"
+    "build": "./scripts/build.js"
   },
   "author": "Martin Ring <martin.ring@dfki.de>",
   "dependencies": {
@@ -18,11 +18,13 @@
     "@citeproc-rs/wasm": "canary",
     "@types/plotly.js": "1.36.0",
     "canvas": "2.7.0",
+    "citation-js": "0.5.0",
     "esbuild": "^0.9.0",
     "highlights": "3.1.4",
     "language-haskell": "github:atom-haskell/language-haskell",
     "language-smt-lib": "github:wysiib/language-smt-lib",
     "markdown-it": "^12.0.4",
+    "markdown-it-anchor": "^7.1.0",
     "markdown-it-attrs": "4.0.0",
     "markdown-it-bracketed-spans": "1.0.1",
     "markdown-it-citations": "^1.1.0",
@@ -34,6 +36,7 @@
     "markdown-it-metadata-block": "^1.0.0",
     "markdown-it-multimd-table": "^4.0.3",
     "markdown-it-table-captions": "^1.0.4",
+    "markdown-it-toc-done-right": "^4.2.0",
     "mathjax-full": "^3.1.2",
     "normalize.css": "^8.0.1",
     "prince": "1.8.6",

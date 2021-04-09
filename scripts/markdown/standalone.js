@@ -21,11 +21,55 @@ export default function (md) {
       if (typeof env.meta.author == 'string')
       html.push(`    <meta></meta>`)
     }  
-    html.push(
-      '  </head>',
-      `  <body>${body}</body>`,
-      '</html>'
-    )
+    html.push('  </head>','  <body>')    
+    if (env.meta.title) {
+      html.push('    <header id="title-block-header">')
+      html.push(`      <h1 class="title">${env.meta.title}</h1>`)    
+      if(env.meta.subtitle) {
+        html.push(`      <p class="subtitle">${md.renderInline(env.meta.subtitle,env)}</p>`)
+      }
+      if(env.meta.author instanceof Array) {
+        env.meta.author.forEach(author => {
+          html.push(`      <p class="author">${env.meta.author}</p>`)
+        })
+      }
+      if(env.meta.date) {
+        html.push(`      <p class="date">${env.meta.date}</p>`)
+      }
+      html.push('    </header>')
+    }
+    html.push('<nav id="TOC" rold="doc-toc">')
+    html.push('<h1>Table of Contents</h1>')    
+    const mkLevel = (level) => {
+      if (level) {
+        html.push('<ul>')
+        level.forEach(item => {       
+          html.push('<li>')        
+          html.push(`<a href='#${item.id}'><span class='toc-section-number'>${item.number || ''}</span><span class='title'> ${md.renderer.renderInline(item.content.children,md.options,env)}</a>`)
+          mkLevel(item.children)
+          html.push('</li>')
+        })
+        html.push('</ul>')
+      }      
+      
+    }
+    mkLevel(env.tree)
+    html.push('</nav>')
+    /*
+    $if(toc)$
+    <nav id="$idprefix$TOC" role="doc-toc">
+    $if(toc-title)$
+    <h2 id="$idprefix$toc-title">$toc-title$</h2>
+    $endif$
+    $table-of-contents$
+    </nav>
+    $endif$
+    $body$
+    $for(include-after)$
+    $include-after$
+    $endfor$*/
+    html.push('<div class="main">',body,'</div>')
+    html.push('  </body>','</html>')      
     return(html.join('\n'))
   }
 }
