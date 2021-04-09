@@ -1,3 +1,5 @@
 *.js linguist-detectable=false
 *.ts linguist-detectable=false
 *.md linguist-language=Markdown
+*.css linguist-detectable=false
+*.bib linguist-detectable=false
