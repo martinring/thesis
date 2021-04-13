@@ -20,7 +20,7 @@ year, more complex systems are being designed and need to be verified. Iterative
 improvements have been proposed in the past years, e.g. the introduction of 
 higher levels of abstractions for design such as the *Formal Specification Level* 
 [@DSW:12] and the *Electronic System Level* [@MBP:07], or the lifting of SAT 
-solvers to solvers for *SAT Modulo Theory* (SMT) [@ES:2003;@BBC+:2005;@Wille2007SWORDAS;@Dutertre:2014;@Z3], but these cannot and will not be able to cope
+solvers to solvers for *SAT Modulo Theory* (SMT) [@ES:2003;@BBC+:2005;@Wille2007SWORDAS;@Dutertre:2014;@Moura2008Z3AE], but these cannot and will not be able to cope
 with the complexity. The consequences are evident today: While several
 years back, the actual implementation process was the core activity in any
 design flow, verification dominates today. In fact, more than 40% of the
@@ -58,15 +58,51 @@ the middle ground in between: verify properties of the system as soon as
 practically possible, but as late as necessary. In other words, verification 
 does not terminate with deployment, but is also not kept until the last moment. 
 
-## Structure of this thesis
+## About this thesis
 
-## Source code
+This cumulative thesis is based on the original publications
 
-This thesis is based on a large amount of code, implementing the described 
+[@Chimpanc]
+
+: M. Ring, J. Stoppe, C. Luth, and R. Drechsler, “Change impact analysis for 
+  hardware designs — from natural language to system level,” in *Forum on 
+  Specification & Design Languages (FDL 2016)*, Bremen, Germany, Sep. 2016, pp. 
+  1–7
+
+[@Selfie2]
+
+: M. Ring, F. Bornebusch, C. Lüth, R. Wille, and R. Drechsler, “Better Late Than 
+  Never — Verification of Embedded Systems After Deployment,” in *Design, 
+  Automation Test in Europe Conference Exhibition (DATE 2019)*, Florence, Italy, 
+  Mar. 2019, pp. 890–895
+
+[@Timing]
+
+: M. Ring and C. Lüth, “Let’s Prove It Later — Verification at Different Points 
+  in Time,” in *International Conference on Software Engineering and Formal 
+  Methods (SEFM 2019)*, Oslo, Norway, Sep. 2019, pp. 454–468
+
+[@VerificationRuntime]
+
+: M. Ring, F. Bornebusch, C. Lüth, R. Wille, and R. Drechsler, “Verification 
+  Runtime Analysis — Get the Most Out of Partial Verification,” in *Design, 
+  Automation Test in Europe Conference Exhibition (DATE 2020)*, Grenoble, France, 
+  Mar. 2020, pp. 873–878
+{.refs}
+
+### Source code
+
+This thesis is accompanied by a large amount of code, implementing the described 
 concepts, benchmarking these and providing user interfaces for interactive 
-exploration. All code is publicly hosted on Github. Whenever a section is 
-accompanied by an implementation, a link of the following form is provided:
+exploration. All code is publicly hosted on the code hosting platform GitHub. 
+Whenever a section is accompanied by an implementation, a link of the following 
+form is provided:
 
 [![https://github.com/martinring/thesis - GitHub](https://gh-card.dev/repos/martinring/thesis.svg?fullname=)](https://github.com/martinring/thesis){.ghlink}
 
-> All source code has been written solely by the author of this thesis.
+> All linked source code was developed solely by the author of this thesis,
+> unless explicitly indicated otherwise.
+
+### Structure
+
+The thesis is structured as follows: [##chap:specific] intro

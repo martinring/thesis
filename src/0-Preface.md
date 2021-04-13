@@ -16,5 +16,21 @@ macros:
   Nat: ['{\mathbb N}',0]
 ...
 
-This cumulative thesis is based on the original works [@Chimpanc], [@Selfie2], 
-[@VerificationRuntime] and [@Timing]
+:::{hidden=true}
+[@Chimpanc]
+[@Selfie2]
+[@Timing]
+[@VerificationRuntime]
+:::
+
+:::{.disclaimer}
+
+I hereby declare that
+
+- this dissertation is my own original work,
+- it has been completed without claiming any illegitimate assistance and
+- I have acknowledged all sources used (both, verbatim and regarding their content).
+
+[Martin Ring, April 16 2021]{.signature}
+
+:::

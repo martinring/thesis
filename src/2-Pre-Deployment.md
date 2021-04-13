@@ -1,6 +1,12 @@
 # A Priori Verification {#chap:specific}
 
-> *This chapter is based on the original work "Change Impact Analysis for Hardware Designs -- From Natural Language to System Level" [@Chimpanc]*
+> This chapter is based on the original work 
+> 
+> M. Ring, J. Stoppe, C. Luth, and R. Drechsler, “Change impact analysis for 
+> hardware designs — from natural language to system level,” in *Forum on 
+> Specification & Design Languages (FDL 2016)*, Bremen, Germany, Sep. 2016, pp. 
+> 1–7 [@Chimpanc]
+
 
 To allow thought about the verification of systems after deployment, we will 
 first establish a top-down agile work-flow for *a priori* verification in this 
@@ -205,9 +211,9 @@ and buildings by implementation classes like doors. The final refinement step
 translates a state machine diagram into a SystemC implementation, with doors (but
 not people) becoming components (called `SC_MODULE` in SystemC), comprised of a 
 card reader, a turnstile, and green and red LEDs. The turnstile has a method 
-`operate` which implements the state machine diagram above:
+`operate` which implements the state machine diagram above ([#fig:case-study-systemc]).
 
-```c++
+```{.cpp caption="SystemC representation of the access control system (excerpt)" #fig:case-study-systemc}
 SC_MODULE(Door)
 {
   //...
@@ -228,6 +234,12 @@ SC_MODULE(Gate)
 ```
 
 ## SPECifIC SysML
+
+A reference implementation is freely available:
+
+[![https://github.com/DFKI-CPS/specific-sysml - GitHub](https://gh-card.dev/repos/DFKI-CPS/specific-sysml.svg?fullname=)](https://github.com/DFKI-CPS/specific-sysml){.ghlink}
+
+DFKI-CPS/specific-sysml
 
 TODO
 

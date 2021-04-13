@@ -406,7 +406,7 @@ Section [#sec:case-study] above.
 
 The implementation is given as an executable *system model*. To stay
 independent of a specific programming language, we again use the functional
-hardware description language Clash [@ClaSH] as modelling language,
+hardware description language Clash [@Clash] as modelling language,
 since it allows us to simulate the system as well as synthesize an
 implementation in VHDL or VeriLog. Another possibility with more
 commercial traction would be SystemC, but that has a less clear semantics

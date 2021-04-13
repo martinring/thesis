@@ -97,7 +97,13 @@
     @bottom-center {
       content: counter(page);
     };
+    @top-center {
+      content: string(doctitle);
+      border-bottom: 1px solid black;
+    }    
   }
+
+  h1[data-name] { string-set: doctitle attr(data-name) ' - ' content() }
 
   @page :left {
     margin: 3cm 4cm 3cm calc(3cm + 5rem);
@@ -123,6 +129,25 @@
 
   a {
     color: black;
+  }
+
+  .disclaimer {
+    page-break-before: always;
+    page: preface;
+    display: block !important;
+  }
+
+  .disclaimer::before {
+    content: 'Disclaimer';
+    font-size: 3rem;
+    font-weight: bold;
+  }
+
+  .disclaimer .signature {
+    margin-top: 3rem;
+    display: block;
+    width: 66%;
+    border-top: 1px solid black;
   }
 
   hr {

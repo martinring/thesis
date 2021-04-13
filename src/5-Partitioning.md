@@ -13,8 +13,8 @@ proposition^[
   methodology (because other types such as integer variables can be encoded as 
   bit vectors) but significantly simplifies the exposition in the following.
 ] $\phi$ that shall be proven with contemporary reasoning
-engines such as SAT solvers [@ES:2003; @Biere2008PicoSATE], SMT
-solvers [@Moura2008Z3AE; @Brummayer2009BoolectorAE; @Wille2007SWORDAS],
+engines such as SAT solvers [@ES:2003;@Biere2008PicoSATE], SMT
+solvers [@Moura2008Z3AE;@Brummayer2009BoolectorAE;@Wille2007SWORDAS],
 or similar. The particular logic and reasoning engine used do not
 matter, as long as the proof procedure is fully automatic. We are
 interested in problems that cannot be solved using the given resources,

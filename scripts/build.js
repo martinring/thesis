@@ -3,13 +3,13 @@ import prince from 'prince';
 import fs from 'fs/promises';
 import md from './markdown.js';
 import esbuild from './esbuild.js';
-import yaml from 'yaml';
 import * as log from './log.js';
 import puppeteer from 'puppeteer-core';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { argv } from 'process';
 import Cite from 'citation-js';
+import yaml from 'yaml';
 
 const options = yargs(hideBin(argv))
   .option('pdf',{ boolean: true })
@@ -27,11 +27,35 @@ const src_ = log.timed('load markdown sources',
     ))
 )
 
-
-
 const bib_ = log.timed('load bibliography',
-  fs.readFile('src/bib/refs.bib').then(f => Cite.input(f.toString('utf-8')))
-)
+  fs.readdir('src/bib',{ withFileTypes: true} )
+    .then(dir => 
+      Promise.all([...dir.filter(file => file.isFile && file.name.endsWith('.yaml'))
+           .map(file => fs.readFile('src/bib/' + file.name).then(x => yaml.parse(x.toString('utf-8')))),
+         ...dir.filter(file => file.isFile && file.name.endsWith('.json'))
+           .map(file => fs.readFile('src/bib/' + file.name).then(x => JSON.parse(x.toString('utf-8')))),
+         ...dir.filter(file => file.isFile && file.name.endsWith('.bib'))
+           .map(file => fs.readFile('src/bib/' + file.name).then(x => Cite.input(x.toString('utf-8'))))]
+        ).then(arrs => {    
+    const result = new Map() 
+    arrs.forEach(x => x.forEach(item => {
+      if (!item.id) {
+        log.warn(`no id for reference '${item.title}'`)
+      } else {
+        if (result.has(item.id)) {
+          log.warn(`duplicate bib entry '${item.id}'`)          
+        } else {
+          delete item._graph          
+          result.set(item.id,item)
+        }
+      }
+    }))    
+    const arr = Array.from(result.values())
+    fs.writeFile('build/bib.yaml', yaml.stringify(arr,{    
+    }))
+    return arr
+  })
+))
 
 const style_ = log.timed('load citation style',
   fs.readFile('src/bib/ieee.csl').then(f => f.toString('utf-8'))
@@ -46,6 +70,7 @@ const [bib,style] = await Promise.all([bib_,style_])
 const markdown_ = log.timed('initialize markdown engine',md({
     typographer: true,
     html: true,
+    checkRefs: true,
     csl: {
       bib,
       style

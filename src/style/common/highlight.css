@@ -17,3 +17,11 @@
 .editor .source .attribute-name {
   color: #001080;
 }
+
+.editor .source .comment {
+  color: #008000;
+}
+
+.editor .source .storage.type {
+  color: #0000ff;
+}

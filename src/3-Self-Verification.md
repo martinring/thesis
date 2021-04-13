@@ -2,7 +2,7 @@
 
 > *This chapter is based on the original work "Better Late Than Never: Verification of Embedded Systems After Deployment" [@Selfie2]*
 
-In this chapter, we proposes a design and verification methodology which 
+In this chapter, we proposes a simple design and verification methodology which 
 conducts verification after deployment. To this end, we start with the 
 observation that contemporary systems are designed to operate in a variety of 
 operating contexts. In order to do so, *configurations* are used, i.e. parameters
@@ -21,42 +21,23 @@ increases costly design time, and runs the risk of excluding possible
 configurations, decreasing availability, making the system less versatile
 and hence less marketable than strictly necessary.
 
-Motivated by this observation, this work proposes a design and verification
-methodology which conducts verification after deployment, \ie in the field and once the actual configuration
-is observable. 
-By this, this paper proposes a first realization of the concept of \emph{self-verification} envisioned in [@DFW:2015]. 
-Even though it results in continuous verification tasks as the
-environment keeps changing, the drastic reduction of the search space outweigh this. As a result, embedded systems
-can be verified even on a much weaker machine and with much less
-sophisticated tools, while prior to deployment verification failed due to the
-exponential complexity.
-%
-Our approach of post-deployment verification guarantees safety with maximum
-availability --- the system will never refuse to operate when it is
-actually safe to run. %% \todo{verstehe ich nicht?}
+Motivated by this observation, this chapter proposes a design and verification
+methodology which conducts verification after deployment, i.e. in the field and 
+once the actual configuration is observable. 
+Even though it results in continuous verification tasks as the environment 
+keeps changing, the drastic reduction of the search space outweigh this. As a 
+result, embedded and cyber-physical systems can be verified even on a much 
+weaker machine and with much less sophisticated tools, while prior to deployment 
+verification failed due to the exponential complexity.
 
 In order to assess the feasibility of the proposed methodology, we have
-implemented the proposed design and verification flow and used a lightweight version
-of the SAT solver MiniSat~\cite{ES:2003,Bornebusch2017TowardsLS} to solve
-the resulting verification conditions after deployment. The evaluation of a number of case studies
-showed that, following the proposed methodology, verification problems
-which failed prior to deployment (using high-end verification tools and
-machines) could be completed after deployment using the lightweight solver on reduced hardware.
-
-In the following, we present the proposed methodology as follows: First,
-%  we
-% briefly review the current situation in the verification of circuits and
-% systems, pinpointing the core problem of today's verification
-% schemes. Afterwards, 
-we motivate and illustrate the proposed verification methodology using a
-small case study. Section~\ref{sec:impl} then describes the implementation
-of this methodology using the same case study and, by this, provides a
-detailed description for the entire flow. Section~\ref{sec:eval} summarizes
-the results of evaluating further, more sophisticated case studies
-conducted by us --- confirming the applicability and benefits of the
-proposed methodology. Besides that, this section also discusses the
-consequences of the proposed methodology to the established design flow.
-Finally, Section~\ref{sec:concl} summarizes and concludes this work.
+implemented the proposed design and verification flow and used a lightweight 
+version of the SAT solver MiniSat [@ES:2003,@light-weight-SAT-solving] to solve
+the resulting verification conditions after deployment. The evaluation of a 
+number of case studies showed that, following the proposed methodology, 
+verification problems which failed prior to deployment (using high-end 
+verification tools and machines) could be completed after deployment using the 
+lightweight solver on reduced hardware.
 
 ## General Idea {#sec:selfie-general-idea}
 
@@ -171,9 +152,9 @@ formal development of the running example considered in the previous section.
 The design flow starts with a *modelling phase*, where the structure
 and behaviour of the system is modelled at an abstract level without
 referring to any implementation se (see [#fig:design-flow]). In
-our case, we use SysML [@SysML] and OCL [@RichtersGogolla:2002] to
+our case, we use SysML [@SysML] and OCL [@RichtersGogolla2002] to
 specify the structure and formalize constraints on its behaviour as well as the
-functional hardware description language Clash [@ClaSH] for a uniform,
+functional hardware description language Clash [@Clash] for a uniform,
 executable and synthesizeable model of the system.
 
 The actual specification and implementation languages are of no
@@ -193,13 +174,13 @@ specification which have to be shown in order to guarantee this.
 Specifically, we translate both the Clash model and the constraints from
 the OCL specification into *bit-vector logic* (i.e. first-order logic
 with bit-vectors). Trying to show these in an SMT prover such as
-Yices [@Dutertre:2014] or Z3 [@Z3] fails for non-trivial examples, as does trying to show the properties
+Yices [@Dutertre:2014] or Z3 [@Moura2008Z3AE] fails for non-trivial examples, as does trying to show the properties
 translated into *conjunctive normal form* (CNF) with a SAT solver such as
 MiniSat. This is where verification usually fails.
 
 However, post-deployment after we have instantiated the configuration
 variables, the search space is small enough to allow verification of the
-corresponding properties even by a lightweight solver [@Bornebusch2017TowardsLS].
+corresponding properties even by a lightweight solver [@light-weight-SAT-solving].
 By this, verification of all properties becomes possible. Recall that this
 instantiation cannot be done at the design time, because at that point the
 instantiating values are still unknown. Therefore, the proofs must be rerun
@@ -469,7 +450,7 @@ controller in order to demonstrate its applicability.
 The home controller has been realized on top of a ZedBoard, which comprises an
 ARMv7 core running Linux to control a Xilinx FPGA, and which for the
 purposes of verification has been equipped with a lightweight SAT
-solver [@Bornebusch2017TowardsLS]. The obtained results are summarized
+solver [@light-weight-SAT-solving]. The obtained results are summarized
 in this section. Furthermore, we also discuss possible ramifications which
 have to be considered when utilizing the proposed methodology in practice.
 
