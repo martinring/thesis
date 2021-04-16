@@ -1,11 +1,7 @@
 # A Priori Verification {#chap:specific}
 
-> This chapter is based on the original work 
-> 
-> M. Ring, J. Stoppe, C. Luth, and R. Drechsler, “Change impact analysis for 
-> hardware designs — from natural language to system level,” in *Forum on 
-> Specification & Design Languages (FDL 2016)*, Bremen, Germany, Sep. 2016, pp. 
-> 1–7 [@Chimpanc]
+> *This chapter is based on the original work “Change impact analysis for 
+> hardware designs — from natural language to system level” [@Chimpanc]*
 
 
 To allow thought about the verification of systems after deployment, we will 
@@ -15,6 +11,8 @@ informal, naturally phrased specifications down to implementational apsects and
 show how these can be connected in such a way that requirements can be tracked 
 and verified across different abstraction levels. In the subsequent chapters, 
 this will allow us to choose where self-verification plugs into the flow.
+
+## Background
 
 Traditional hardware design languages (HDLs) such as Verilog or VHDL which are 
 supposed to be synthesised into hardware are increasingly unable to handle large 
@@ -105,7 +103,7 @@ However, while these models may be used to locate potential errors early on
 in the design process, they are neither complete nor actually executable.
 
 
-### The Electronic System Level (ESL)
+### The Electronic System Level (ESL) {#sec:esl}
 
 The next step in refining the system is to create a working prototype
 without going into the implementation details required by HDLs.  System
@@ -124,19 +122,20 @@ representing a model of the system that can be executed, while still being
 too abstract to be translated into hardware.
 
 However, there are several modern alternatives to SystemC with less commercial 
-traction (for now) such as Chisel [@Chisel] and Clash [@Clash]. These share the 
-advantage of having explicit semantic models, which allow for sophisticated 
-static analysis as well as synthesis of lower level RTL models (see below). 
+traction (for now) such as *Chisel* [@Chisel], a DSL embedded in Scala, and 
+*Clash* [@Clash], a language based on Haskell. These share the advantage of 
+having explicit semantic models, which allow for sophisticated static analysis 
+as well as synthesis of lower level RTL models (see below).
 
-From the ESL, we can map the system design further down to dedicated HDLs
-which may be translated into hardware [@hafer1983formal]; this is
-called the Register Transfer Level (RTL), but as the connections here are
-fairly well-known we will not explore it further.
+In the following we will only consider SystemC (due to its commercial traction 
+and importance in the community) and Clash (for its extensibility and clear 
+semantics).
 
 ### The Register Transfer Level (RTL) and below
 
-The Register Transfer Level gives designers the ability to design systems that 
-may be translated into hardware [@hafer1983formal].
+From the ESL, we can map the system design further down to the Register 
+Transfer Level gives designers the ability to design systems that may be 
+translated into hardware [@hafer1983formal].
 
 Dedicated HDLs are specifically designed to be mapped to hardware, focusing on 
 the description of structural features and parallel execution while at the same 
@@ -201,10 +200,12 @@ doors.  To make this into an ESL specification, we then describe the actual
 mechanics of operating the door in more detail: when a person is
 approaching the door, a green or red light should indicate whether access is
 granted or denied, and a turnstile should open (or not). This can be
-expressed by a state machine diagram in SysML ([#fig:case-study],
+expressed by a state machine diagram in SysML ([#fig:case-study-state],
 right).
 
-![SysML specification of the access control system (excerpt)](acs-diagram-blocks.svg;acs-diagram-state.svg){#fig:case-study}
+![SysML block definition diagram of the access control system](acs-diagram-blocks.svg){#fig:case-study width=67%}
+
+![SysML state machine diagram of the access control system](acs-diagram-state.svg){#fig:case-study-state width=80%}
 
 In our refinement steps, we have replaced modelling classes such as people
 and buildings by implementation classes like doors. The final refinement step
@@ -233,7 +234,92 @@ SC_MODULE(Gate)
 };
 ```
 
-## SPECifIC SysML
+## Working with SysML
+
+When working with OCL-constrained SysML models, there is a large collection of 
+tools available, which let us design diagrams. These can be classified into two 
+groups. On the one hand those which have an underlying semantic model and on the 
+other hand graphical tools without a semantic model (of SysML). Examples for the
+former are Astah SysML, Papyrus, System Architect or Enterprise Architect. Since 
+we want to formally verify compliance to the specification, we are dependent on 
+the semantic model and thus will not consider the tool from the latter class 
+(e.g. Microsoft Visio or Capella).
+
+We have chosen to support Papyrus, which is based on the Exclipse Modelling 
+Foundation. However, since SysML is thoroughly specified 
+[@SysML], it should be fairly straight forward to map between different 
+representations.
+
+The reason we chose Papyrus is the fact, that it is the only Framework which 
+allows for semantically meaningful OCL constraints. All other tools we have 
+investigated treat Constraints as verbatim text with a language annotation, that 
+can indicate an OCL constraint or any other language (another specification 
+language, natural language or a programming language). 
+
+We have developed our own textual representation of SysML (called *SPECifIC SysML*) 
+which is based on the graphical appearance of diagrams. In this section we give 
+an overview over the language.
+
+### Scope of the Language
+
+SPECifIC SysML covers a formally well-defined subset of SysML, in particular it
+does not support parametric diagrams since they are redundant and can be 
+expressed with OCL constraints. In addition we dropped activity, sequence and 
+use case diagrams, since they only represent test cases and cannot be used to 
+fully specify the behaviour of a system. State machine diagrams are the only 
+behavioural diagrams we support. All other behavioural aspects have to be 
+modelled by means of the OCL. However, since SPECifIC SysML compiles to Papyrus
+Models it can still be combined with any diagram type that is not supported in 
+the textual representation.
+
+### Lexical Syntax
+
+The language tries to mimic the appearance of drawn diagrams while keeping it 
+"writable". We use indentation to indicate the structure of a diagram and 
+transfer every textual rule that SysML specifies into the grammar of the 
+language. Most other aspects such as comments, literals and delimiters are taken 
+from the OCL Language specification.^[For details consult the reference implementation]
+
+````{.sysml #fig:sysml-spec caption="The example from [#sec:acs-example] expressed in SPECifIC SysML"}
+bdd [package] fsl3::acs [ACS]
+-----------------------------------------------------------
+
+block Building
+  references
+    gate: Building[*] <- building
+      derive: org_dom.dest->asSet()
+    building: Building[*] <- gate
+    org_dom: Door[*] <- org
+  constraints
+    inv: not (gate->includes(self))
+
+block Person
+  references
+    aut: Building[*]
+    sit: Building[1] { subsets aut }
+  constraints
+    inv: aut->forAll(b|aut.building->includes(b))
+
+block Door
+  operations
+    enter(p: Person)
+      pre: p.aut->includes(dest)
+      pre: p.sit = org
+      post: p.sit = dest
+  references
+    org:  Building[1] <- org_dom
+    dest: Building[1]
+  owned behaviors
+    state machine EnterBehavior <|- enter
+      initial state Waiting
+        enter / -> Waiting
+````
+
+### Syntax
+
+### Semantics
+
+### Refrence Implementation
 
 A reference implementation is freely available:
 
@@ -242,12 +328,6 @@ A reference implementation is freely available:
 DFKI-CPS/specific-sysml
 
 TODO
-
-We can also use commercial tools like
-Astah SysML, but their OCL support tends to be not as sophisticated. Instead, 
-we make use of the OCL implementation of the Eclipse Modelling Foundation. 
-Moreover, our textual representation makes the design flow fairly light-weight, 
-allowing users to employ any editor and versioning system at their disposal.
 
 ## A Framework for Change Impact Analysis {#sec:functionalChangeManagement}
 
@@ -273,7 +353,7 @@ being that there are no semantic connections to external models which could be
 taken into consideration, leaving the user without knowledge about impacts to 
 other specification layers. Furthermore, we are not aware of any other change 
 management tool available which is able to calculate the impact of changes on 
-the correctness of SysML/OCL refinements. In addition, ChimpanC supports impact 
+the correctness of SysML/OCL refinements. In addition, [ChImpAnC]{style=font-variant:small-caps} supports impact 
 analysis between different abstraction levels.
 
 The analysis of SystemC designs is a complex task that is a research field on 
@@ -285,15 +365,14 @@ Different approaches to extract the given information include parsing the
 source code [@Fey2004;@Karlsruhe2012;@Castillo2007;@Brandolese2006;@Berner2005] 
 (which results in the support of only a subset of SystemC, as no existing 
 parser supports all given dialects) or using modified compilation workflows in 
-order to modify the executable design to trace and store the required data itself 
-[@Genz2009;@Moy2005;@Grosse2003]
-(which results in the support of all designs that are built using the
-compiler being used).  In order to keep our approach as applicable as
-possible, the approach given in [@stoppe2013data] was used: instead
-of relying on the source code, the compiler-generated debug symbols are
-used.  While the format itself differs between compiler architectures, it
-is always standardized and/or accessible, resulting in a reliable
-interface to retrieve structural descriptions from SystemC designs.
+order to modify the executable design to trace and store the required data 
+itself [@Genz2009;@Moy2005;@Grosse2003] (which results in the support of all 
+designs that are built using the compiler being used).  In order to keep our 
+approach as applicable as possible, the approach given in [@stoppe2013data] was 
+used: instead of relying on the source code, the compiler-generated debug 
+symbols are used. While the format itself differs between compiler 
+architectures, it is always standardized and/or accessible, resulting in a 
+reliable interface to retrieve structural descriptions from SystemC designs.
 
 The OCL approach to specification with preconditions, postconditions and
 invariants is called design by contract and goes back to
@@ -456,6 +535,8 @@ element Operation {
 
 ### Semantic Difference Analysis
 
+![Change management via explicit semantics after initial extraction](mappings-1.svg){#fig:explicitSemantics0 width=80%}
+
 The distinctive feature of the diff algorithm is that it takes the
 intended semantics of the documents into account. This is achieved by
 representing the semantics as a graph (*explicit semantics*).
@@ -463,6 +544,8 @@ The semantic graph is extracted from the syntactic graph
 by graph rewrite rules, which can be efficiently implemented in Neo4j;
 after extraction, the nodes of this semantic graph are connected to the
 origin nodes of the syntactic tree ([#fig:explicitSemantics0]).
+
+![Change management via explicit semantics after application of syntactic diff](mappings-2.svg){#fig:explicitSemantics1 width=80%}
 
 When a change in an input file occurs, a diff is applied to the syntactic
 tree. Then, we mark the nodes of the semantic graph as "deleted"
@@ -472,6 +555,8 @@ the graph are marked as "preserved", nodes that do not exist are marked as
 "added", and all other nodes remain marked as "deleted". During this process
 additional semantic knowledge can be used to handle individual nodes as
 required. 
+
+![Change management via explicit semantics after second extraction](mappings-3.svg){#fig:explicitSemantics2 width=80%}
 
 Thus, we have the *syntactic graph* which consists of the abstract
 syntax trees, and the *semantic graph* extracted from them.  We
@@ -484,9 +569,6 @@ the persisted syntactic tree in the database:
 [![https://github.com/DFKI-CPS/egraph - GitHub](https://gh-card.dev/repos/DFKI-CPS/egraph.svg?fullname=)](https://github.com/DFKI-CPS/egraph){.ghlink}
 
 [![https://github.com/DFKI-CPS/secore - GitHub](https://gh-card.dev/repos/DFKI-CPS/secore.svg?fullname=)](https://github.com/DFKI-CPS/secore){.ghlink}
-
-
-![The ChimpanC user interface](screen-main.png){#fig:screen-main}
 
 ### Change Impact Analysis {#sec:mappings}
 
@@ -523,15 +605,31 @@ pops up again.
 Impact rules such as these are described directly as Neo4j queries; this makes 
 them fast to execute and keeps the impact system extensible.
 
-## Reasoning about OCL
+## Reasoning about OCL {#sec:ocl}
+
+To discharge proof obligations, that arise from the formal specification level 
+we need a method to transfer constraints into lower level representations. For 
+OCL there exists a thorough specification of the semantics [@OCLSpec], however 
+SystemC (and especially its extensions, e.g. TLM) has no such specification, and
+even the host language C++ is not unambiguous across compilers and platforms. 
+
+So Clash (See [#sec:esl]) is a natural choice if we not only want to map and 
+trace changes accross layers but also conduct verification (and trace 
+verification results) across layers. For this we have developed a dedicated 
+backend that can translate Clash designs into SMT Bitvector logic (See also 
+[#sec:clash-smt]). In addition we have built a small tool, that can generate the 
+proof obligations as SMT assertions from the SysML Model, the OCL Constraints 
+and the Mappings to the ESL design.
 
 ## The User Interface {#sec:frontend}
+
+![The ChImpAnC user interface](screen-main.png){#fig:screen-main}
 
 The source code of the user interface is freely available:
 
 [![DFKI-CPS/chimpanc - GitHub](https://gh-card.dev/repos/DFKI-CPS/chimpanc.svg?fullname=)](https://github.com/DFKI-CPS/chimpanc){.ghlink}
 
-ChimpanC is realised as a web interface and can either run locally or on
+[ChImpAnC]{style=font-variant:small-caps} is realised as a web interface and can either run locally or on
 a team server. When users open the application in a browser they get
 presented a multi-column layout representing the different specification
 layers ([#fig:screen-main]). The leftmost column is the most abstract one --- 
@@ -592,3 +690,20 @@ they already result in an inconsistent model, and thus an inconsistency
 error. Impact warnings appear as orange elements indicating that user
 attention is required ([#fig:impactWarn]).
 
+## Conclusion
+
+This chapter introduced the different layers of abstraction that may be used to
+design systems top-down. We also presented [ChImpAnC]{style=font-variant:small-caps}, 
+a tool which supports a comprehensive system design flow across different levels 
+of abstraction levels, from natural language down to system-level models. [ChImpAnC]{style=font-variant:small-caps} manages the models of the systems at the different 
+abstraction levels, keeps track of dependencies, and calculates the impact of 
+changes.  Moreover, it can warn about inter layer inconsistencies that would 
+previously be left unnoticed by the established tool chain.
+
+We believe that our tool is easy to integrate into existing workflows since it 
+is independent of the utilised tools and can be extended to support all kinds of 
+formats using EMF as a simple and well documented interface. Users can provide 
+rules for refinement and automatic impact propagation as graph rewriting rules 
+in the form of Neo4j queries. Even if not all designers in a team use the tool, 
+it offers added value, since it provides a way to detect and communicate the 
+impact of changes across different layers.

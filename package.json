@@ -8,7 +8,9 @@
     "url": "https://github.com/martinring/thesis.git"
   },
   "scripts": {
-    "build": "./scripts/build.js"
+    "clean": "rm -r build/; mkdir build;",
+    "build": "./scripts/build.js",
+    "build:pdf": "./scripts/build.js --pdf; prince build/index.prince.html --output build/index.pdf"
   },
   "author": "Martin Ring <martin.ring@dfki.de>",
   "dependencies": {

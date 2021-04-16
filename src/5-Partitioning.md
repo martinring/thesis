@@ -3,6 +3,45 @@
 > *This chapter is based on the original work "Verification Runtime Analysis: Get the Most Out of 
 Partial Verification" [@VerificationRuntime]*
 
+The central means to reduce the search space during run-time and, by this, 
+reduce the runtime of the reasoning engine is to set a certain amount of the 
+given variables to a fixed value. While the general methodology has been 
+explored in the previous chapters, the question which variables to fix in 
+order to achieve the largest reduction of verification runtime has not been 
+addressed yet. While in theory fixing one Boolean variable would reduce the 
+search space and runtime by half, actual instances show a much smaller and less 
+uniform reduction due to the optimizations by the proof engine.  Some variables 
+may hardly have an effect at all, while others may immediately cut down a 
+day-long verification process to a few moments. Because of that, it is essential 
+for verification engineers to have a clear understanding about the impact of 
+fixing a particular variable to the verification runtime, so they can follow the 
+general idea of fixing some variables in order to get a partial result out of 
+the verification process covering as many cases as possible. However, no 
+systematic investigation on this effect has been conducted so far.
+
+In this chapter, we introduce a methodology to analyze verification runtime,
+and to measure it practically in a meaningful way. The main problem is
+*how many* and *which* variables are fixed. For this, we first state a formal 
+criterion describing an optimal solution to this problem. Based on that, a cost 
+function is defined which can be used to employ stochastic and heuristic methods 
+in order to eventually determine solutions optimized for this goal.
+
+Using a proof-of-concept implementation based on evolutionary algorithms,
+we were able to confirm the potential of the proposed methodology. In fact, 
+experimental evaluations confirmed that this methodology indeed determines a set 
+of variables to be fixed which keeps the verification runtime within specified 
+limits while still covering as much as possible of the search space.
+
+In general, the methodology works for any other heuristic which optimizes with 
+respect to a given cost function, and the proposed analysis method is 
+independent from both the reasoning engine and the underlying logical language, 
+i.e. we treat the reasoning engine as a completely opaque black box which either 
+proves a proposition or not.
+
+This offers valuable information for designers following the approach of the 
+previous chapters, to choose which parts of a proof offer the highest potential 
+to be postponed for self-verification.
+
 ## Fixing Free Variables
 
 In the following, we consider a verification problem as a single
@@ -55,8 +94,6 @@ available resources; i.e. the available time (on the y-axis) determines
 the corresponding number of variables (on the x-axis).
 :::
 
-![Idealized and observed runtime of a representative verification problem.](idealized-runtime.ts){#fig:runtime-idealized}
-
 However, such an idealized scenario almost never occurs. In fact, it
 quickly becomes clear that the relation between the number of fixed
 variables and the proof time is rather erratic.  Again, this is
@@ -78,6 +115,8 @@ variables. Instead, there are a number of data points which are better
 than the idealized scenario discussed before in [#ex:ideal_scen], i.e. points 
 which lie below the diagonal in [#fig:runtime-idealized].
 :::
+
+![Idealized and observed runtime of a representative verification problem.](idealized-runtime.ts){#fig:runtime-idealized}
 
 As illustrated by these observations, simply fixing a certain number of
 variables of $\phi$ often does not yield the desired result.  Moreover, a
@@ -213,6 +252,8 @@ evolutionary algorithms, etc.). However, all of these need a dedicated
 *cost function* which unambiguously describes the quality in a quantifiable 
 fashion (i.e. as a number) to guide the search.
 
+![Contour of the cost function](cost-contour.ts){#fig:runtime-score}
+
 To get this cost function, we propose a geometric interpretation of
 the data points in [#fig:runtime-idealized]. We are
 looking for the one which is closest to the bottom left corner, i.e.
@@ -265,8 +306,6 @@ lines are considered during analysis. This way, it is ensured that a
 good solution is derived while, at the same time, the analysis time
 remains efficient.
 :::
-
-![Contour of the cost function](cost-contour.ts){#fig:runtime-score}
 
 Using this cost function and the threshold, any heuristic method of choice can
 be applied to determine a set $X$ such that $q(X)$ is minimized -- this
@@ -480,7 +519,7 @@ original proof time.
 ### Obtained Results
 
 A representative subset of results is summarized in [#tab:rta-results] 
-(For the full results see [#a:rta-full]). Here, the first 
+(For the full results see the linked github repository). Here, the first 
 columns denote the problem size: the number of SMT variables, and the number of 
 bits ($|\FV{\phi}|$) representing those SMT variables. The next group of
 columns shows the results of the analysis: $\tau(\phi)$ is the
@@ -495,6 +534,43 @@ arbitrary selection of variables $Y \subset \FV{\phi}$ with the same
 size $|Y| = |X|$ is set to a fixed value, while $\AvgTphi{X}$ denotes
 the runtime when exactly the variables in $X$ are set to a fixed
 value.
+
+The results clearly confirm the benefits of our approach.  While it is
+in general not surprising that fixing a number of variables reduces
+the verification runtime, our analysis yields a small number $|X|$ of
+variables to fix for maximum effect. By this, verification
+engineers get much more out of partial verification since it allows
+them to only set a small portion of the
+variables to a fixed value. E.g. for *calypto/problem_22.smt2*, 
+a naive method would have led
+them to set $\tau(\phi)=128$ variables to a fixed value; with the
+sophisticated analysis method proposed in this work, just fixing
+$|X|=13$ is sufficient --- yielding substantially larger coverage.
+
+Moreover, the results confirm that not only the number $|X|$ of
+variables is important (*how many?*), but also which variables
+should be set to a fixed value (*which?*).  This can clearly be
+seen in the last two columns of [#tab:rta-results] randomly
+fixing $|X|$ variables often leads to a time-out ($600s$). In
+contrast, fixing exactly those variables $X$ obtained by the proposed
+analysis allows solving *all* benchmarks in negligible runtime.
+
+
+The identified candidates do indeed reduce runtime significantly with respect to 
+randomly constrained instances. Out of 333 instances there were 221 which were 
+sped up by factor 10 or more, 167 were sped up by factor 100 or more and 94 were 
+sped up by factor 1000 and more. For 11 benchmarks the reference time could not
+be determined due to time-outs of factor >10000.
+
+Those benchmarks which were not significantly sped up can actually be recognized during 
+analysis because they show no clear relation between sets of variables and 
+runtime and thus have large fluctuations within the population over generations 
+of the EA. We identified sevaral reasons, why this can happen: when too much information 
+is represented by a single SMT variable; when there are only pseudo-random 
+dependencies between variables and when too much of the heavy lifting happens in
+local function definitions. However, these instances can be quickly identified 
+and might be fixable by adapting the representation of the proof.
+
 
 <style>
 #tab\:rta-results {
@@ -554,39 +630,41 @@ value.
 
 : Obtained Results {.standalone .rotated #tab:rta-results}
 
+### Further Discussion
 
-The results clearly confirm the benefits of our approach.  While it is
-in general not surprising that fixing a number of variables reduces
-the verification runtime, our analysis yields a small number $|X|$ of
-variables to fix for maximum effect. By this, verification
-engineers get much more out of partial verification since it allows
-them to only set a small portion of the
-variables to a fixed value. E.g. for *calypto/problem_22.smt2*, 
-a naive method would have led
-them to set $\tau(\phi)=128$ variables to a fixed value; with the
-sophisticated analysis method proposed in this work, just fixing
-$|X|=13$ is sufficient --- yielding substantially larger coverage.
+The obtained results show how many and which variables to fix to get as much
+as possible out of partial verification. In this regard, note that there may be 
+external reasons to fix (or not fix) a variable. For example, it makes no sense 
+to fix sensor input which changes rapidly, but it makes a lot of sense to fix 
+configuration parameters which rarely change. Obviously such considerations can 
+easily be integrated into the proposed analysis e.g. by adding a *weight* to the
+variables such that instantiating some variables (which do not change often) is 
+favourable to instantiating others (which do change often).
 
-Moreover, the results confirm that not only the number $|X|$ of
-variables is important (*how many?*), but also which variables
-should be set to a fixed value (*which?*).  This can clearly be
-seen in the last two columns of [#tab:rta-results] randomly
-fixing $|X|$ variables often leads to a time-out ($600s$). In
-contrast, fixing exactly those variables $X$ obtained by the proposed
-analysis allows solving *all* benchmarks in negligible runtime.
+With regard to related work, the term "partial verification" is also used with 
+model checking, in particular software model checking (see 
+e.g. [@Parizek2007,@Groce2004]), referring to techniques to reduce the search 
+space in order to find counterexamples (and, hence, bugs), or referring to the 
+exchange of results between different automatic tools (model checkers, static 
+analyzers, theorem provers) such that the combination of partial results makes 
+the whole verification succeed (see e.g. [@Wuestholz,@Beyer2016]). This is also 
+referred to as conditional model checking [@Beyer2012]. Furthermore, the term is 
+also used in the context of agents [@Caragiannis2012,@Yu2011], but refers to 
+verification of truthfulness. However, the methodology proposed in this chapter 
+here is not related to any of these previous work and, hence, is novel to the 
+best of our knowledge.
 
+## Conclusion
 
-The identified candidates do indeed reduce runtime significantly with respect to 
-randomly constrained instances. Out of 333 instances there were 221 which were 
-sped up by factor 10 or more, 167 were sped up by factor 100 or more and 94 were 
-sped up by factor 1000 and more. For 11 benchmarks the reference time could not
-be determined due to time-outs of factor >10000.
+In this chapter, we presented a systematic verification runtime analysis which 
+shows *how many* and *which* variables to fix for maximum verification runtime 
+reduction. Experimental evaluations based on a proof-of-concept implementation 
+confirmed the potential and demonstrated that the proposed analysis method
+does not only yield a partial verification result, but also gets the most out of 
+it. Considering that further analysis methods can be implemented on top of this 
+methodology, this work provides a promising basis for future work in this 
+direction.
 
-Those benchmarks which were not significantly sped up can actually be recognized during 
-analysis because they show no clear relation between sets of variables and 
-runtime and thus have large fluctuations within the population over generations 
-of the EA. We identified sevaral reasons, why this can happen: when too much information 
-is represented by a single SMT variable; when there are only pseudo-random 
-dependencies between variables and when too much of the heavy lifting happens in
-local function definitions. However, these instances can be quickly identified 
-and might be fixable by adapting the representation of the proof.
+In the context of self-verification this analysis method is able to indicate to 
+the designer, which parts of a proof are worthy to transfer or postpone into 
+runtime and by this enhances the workflow drastically.

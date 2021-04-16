@@ -16,3 +16,16 @@
   font-weight: bold;
   src: url('./vollkorn/Vollkorn-Bold.woff2');
 }
+
+@font-face {
+  font-family: vollkorn-sc;
+  font-variant: small-caps;
+  src: url('./vollkorn/vollkorn-sc-v6-latin-regular.woff2')
+}
+
+@font-face {
+  font-family: vollkorn-sc;
+  font-variant: small-caps;
+  font-weight: 700;
+  src: url('./vollkorn/vollkorn-sc-v6-latin-700.woff2')
+}

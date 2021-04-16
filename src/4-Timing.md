@@ -1,4 +1,4 @@
-# Timing of [Self-Verification]{.nobr}
+# Design of Self-Verifying Systems {#chap:timing}
 
 > *This chapter is based on the original work "Let's Prove it Later --- Verification at Different Points in Time" [@Timing]*
 
@@ -10,7 +10,7 @@ self-verification and widen the somewhat simplistic concept of *configurations*
 to *trigger transitions*: Transitions of a system that trigger a verification 
 (i.e. in terms of [#chap:selfie], a change of the configuration). 
 
-## [Design Time]{.nobr} vs. [Self-Verification]{.nobr} vs. [Runtime Verification]{.nobr}
+## Self-Verification, Design Time & Runtime Verification
 
 The key advantage of self-verification as described in [#chap:selfie] is that 
 after deployment, the concrete values of parameters may become known for 
@@ -567,10 +567,18 @@ demonstrator --- the access control system implemented as an interactive
 SVG, which can be viewed and run in any web browser. Users can directly
 experience the effect of choosing different verification triggers.
 
-The demonstrator also exhibits the general applicability of
-self-verification and the versatility of our tool chain, which could be
-adapted to support a different implementation platform (SVG and TypeScript
-instead of Clash) with moderate effort.
+The demonstrator also exhibits the applicability of self-verification and the 
+versatility of our tool chain, which could be adapted to support a different 
+implementation platform (SVG and TypeScript instead of Clash) with moderate 
+effort.
+
+This raises the question of the general applicability of the approach. As 
+presented here, some kinds of safety-critical systems could not be addressed 
+adequately, namely fail-safe systems [@FailSafe], where there is no default safe state which 
+we can always revert to if self-verification does not succeed. On the other 
+hand, an attractive avenue for further exploration is “just-in-time 
+verification”, where one tries to prove properties at run time as they are 
+needed (see [#sec:jit])
 
 In [#chap:partitioning], we will further investigate how the designer can 
 be assisted in the design decisions; in particular, how the system can suggest

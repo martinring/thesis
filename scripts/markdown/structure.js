@@ -39,9 +39,19 @@ export default function (md) {
     let table = 0
     let tableBlock = null
     let containers = {}
-    state.tokens.forEach((block, idx) => {
+    let idx = 0
+    while (idx < state.tokens.length) {
+      const block = state.tokens[idx]
       if (rex_unnumbered.test(block.attrGet('class'))) {
         if (block.type == 'heading_open' && block.tag == 'h1') {
+          if (chapter > 0) {
+            state.tokens.splice(idx,0,new state.Token('section','section',-1))
+            idx += 1;
+          }
+          const chapSection = new state.Token('section','section',1)  
+          chapSection.attrSet('class',appendix ? 'appendix' : 'chapter') 
+          idx += 1;   
+          state.tokens.splice(idx,0,chapSection)
           tree.push({
             number: undefined,
             id: autoId(block,state.tokens[idx + 1]),
@@ -54,10 +64,18 @@ export default function (md) {
           case 'heading_open':
             switch (block.tag) {
               case 'h1':
+                if (chapter > 0) {
+                  state.tokens.splice(idx,0,new state.Token('section','section',-1))
+                  idx += 1;
+                }
+                const chapSection = new state.Token('section','section',1)
+                state.tokens.splice(idx,0,chapSection)
+                idx += 1;
                 if (!appendix && rex_appendix.test(block.attrGet('class'))) {
                   chapter = 0
                   appendix = true
                 }
+                chapSection.attrSet('class',appendix ? 'appendix' : 'chapter')                
                 chapter += 1;
                 const chapterSym = appendix ? String.fromCharCode('A'.charCodeAt(0) - 1 + chapter) : chapter.toString()
                 figure = 0;
@@ -237,6 +255,7 @@ export default function (md) {
             }
         }
       }
-    })
+      idx += 1;
+    }
   })
 }

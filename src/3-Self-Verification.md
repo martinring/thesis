@@ -1,4 +1,4 @@
-# Principles of [Self-Verification]{.nobr} {#chap:selfie}
+# Fundamentals of [Self-Verification]{.nobr} {#chap:selfie}
 
 > *This chapter is based on the original work "Better Late Than Never: Verification of Embedded Systems After Deployment" [@Selfie2]*
 
@@ -310,7 +310,7 @@ then compiled onto the FPGA by the proprietary tool chain of the FPGA vendor
 (in our case, Xilinx). Thus, the Clash model is the foundation of the
 verification after deployment.
 
-#### Verification (right-hand side of [#fig:design-flow])
+#### Verification (right-hand side of [#fig:design-flow]) {#sec:clash-smt}
 
 To prove the verification conditions, we translate them into
 CNF, which is suitable as input for reasoning engines such as SAT solvers. 
@@ -562,7 +562,7 @@ system is unverified for the time it takes to conduct the proof. There are
 three possible ways to cope with this:
 
 1. For acceptable risks, the system can just continue operating while the 
-   verification is running in parallel.
+   verification is running in parallel. 
 2. We can delay the change of the variable and ignore the connected light until 
    correctness has been proven. This sacrifices function for safety.
 3. We can stop operation and only continue after the system is proven safe 
@@ -573,7 +573,7 @@ None of these situations is desireable and thus the verification controller
 might use statistical observations for the prediction of future
 variable-states and proactively verify them during idle-time. If any of these 
 states occurs, the system can instantaneously continue operating with guaranteed
-safety.
+safety (see also [#sec:predictive-verification])
 
 If a proof fails for the resulting configuration, the
 system informs the user about the failed proof.  The user can disconnect
@@ -582,6 +582,49 @@ and the change results in a safe state. This especially means that the
 system can still operate safely even though some functionality is
 missing. Furthermore, the manufacturer is informed about the failed
 configuration, and can use this information to take appropriate measures.
+
+## Discussion
+
+The results obtained by the conducted cases studies summarized above
+clearly show the promises of the proposed verification methodology.
+However, some obvious ramifications have to be discussed when evaluating
+the general applicability of this methodology.
+
+The proposed methodology obviously requires the system to be equipped with 
+on-board verification tools to conduct the verification tasks. Since the 
+considered systems are substantially less powerful than usual desktop systems or 
+verification servers, this requires lightweight but still efficient versions of 
+those tools. Here, recent developments on lightweight methods 
+[@Bornebusch2017TowardsLS;@DBLP:series/lncs/BalintS16] as well as endeavours 
+towards efficient hardware solvers [@DBLP:conf/dsd/IvanA13;@dfki9553] provide 
+promising platforms for this purpose. Besides, it should be noted that 
+the proposed verification methodology yields an exponential reduction in
+the search space, so even less powerful verification tools might be able
+to cope. Our evaluation results corroborate this assumption.
+
+Besides that, the obvious question is what happens if the verification
+after deployment fails, and the deployed system turns out to be erroneous?
+This would be rather unfortunate, but we still believe that conducting
+verification after deployment has its value. First, note that this is a
+strict improvement over the existing situation, where the error would not
+have been detected at all, while verification after deployment at least
+shows its existence. This gives vendors the possibility to react (e.g. by
+calling the system back, issuing software patches or hardware fixes). Second, 
+verification failure does not necessarily indicate an erroneous system; it may 
+equally indicate that the configuration variables are instantiated with 
+erroneous values. In this case, the system may just pause until it is 
+re-configured with allowed values, in this way guaranteeing correct 
+functionality.
+
+Our approach differs from *runtime verification*, which is concerned
+with "checking whether a *run* of a system under scrutiny satisfies or
+violates a given correctness property" [@Leucker:2009]. The central notion of 
+runtime verification is the trace (or run) of a system, and central questions 
+are how to derive monitors checking a concrete run against an abstract 
+specification. The logics employed are typically temporal or modal logics. In 
+our work, we are not concerned with monitoring the system at all, we instead 
+*specialize* given variables in an abstract specifications if they do not change 
+often.
 
 ## Conclusion
 

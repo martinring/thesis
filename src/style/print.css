@@ -2,8 +2,20 @@
 
 @media print {
   .standalone {    
-    padding: 0;
-    page: standalone;
+    padding: 0;      
+    -prince-float: top;        
+  }
+
+  section.chapter {
+    page: chapter;
+    -prince-page-group: start;
+  }
+
+  
+
+  section.appendix {
+    page: appendix;
+    -prince-page-group: start;
   }
 
   header {
@@ -19,13 +31,19 @@
     flex-direction: column;
   }
 
+  header .date {
+    flex-grow: 1;
+  }
+
   header::before {
     flex-grow: 1;
   }
 
-  header::after {
-    content: '';
-    flex-grow: 2;
+  header::after {    
+    content: 'Supervisor: Prof. Dr. Christoph Lüth\ASecond Referee: Prof. Dr. Martin Fränzle';
+    flex-grow: 1;
+    white-space: pre;
+    text-align: left;            
   }
 
   header h1 {    
@@ -33,42 +51,32 @@
     text-align: center;
   }
 
-  @page header {
-    margin: 3cm;   
-    counter-reset: page;     
-
-    @bottom-center {
-      content: '';
-    };
+  @page { 
+    size: A4;
+    margin-top: 4.5cm;
+    margin-bottom: 4cm;    
+    margin-inside: 3.85cm; /* .85cm wire-o binding */
+    margin-outside: 5cm;    
+    @bottom-center { 
+      width: 100%; 
+      vertical-align: top;
+      padding-top: 1rem;
+    }    
+    @top-center {
+      vertical-align: bottom;
+      margin-bottom: 2.5rem;
+      border-bottom: thin solid black;
+      font-family: vollkorn-sc;
+    }
   }
 
-  @page standalone {    
-    margin: auto;
-    -prince-shrink-to-fit: auto;
-  }
+  @page:left { @bottom-center { text-align: left; } }
+  @page:right { @bottom-center { text-align: right; } }  
 
-  @page rotated {
-    margin: auto;
-    -prince-rotate-body: landscape;
-    -prince-shrink-to-fit: auto;
-  }  
-
-  #TOC a::after {
-    font-variant-numeric: tabular-nums lining-nums;
-    content: leader('⋅') ' ' target-counter(attr(href url), page);
-  }
-
-  @page standalone:left, rotated:left {
-    margin: 3cm 4cm 3cm 3cm;
-  }
-  
-  @page standalone:right, rotated:right {
-    margin: 3cm 3cm 3cm 4cm;    
-  }
-
-  #TOC {
-    page: preface;
-    counter-reset: page 1;
+  @page header {    
+    counter-reset: page;
+    margin: 4cm !important;
+    margin-inside: 4.85cm;
   }
 
   @page preface {
@@ -77,54 +85,103 @@
     };
   }
 
+  @page chapter, appendix {
+    @bottom-center {
+      content: counter(page) ;
+    };
+  }
+
+  @page chapter:left {
+    @top-center {
+      text-align: left;
+      content: string(chapter);
+    }
+    @top-left {      
+      margin-left: -5rem;
+      width: 3.5rem;
+      padding-right: 1.5rem;
+      text-align: right;
+      vertical-align: bottom;
+      margin-bottom: 2.5rem;
+      content: string(chapter-num);
+    }
+  }
+
+  
+
+  @page chapter:right {
+    @top-center {
+      text-align: right;
+      content: string(section);
+    }
+  }
+
+  @page chapter:first {
+    @top-center { content: ''; border-bottom: none; } 
+    @top-left { content: '' }
+  }
+
+  @page rotated {
+    -prince-rotate-body: landscape;
+  }
+
+  #TOC a::after {
+    font-variant-numeric: tabular-nums lining-nums;
+    content: leader('⋅') ' ' target-counter(attr(href url), page);
+  }
+
+  #TOC {
+    page: preface;
+    counter-reset: page 1;
+  }
+
+
+
   .standalone.rotated {
-      page: rotated
+      page: rotated;      
   }
 
   table, figure {
-    -prince-float-defer-page: 1;
-    -prince-float: snap unless-fit;    
-    -prince-float-policy: in-order;
+    -prince-float: snap unless-fit; 
   }
 
   :root {
     color-adjust: exact;    
   }
 
-  @page {
-    size: A4;
-    margin: 3cm;
-    @bottom-center {
-      content: counter(page);
-    };
-    @top-center {
-      content: string(doctitle);
-      border-bottom: 1px solid black;
-    }    
+
+
+  h1[data-name] { 
+    string-set: chapter-num attr(data-chapter), chapter content(), section '';
   }
 
-  h1[data-name] { string-set: doctitle attr(data-name) ' - ' content() }
-
-  @page :left {
-    margin: 3cm 4cm 3cm calc(3cm + 5rem);
-  }
-  
-  @page :right {
-    margin: 3cm 3cm 3cm calc(4cm + 5rem);
+  h2[data-name] { 
+    string-set: section content() 
   }
 
-  h1[data-chapter]:first-of-type {
+  section.chapter:first-of-type {
     counter-reset: page 1;
   }
 
   h1 {
-    page-break-before: always;
-    padding-top: 4rem;
+    page-break-before: left;    
+    margin-top: 4cm !important;
   }
-
+  
   h1,h2,h3,h4,h5,h6 {
     page-break-inside: avoid;
     page-break-after: avoid;
+  }
+
+  h1::before, h2::before, h3::before, h4::before {
+    float: outside !important;
+    margin-left: 0 !important;
+    margin-outside: -5rem;
+    text-align: inside !important;
+  }
+
+  h1 + blockquote {
+    -prince-float: top;
   }
 
   a {
@@ -159,6 +216,10 @@
   }
 
   *:not(.breakable) > pre {
+    page-break-inside: avoid;
+  }
+
+  div.counter {
     page-break-inside: avoid;
   }
 }

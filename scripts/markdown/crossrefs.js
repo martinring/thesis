@@ -1,3 +1,5 @@
+import * as log from '../log.js'
+
 /** @type { import("markdown-it").PluginSimple } */
 export default function (md) {
   const rex = /#([\w][\w:.#$%&\-+?<>~\/]*)/
@@ -54,8 +56,11 @@ export default function (md) {
   md.renderer.rules['crossref'] = (tks,idx,opts,env,self) => {
     const token = tks[idx]
     if (token.nesting == 1) {
-      const name = env.refs[token.attrGet('href').slice(1)] || 'UNDEFINED CROSSREF'
-      return `<a ${self.renderAttrs(token)}>${name}`
+      const name = env.refs[token.attrGet('href').slice(1)]
+      if (!name) {
+        log.warn(`undefined crossref '${token.attrGet('href').slice(1)}'`)
+      }
+      return `<a ${self.renderAttrs(token)}>${name || 'UNDEFINED CROSSREF'}`
     } else {
       return '</a>'
     }

@@ -998,7 +998,6 @@
   page: 1-4
 - type: report
   id: SysML
-  citation-label: SysML
   issued:
     date-parts:
     - - 2019
@@ -1006,6 +1005,15 @@
   publisher: Object Management Group
   title: Systems Modeling Language (SysML), Version 1.6
   URL: https://www.omg.org/spec/SysML/1.6/PDF  
+- type: report
+  id: OCLSpec
+  issued:
+    date-parts:
+    - - 2014
+      - 2
+  publisher: Object Management Group
+  title: Object Constraint Language (OCL), Version 2.4
+  URL: https://www.omg.org/spec/OCL/2.4/PDF  
 - id: Moura2008Z3AE
   DOI: 10.1007/978-3-540-78800-3_24
   type: paper-conference
@@ -1266,4 +1274,66 @@
     date-parts:
       - - 2012  
         - 6  
+- id: TimeBoundedVerification
+  DOI: 10.1007/978-3-642-04081-8_33
+  publisher: Springer
+  page: 496-510
+  title: Time-Bounded Verification
+  author:
+    - given: Joël
+      family: Ouaknine
+      sequence: first
+      affiliation: []
+    - given: Alexander
+      family: Rabinovich
+      sequence: additional
+      affiliation: []
+    - given: James
+      family: Worrell
+      sequence: additional
+      affiliation: []
+  container-title: CONCUR 2009 - Concurrency Theory
+  issued:
+    date-parts:
+      - - 2009
+- id: TimedAutomata
+  DOI: 10.1016/0304-3975(94)90010-8
+  publisher: Elsevier
+  issue: "2"
+  page: 183-235
+  source: Crossref
+  title: A theory of timed automata
+  volume: "126"
+  author:
+    - given: Rajeev
+      family: Alur
+      sequence: first
+      affiliation: []
+    - given: David L.
+      family: Dill
+      sequence: additional
+      affiliation: []
+  container-title: Theoretical Computer Science
+  issued:
+    date-parts:
+      - - 1994
+        - 4
+- id: FailSafe
+  DOI: 10.1109/ftdcs.1997.644721
+  publisher: IEEE  
+  title: Available fail-safe systems
+  author:
+    - given: D.
+      family: Essame
+    - given: J.
+      family: Arlat
+    - given: D.
+      family: Powell
+  event-place: Tunis, Tunisia
+  container-title: IEEE Computer Society Workshop on
+    Future Trends of Distributed Computing Systems 
+  issued:
+    date-parts:
+      - - 1997
+        - 10
 ...
