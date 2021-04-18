@@ -18,7 +18,7 @@ process may remain undetected in the final product.
 This is obviously caused by the exponential complexity of the problem. Each 
 year, more complex systems are being designed and need to be verified. Iterative 
 improvements have been proposed in the past years, e.g. the introduction of 
-higher levels of abstractions for design such as the *Formal Specification Level* 
+higher levels of abstraction for design such as the *Formal Specification Level* 
 [@DSW:12] and the *Electronic System Level* [@MBP:07], or the lifting of SAT 
 solvers to solvers for *SAT Modulo Theory* (SMT) [@ES:2003;@BBC+:2005;@Wille2007SWORDAS;@Dutertre:2014;@Moura2008Z3AE], but these cannot and will not be able to cope
 with the complexity. The consequences are evident today: While several years 
@@ -57,7 +57,7 @@ and software is decided rather late in the development process.
 The idea of *self-verification* as envisioned in [@DFW:2015] is to investigate 
 the middle ground in between: verify properties of the system as soon as 
 practically possible, but as late as necessary. In other words, verification 
-does not terminate with deployment, but is also not kept until the last moment.
+does not terminate with deployment, but is also not deferred until the last moment.
 The authors of [@DFW:2015] name three benefits that self-verification yields:
 
 1. *More resources* -- the computational power and verification effort of 
@@ -68,7 +68,7 @@ The authors of [@DFW:2015] name three benefits that self-verification yields:
    and by this can substitute abstract variables with definitive observations.
 
 Of these aspects, the scope of this work is the latter: How can information 
-gained during operation be utilized to speed up the verification process so 
+gained during operation be utilised to speed up the verification process so 
 drastically that it becomes feasible? This thesis is *not* concerned with the 
 former two aspects and does not investigate how computing power and time of 
 deployed systems may be combined. Contrarily, we assume less computational power 
@@ -80,7 +80,7 @@ devices with far less capabilities than a dedicated compute server has.
 The thesis is structured as follows: 
 
 - [#chap:specific] gives a brief overview of the state of the art in 
-  specification of cyber-physcial and embedded systems and introduces 
+  specification of cyber-physicial and embedded systems and introduces 
   advanced concepts of a-priori verification which we build upon in the 
   following chapters.
 - [#chap:selfie] introduces and evaluates a simple scheme that can be applied to 
@@ -90,7 +90,7 @@ The thesis is structured as follows:
 - [#chap:partitioning] introduces a methodology to analyse proofs with respect 
   to the question, which parts offer the most reduction in prover run time when 
   instantiated during system run-time. 
-- Finally we sketch some advanced ideas for future work in [#chap:advanced] and 
+- Finally, we sketch some advanced ideas for future work in [#chap:advanced] and 
 - conclude with a brief summary of the results in [#chap:conclusion].
 
 ## About this thesis
@@ -165,11 +165,11 @@ terms:
   E.g. "The run time of the verification was 42 seconds".
 - *run-time* is the time at or during which a process runs. 
   E.g. "The property could be proven during run-time". May be used as an 
-  attributive adjective as in "run-time information" (refering to information
+  attributive adjective as in "run-time information" (referring to information
   available during run-time).
 - finally a *runtime* is shorthand for *Runtime Environment* as in 
   *Java Runtime* or *Haskell Runtime*.
 
 Unfortunately this distinction has not previously been made and hence, the 
-original publication "Verification Runtime Analysis" breaks these rules and 
-should be titled "Verification Run Time Analysis".
+original publication [@VerificationRuntime] "Verification Runtime Analysis" 
+breaks these rules and should rather be titled "Verification Run Time Analysis".

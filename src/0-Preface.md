@@ -2,7 +2,7 @@
 title: Self-Verification
 subtitle: Verification of Embedded and Cyber-Physical Systems [after Deployment]{.nobr}
 author: ['Martin Ring']
-date: 16.04.2021
+date: the 19th of April 2021
 abstract: |
   this is the abstract
 bibliography:
@@ -31,6 +31,6 @@ I hereby declare that
 - it has been completed without claiming any illegitimate assistance and
 - I have acknowledged all sources used (both, verbatim and regarding their content).
 
-[Martin Ring, April 16 2021]{.signature}
+[Martin Ring, the 19th of April 2021]{.signature}
 
 :::

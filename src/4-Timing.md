@@ -16,31 +16,13 @@ verification. Some may be instantiated early on after deployment, and not change
 after that at all, or only very infrequently; others may change, but not that
 often; and even others may be sensor data which are read in small
 intervals, but where the rate of change may be limited. All of this
-information may be utilized at run-time for more efficient verification.
+information may be utilised at run-time for more efficient verification.
 
 This observation hinges on the fact that proving a property $\phi$ depends, 
 *inter alia*, on the number of free variables in $\phi$, and that parameters as 
 mentioned above usually occur as free (or universally quantified) variables in
 $\phi$. Then, proving $\phi\Subst t x$ with a ground term $t$ instantiated for 
 $x$ is typically orders of magnitude easier than proving $\phi$.
-
-
-![Four different points in time chosen for verification, from design time 
-(leftmost) to run-time (rightmost). Trigger transitions are marked with small 
-boxes; they trigger verification tasks which show that every possible path 
-through the state space which does not include other trigger transitions is 
-safe. Green boxes mark successful verification, and red boxes mark failed 
-verification tasks. The solid red state is unsafe; it violates the safety 
-property $\phi$. Grayed-out states are not reachable, because they come after a 
-failed verification (open red box). Design time verification (on the left) would 
-identify the system as erroneous and prohibit its execution. Second to left, the 
-system is verified early after deployment and thus is allowed to execute only a 
-small fraction (6 transitions) of the system, blocking two transitions and 
-leaving 6 transitions unreachable. Third to left, most of the system is 
-executable (11 transitions) but two transitions are blocked and one transition 
-is not reachable. The rightmost example allows all but one transition. Note that 
-in the last example the system gets deadlocked in state 4 when taking the 
-leftmost path.](traces1.svg;traces2.svg;traces3.svg;traces4.svg){#fig:configuration}
 
 Comparing self-verification to run-time and *a priori* design time 
 verification on a more abstract level, we consider specific runs of the system
@@ -63,13 +45,30 @@ self-verification shows that all states $\sigma_k$ reachable with ordinary
 transitions from $\sigma_{i+1}$ are safe, i.e. $\phi(\sigma_k)$. If another 
 trigger transition is reached, the self-verification is run again. Note that the 
 classification of trigger transitions and ordinary transitions depends on the 
-particular $\phi$, and is a design decision (see [#sec:case-study] 
+particular $\phi$ and is a design decision (see [#sec:case-study] 
 below). *A priori* and run-time verification can be seen as extreme cases of
 self-verification: in design time verification only one transition
 (the one leading to the initial state of the system) is classified as a
 trigger transition, while in run-time verification every transition is a
 trigger transition.  [#fig:configuration] illustrates the effect
 of different sets of trigger transitions for one system.
+
+![Four different points in time chosen for verification, from design time 
+(leftmost) to run-time (rightmost). Trigger transitions are marked with small 
+boxes; they trigger verification tasks which show that every possible path 
+through the state space which does not include other trigger transitions is 
+safe. Green boxes mark successful verification, and red boxes mark failed 
+verification tasks. The solid red state is unsafe; it violates the safety 
+property $\phi$. Grayed-out states are not reachable, because they come after a 
+failed verification (open red box). Design time verification (on the left) would 
+identify the system as erroneous and prohibit its execution. Second to left, the 
+system is verified early after deployment and thus is allowed to execute only a 
+small fraction (6 transitions) of the system, blocking two transitions and 
+leaving 6 transitions unreachable. Third to left, most of the system is 
+executable (11 transitions) but two transitions are blocked and one transition 
+is not reachable. The rightmost example allows all but one transition. Note that 
+in the last example the system gets deadlocked in state 4 when taking the 
+leftmost path.](traces1.svg;traces2.svg;traces3.svg;traces4.svg){#fig:configuration}
 
 Because the effort to state and prove $\phi$ increases with the number of states
 we want to cover, self-verification allows us to strike a balance: we may
@@ -86,19 +85,19 @@ implementation. If we move verification into run-time, we can relax
 preconditions at design time, allowing for more readable specifications and
 speeding up the development process. Consider
 [#fig:configuration] again: to make the system usable as
-well as correct, one would have to, e.g. refine the specification (or the
+well as correct, one would have to e.g. refine the specification (or the
 implementation) to exclude the transitions from states 1 and 2 to 3. With
 self-verification, we can allow a more liberal specification or
 implementation and still remain safe, making the development process easier.
 
 Thus, in essence specification becomes easier and faster to write, and
-moreover we are liberated from having to prove everything *a priori*,
+moreover we are liberated from having to prove everything *a priori*
 and can instead adapt the proving strategy to the problem at hand. 
 
 ## Case Study {#sec:case-study}
 
 In the following, we introduce a case study building loosely on Abrial 
-[@Abrial]. The case study is simple enough to be easily understood, yet complex enough to show the subtle effects of verification at different points in time. Note that this case study is stricly different from the  
+[@Abrial]. The case study is simple enough to be easily understood, yet complex enough to show the subtle effects of verification at different points in time. Note that this case study is strictly different from the  
 similar example in [#chap:specific] and must not be confused.
 
 ### Informal Description
@@ -119,17 +118,17 @@ equivalent to each room having a set of entries and exits.
 
 Users are represented in the system by *cards* which regulate the
 access to rooms. (In the following, we use cards and users interchangeably;
-the formal specification only has cards.) Each card authorizes access to a
+the formal specification only has cards.) Each card authorises access to a
 set of rooms, by restricting passage through the doors. The access control
 system operates in two modes: in normal mode, a door may only be passed
-(using a card) if the card authorizes access to the room the door is
+(using a card) if the card authorises access to the room the door is
 leading to. However, we can declare an emergency for the whole building; in
 that modus, some doors are opened, allowing anyone to pass through.
 
 Opening doors in an emergency is subject to two *safety properties*:
 firstly, it should allow any user (card) to eventually arrive in a safe
 room, and secondly, it should not allow any user to enter a room they are
-not authorized to. A subset of rooms is considered to be *safe*; in
+not authorised to. A subset of rooms is considered to be *safe*; in
 the simplest case, this can just be the outside modelled as a
 room. 
 
@@ -137,18 +136,18 @@ As an example for the necessity of the safety properties, take the nuclear
 power plant: even in case of an emergency, one would not want 
 anybody to exit through the reactor core.
 
-![Example of a very simple building. The user with card A is
-authorized for room a, user B is authorized for room b, both are
-authorized for rooms c and s. Room s is the only safe room (it is
-the outside). The situation shown violates the
-safety property.](simple-building.svg){#fig:simple-unsafe width=50%}
-
 This rather innocuous specification allows some subtle effects. Consider the 
 simple building in [#fig:simple-unsafe]. The depicted situation violates the
 safety property, as in case of an emergency, we cannot disable access control 
 and open the doors in such a fashion that neither user A or user B are allowed 
-to access rooms they are not authorized to (rooms b and a, respectively), and 
+to access rooms they are not authorised to (rooms b and a, respectively), and 
 at the same time both are able to get to a safe room (s). 
+
+![Example of a very simple building. The user with card A is
+authorised for room a, user B is authorised for room b, both are
+authorised for rooms c and s. Room s is the only safe room (it is
+the outside). The situation shown violates the
+safety property.](simple-building.svg){#fig:simple-unsafe width=50%}
 
 Hence, we need to prevent a situation like this from happening. This
 could be done by
@@ -182,7 +181,7 @@ context Door
   inv: from.building = to.building
 ````
 
-Furthermore cards are also associated to buildings and may only authorize 
+Furthermore cards are also associated to buildings and may only authorise 
 access to rooms which belong to the same building:
 
 ````{.ocl .continue}
@@ -193,9 +192,9 @@ context Card
 Cards have a set of *authorizations* (rooms which the holder of the
 card is allowed to enter) and exactly one *location*, which
 determines the current location of the card, and which must always be
-contained in the set of authorizations^[We assume an idealized scenario where 
+contained in the set of authorizations^[We assume an idealised scenario where 
 we can reliably track the location of a card holder and can prevent that people 
-share their cards]. On the other hand, rooms have a set of *authorized* cards (those
+share their cards]. On the other hand, rooms have a set of *authorised* cards (those
 cards which have the room in their set of authorizations), and a set of
 *checkedIn* cards (the set of cards whose location is this room).
 
@@ -213,7 +212,7 @@ Rooms have a Boolean attribute *isSafe* which determines whether the
 room is safe during an emergency. A door has a method *pass*, which
 determines whether a given card is allowed to pass. This is the case if
 either the door is open (see immediately below), or if the card is in the
-room this door is opening from, and the card is authorized for the room the
+room this door is opening from, and the card is authorised for the room the
 door is opening to. We have encapsulated this precondition as an OCL
 function *mayPass* in order to reuse it later. The postcondition of
 the *pass* method is that the *location* of the card has
@@ -234,13 +233,13 @@ context Door::pass(card: Card):
   post: card.location = to
 ````
 
-We now want to formalize the safety property: in an emergency, users can always
-reach a safe room, yet no user has access to a room they are not authorized
-to. To formalize a user being able to reach a room, we formalize the notion
+We now want to  the safety property: in an emergency, users can always
+reach a safe room, yet no user has access to a room they are not authorised
+to. To formalise a user being able to reach a room, we formalise the notion
 of recursive *access*, which models the traversal along a sequence of
 connected rooms: users have access to the room they are currently in, and
 recursively to all rooms which can be reached through doors which may be
-passed (i.e. rooms which have an entry from an accessable room that this card
+passed (i.e. rooms which have an entry from an accessible room that this card
 has access to). We formulate this notion as an OCL function
 *hasAccess* which for a given room determines whether a given card
 has access to this room. Since OCL does not allow non-terminating functions we 
@@ -259,7 +258,7 @@ context Room
 
 We can now specify the safety properties: firstly, that users can
 always reach a safe room, and secondly, that users only have access to
-rooms they are authorized for:
+rooms they are authorised for:
 
 ````{.ocl .continue}
 context Card:
@@ -282,7 +281,7 @@ safety property. Of course, in full generality --- universally quantified
 over all buildings and all authorizations --- the safety property does not
 hold; we can easily find counterexamples (such as
 [#fig:simple-unsafe]). If we want to show the safety property at
-design time, we have to formalize conditions which are sufficient for the
+design time, we have to formalise conditions which are sufficient for the
 safety property (i.e. preclude unsafe buildings).
 
 With self-verification, we can show the safety property after deployment,
@@ -306,7 +305,7 @@ property. If we can prove the safety property at this point, we are done,
 but this may not always be possible.
 
 The other extreme case is [#enum-verify-3]; this is fairly
-straightforward to verify, but might be inconvenient to the user. (Thus,
+straightforward to verify but might be inconvenient to the user. (Thus,
 this is an example of making a system safe by restricting its
 availability.) Consider the situation in [#fig:simple-safe] with
 the same authorizations as in [#fig:simple-unsafe]. On the left,
@@ -325,7 +324,7 @@ but still precludes unsafe allocations.
 Note how self-verification allows us to relax the development process:
 because we can prove the safety property at run-time, we do not need to
 specify all its preconditions at design time (here, we do not need to
-characterize the preconditions to make buildings and authorizations
+characterise the preconditions to make buildings and authorizations
 safe). This makes the development process more *agile* without
 compromising safety.
 
@@ -386,7 +385,7 @@ block Room
              e.mayPass(card) and e.from.hasAccess(card))    
 ````
 
-We apply the desgin flow introduced in [#chap:selfie] to our case study. As 
+We apply the design flow introduced in [#chap:selfie] to our case study. As 
 demonstrated in [#sec:case-study], we use the same subset of SysML^[The case study only uses block definition diagrams.] together with OCL as a specification formalism. Block 
 definition diagrams and state machine diagrams can be given a formal semantics 
 (which is not the case for all SysML diagrams), so our specifications have a 
@@ -395,12 +394,12 @@ to perform formal correctness proofs.
 
 We use our textual representation of block definition diagrams and
 state machine diagrams ([#fig:example-bdd]). Parts of the 
-corresponding OCL specifications have been shown in Section [#sec:case-study] above. 
+corresponding OCL specifications have been shown in [#sec:case-study] above. 
 
 The implementation is given as an executable *system model*. To stay
 independent of a specific programming language, we again use the functional
 hardware description language Clash [@Clash] as modelling language,
-since it allows us to simulate the system as well as synthesize an
+since it allows us to simulate the system as well as synthesise an
 implementation in VHDL or VeriLog. Another possibility with more
 commercial traction would be SystemC, but that has a less clear semantics
 and it is embedded in C++, technically a lot more awkward to handle (in
@@ -425,8 +424,6 @@ solver at run-time (either as a lightweight software SAT solver
 
 ### The Demonstrator
 
-![Design flow adapted to our demonstrator.](design-flow-demonstrator.svg){#fig:design-flow-demonstrator}
-
 If we implement the case study in our usual design flow, we derive a
 hardware implementation, e.g. on an FPGA. In order to explore the
 implications of proving at different points in time, and to demonstrate the
@@ -434,8 +431,8 @@ effects of self-verification in an easily accessible setting,
 we implemented the case study as an interactive demonstrator. For this, we 
 leveraged the two previously developed tool flows for the instantiation of 
 our model from [#chap:specific]. This allows us to semi-automatically 
-translate the above SysML defenition into an executable system by generating 
-implementation stubs as well as translating the model into a an refinable SMT
+translate the above SysML definition into an executable system by generating 
+implementation stubs as well as translating the model into a refinable SMT
 instance.
 
 Simulating the hardware turned out to be very slow, so instead we chose to
@@ -444,6 +441,8 @@ behaviour implemented in TypeScript.
 
 The core of the system is generated as implementation stubs, using an
 adapted form of our design flow (see [#fig:design-flow-demonstrator]).
+
+![Design flow adapted to our demonstrator.](design-flow-demonstrator.svg){#fig:design-flow-demonstrator}
 
 We have chosen TypeScript [@TypeScript] as the target language
 (TypeScript is like JavaScript, but with added type security),
@@ -464,15 +463,12 @@ The generated SMT proof obligations are a general equivalence proof which
 can be processed by an SMT prover at design time. As mentioned above, the
 prover quickly finds counter examples since our specification can easily
 be violated in general. By adding run-time information in the form of
-assertions, we refine the instance on the fly. This was realized by
+assertions, we refine the instance on the fly. This was realised by
 establishing a WebSocket connection between the SVG and the Z3
 prover. For this, we use the *websocat* utility, which wraps a
 WebSocket server around a command-line program. This allows us to
 load the general proof and then incrementally send assertions restricting
 the state space.
-
-![The demonstrator is implemented as an interactive SVG document, displayed 
-here in a web browser.](screenshot.png){#fig:screenshot}
 
 Technically, the arbitrarily mutable state of our simulation is in
 principle not compatible with the monotonous nature of adding assertions:
@@ -481,7 +477,7 @@ SMT-LIB (the common language used by most SMT provers) allows us to use
 scopes (with the commands *push* and *pop*) for this. In
 order for this to work, we introduce a fixed order in which information is
 added, which is based on the order of execution in the system, ideally
-corresponding to the frequency of change. First we add the general building
+corresponding to the frequency of change. First, we add the general building
 topology, then the access rights, and after that, the tracked locations of
 the card holders. Between every assertion, we save the current size of the
 assertion stack with the *push* command. If any information changes,
@@ -494,7 +490,7 @@ An interesting feature of our implementation is that we did not implement any
 algorithm which opens the doors. Instead, we use the prover to give us a
 model of the existentially quantified safety property, which states that 
 there must be a safe way to exit (i.e. a set of doors to open in case of 
-emergency). Through self-verification not only did we not have to characterize 
+emergency). Through self-verification not only did we not have to characterise 
 buildings, access rights or safe paths through the building, we
 even did not have to implement a path finding algorithm at all.
 
@@ -504,13 +500,16 @@ manually choose one of the three different information levels for the proof,
 which result in different assertions being added as well as different
 triggers for the proof.
 
+![The demonstrator is implemented as an interactive SVG document, displayed 
+here in a web browser.](screenshot.png){#fig:screenshot}
+
 Users can explore the consequences of the different points in time for the
 self-verification. For example, if they choose to verify early on (after a
 new card has been added or access rights change) and add a
 lot of cards, they will notice a considerable slow-down when adding new
 cards or changing access rights. If they choose to verify late (before a
 user enters a room), and construct situations like in
-[#fig:simple-safe], they will realize how users congregate in
+[#fig:simple-safe], they will realise how users congregate in
 front of a room unable to get in. (The demonstrator is intended to be used
 together with additional interactive explanation, not stand-alone, as
 situations like this will have to be constructed consciously.)
@@ -535,13 +534,13 @@ However, we have made a number of observations which can help to assist in
 finding the right set of trigger transitions. The set of trigger
 transitions should be large enough such that verification tasks can be
 completed in a timely manner (again, acceptable verification times depend on
-the concrete use case), but reduced in a way such that no critical
+the concrete use case) but reduced in a way such that no critical
 transition is included. Trigger transitions might be prohibited by
 self-verification in case the specification is violated (fails to verify in
 the concrete instance), so critical transitions should not be included in
 the set of trigger transitions: e.g. if we verify the existence of an
 escape route in case of an emergency it is clearly too late to handle
-failure.  On the other hand administrative operations like changing access
+failure.  On the other hand, administrative operations like changing access
 rights are far better suited to be included as trigger transitions, since a
 potential failure is presented to a trained user of the system. Lastly, one
 should avoid transient states (e.g. a user is
@@ -551,7 +550,7 @@ self-verification may lead to a system dead-locked there, as in [#fig:configurat
 ## Conclusion
 
 The vehicle of our investigations in this chapter was a case study consisting 
-of an access control system, which is parameterized in many dimensions (the 
+of an access control system, which is parameterised in many dimensions (the 
 building under control, the access rights, the users) that can be instantiated 
 at different points in time. 
 

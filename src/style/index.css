@@ -182,8 +182,12 @@ figure[width] {
 figure > figcaption {
   font-size: 0.9rem;
   line-height: 1.4;
-  margin-top: 0.5rem;
+  margin-top: 0.2rem;
   text-align: justify;  
+}
+
+mjx-container + .example {
+  margin-top: 2rem;
 }
 
 figure > figcaption::before {  

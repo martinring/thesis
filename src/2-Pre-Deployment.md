@@ -1,9 +1,9 @@
 # A Priori Verification {#chap:specific}
 
 To allow thought about the verification of systems after deployment, we will 
-first establish a top-down agile work-flow for *a priori* verification in this 
+first establish a top-down agile work flow for *a priori* verification in this 
 chapter. To this end, we will introduce the different abstraction levels from 
-informal, naturally phrased specifications down to implementational apsects and 
+informal, naturally phrased specifications down to implementational aspects and 
 show how these can be connected in such a way that requirements can be tracked 
 and verified across different abstraction levels. In the subsequent chapters, 
 this will allow us to choose where self-verification plugs into the flow.
@@ -28,10 +28,10 @@ arbitrary language to explain how the system is supposed to behave and be
 structured.	Formal modelling languages such as the UML or SysML build on a 
 formal definition to avoid the issue of ambiguities in the description. 
 System-level modelling language such as SystemC are the last step before 
-synthesizable HDLs, allowing to build virtual prototypes that can be simulated 
+synthesisable HDLs, allowing to build virtual prototypes that can be simulated 
 without actually implementing in the final hardware design.
 
-These languages form a hierarchy, and are supposed to be used subsequently: 
+These languages form a hierarchy and are supposed to be used subsequently: 
 providing a natural language description first, then formalising it, providing a 
 system level model and finally implementing the design at the register transfer 
 level gradually leads designers through the process.
@@ -44,7 +44,7 @@ uniform notion of *refinement*, and thirdly, we want to be able to
 
 In this chapter we will present a framework which aims at meeting these
 challenges. The framework provides a uniform management of specifications
-in these languages at a syntactic level, a semantics to relate their
+in these languages at a syntactic level, semantics to relate their
 meaning (as far as possible) by a notion of refinement, and a comprehensive
 change management across all levels. We have implemented the framework in a
 prototype of the *Change Impact Analysis and Control Tool* ([ChImpAnC]{style=font-variant:small-caps}) to 
@@ -83,7 +83,7 @@ desired, meaning that these specifications need to be processed manually.
 
 The next step to describe a system in a more exact way are formal
 languages.
-Standardised languages such as the Systems Modeling Language (SysML) give
+Standardised languages such as the Systems Modelling Language (SysML) give
 designers a way to describe the system readily but at the same time force
 them to adhere to a formal grammar that makes these descriptions
 unambiguous [@drechsler2014fsl].  SysML thus offers a way to add
@@ -147,7 +147,7 @@ to specify how exactly the results are computed.
 These different abstraction levels all have particular purposes and use
 cases:
 
-- natural language offers a way to quickly come up with an initial
+- Natural language offers a way to quickly come up with an initial
   description of a given system that is well-readable without prior
   training and not restricted concerning the described properties;
 - FSL models specify system properties in a precise way amenable to
@@ -174,34 +174,38 @@ development consistent with each other is called *functional change management*.
 As an example, consider the design of an access control system
 (appropriated from [@Abrial]). It should control the access of people
 to buildings by controlling the doors. Initial natural language
-requirements state facts about their relations ([#fig:case-study-isl])
+requirements state facts about their relations ([#fig:case-study-isl]).
 
 ````{caption="Example - Informal Specification Level" #fig:case-study-isl}
 P1: The model is composed of people and buildings
-P5: Any person in a given building is authorised to be there.
+P5: Any person in a given building is authorised to be there
 ````
 
 To formalise requirements such as these, we introduce SysML blocks, with
 added OCL constraints. Here, classes initially include people and
 buildings; associations include $\textit{aut}$ and $\textit{sit}$, which
-point to the buildings someone is authorized to enter, or is currently
-in, respectively ([#fig:case-study]). There is one OCL constraint which states that every person can
-only be in a room she or he is authorized for, i.e.
-$\textit{sit}\in\textit{aut}$, written in OCL as `self.aut->includes(self.sit)` ([#fig:case-study-ocl]). These formalized but very loose
-constraints can now be refined further. For example, we introduce
-doors which connect buildings, and people are authorized to access certain
-doors.  To make this into an ESL specification, we then describe the actual
-mechanics of operating the door in more detail: when a person is
-approaching the door, a green or red light should indicate whether access is
-granted or denied, and a turnstile should open (or not). This can be
-expressed by a state machine diagram in SysML ([#fig:case-study-state]).
+point to the buildings someone is authorised to enter, or is currently
+in, respectively ([#fig:case-study]). 
 
 ![Example - Formal Specification Level (block definition diagram)](acs-diagram-blocks.svg){#fig:case-study width=67%}
+
+There is one OCL constraint which states that every person can
+only be in a room she or he is authorised for, i.e.
+$\textit{sit}\in\textit{aut}$. ([#fig:case-study-ocl]). 
 
 ````{.ocl #fig:case-study-ocl caption="Example - Formal Specification Level (ocl constraint)"}
 context Person
   inv P5: self.aut->includes(self.sit)
 ````
+
+These formalised but very loose
+constraints can now be refined further. For example, we introduce
+doors which connect buildings, and people are authorised to access certain
+doors.  To make this into an ESL specification, we then describe the actual
+mechanics of operating the door in more detail: when a person is
+approaching the door, a green or red light should indicate whether access is
+granted or denied, and a turnstile should open (or not). This can be
+expressed by a state machine diagram in SysML ([#fig:case-study-state]).
 
 ![Example - Formal Specification Level (state machine diagram)](acs-diagram-state.svg){#fig:case-study-state width=80%}
 
@@ -238,12 +242,12 @@ When working with OCL-constrained SysML models, there is a large collection of
 tools available, which let us design diagrams. These can be classified into two 
 groups. On the one hand those which have an underlying semantic model and on the 
 other hand graphical tools without a semantic model (of SysML). Examples for the
-former are Astah SysML, Papyrus, System Architect or Enterprise Architect. Since 
+former are *Astah SysML*, *Papyrus*, *System Architect* or *Enterprise Architect*. Since 
 we want to formally verify compliance to the specification, we are dependent on 
 the semantic model and thus will not consider the tool from the latter class 
-(e.g. Microsoft Visio or Capella).
+(e.g. *Microsoft Visio* or *Capella*).
 
-We have chosen to support Papyrus, which is based on the Exclipse Modelling 
+We have chosen to support Papyrus, which is based on the Eclipse Modelling 
 Foundation. However, since SysML is thoroughly specified 
 [@SysML], it should be fairly straight forward to map between different 
 representations.
@@ -335,7 +339,7 @@ block Door
 
 ### Semantics
 
-The semantics of the language are completely externalized to the unterlying 
+The semantics of the language are completely externalised to the unterlying 
 Papyrus framework. Every Diagram expressed in SPECifIC SysML is mapped to a 
 Papyrus SysML Diagram.
 
@@ -377,7 +381,7 @@ analysis between different abstraction levels.
 The analysis of SystemC designs is a complex task that is a research field on 
 its own.  Embedding SystemC into a change managed workflow is
 thus a non-trivial task as a various C++ dialects need to be supported,
-each tied to compilers that generate an optimized binary version of the
+each tied to compilers that generate an optimised binary version of the
 design to be run that is stripped of all non-essential meta information.
 Different approaches to extract the given information include parsing the
 source code [@Fey2004;@Karlsruhe2012;@Castillo2007;@Brandolese2006;@Berner2005] 
@@ -389,7 +393,7 @@ designs that are built using the compiler being used).  In order to keep our
 approach as applicable as possible, the approach given in [@stoppe2013data] was 
 used: instead of relying on the source code, the compiler-generated debug 
 symbols are used. While the format itself differs between compiler 
-architectures, it is always standardized and/or accessible, resulting in a 
+architectures, it is always standardised and/or accessible, resulting in a 
 reliable interface to retrieve structural descriptions from SystemC designs.
 
 The OCL approach to specification with preconditions, postconditions and
@@ -441,7 +445,7 @@ At the FSL, the class and object diagrams give us a notion of state (see
 [@RichtersGogolla2002] for details): classes describe the system state (via an 
 object model), and object diagrams describe particular system states (in 
 particular, initial states). State transitions are given by the OCL constraints: 
-there is a transition with operation $o$ from $S_1$ to $S_2$ iff.
+there is a transition with operation $o$ from $S_1$ to $S_2$ iff
 
 1. all invariants hold in $S_1$ and $S_2$,
 2. the preconditions of $o$ are satisfied in $S_1$, and
@@ -457,7 +461,7 @@ etc.), and transitions are given by the simulation (see [@SystemCStandard]
 for details; however, we use a reasonable abstraction from the concrete
 SystemC implementation instead of a mathematically precise model of the
 implementation). Thus, the semantic entities at the ESL are classes,
-attributes, and methods. For thiw, we have implemented a semantic meta 
+attributes, and methods. For this, we have implemented a semantic meta 
 model for SystemC based on EMF:
 
 [![https://github.com/DFKI-CPS/scemf - GitHub](https://gh-card.dev/repos/DFKI-CPS/scemf.svg?fullname=)](https://github.com/DFKI-CPS/scemf){.ghlink}
@@ -501,10 +505,10 @@ user (in particular, the mapping of ISL requirements).
 ### Syntactic Representation
 
 The specifications on the different levels are written in different formalisms, 
-each in their own syntax. Since we aim to extensibly support a wide variety of 
-file types, it would be inflexible to implement a parser for every concrete 
-input syntax. Hence we decided to employ the widely adopted, generic Eclipse 
-Modelling Framework (EMF) [@steinberg2008emf], which serves as a common 
+each in their own syntax. Since we aim to support a wide variety of 
+file types in an extensible way, it would be inflexible to implement a parser 
+for every concrete input syntax. Hence we decided to employ the widely adopted, 
+generic Eclipse Modelling Framework (EMF) [@steinberg2008emf], which serves as a common 
 basis for other file types. This means that any format is supported as soon as 
 there is a translation into EMF.
 
@@ -556,8 +560,6 @@ element Operation {
 
 ### Semantic Difference Analysis
 
-![Change management via explicit semantics after initial extraction](mappings-1.svg){#fig:explicitSemantics0 width=80%}
-
 The distinctive feature of the diff algorithm is that it takes the
 intended semantics of the documents into account. This is achieved by
 representing the semantics as a graph (*explicit semantics*).
@@ -566,7 +568,7 @@ by graph rewrite rules, which can be efficiently implemented in Neo4j;
 after extraction, the nodes of this semantic graph are connected to the
 origin nodes of the syntactic tree ([#fig:explicitSemantics0]).
 
-![Change management via explicit semantics after application of syntactic diff](mappings-2.svg){#fig:explicitSemantics1 width=80%}
+![Change management via explicit semantics after initial extraction](mappings-1.svg){#fig:explicitSemantics0 width=80%}
 
 When a change in an input file occurs, a diff is applied to the syntactic
 tree. Then, we mark the nodes of the semantic graph as "deleted"
@@ -576,6 +578,8 @@ the graph are marked as "preserved", nodes that do not exist are marked as
 "added", and all other nodes remain marked as "deleted". During this process
 additional semantic knowledge can be used to handle individual nodes as
 required. 
+
+![Change management via explicit semantics after application of syntactic diff](mappings-2.svg){#fig:explicitSemantics1 width=80%}
 
 ![Change management via explicit semantics after second extraction](mappings-3.svg){#fig:explicitSemantics2 width=80%}
 
@@ -619,7 +623,7 @@ arise from refined OCL constraints. These proof obligations are of the form
 $c_1 \wedge ... \wedge c_n \Longrightarrow d$, where $c_1$ to $c_n$ are 
 constraints on the refined level and $d$ is a constraint in the abstract level.
 If this is proven, we can discharge the obligation and insert additional 
-dependency edges between the constraints $c_1\ldots,c_n$ and $d$. If one of
+dependency edges between the constraints $c_1,\ldots,c_n$ and $d$. If one of
 these constraints changes the proof will be invalidated and the proof obligation 
 pops up again.
 
@@ -635,7 +639,7 @@ SystemC (and especially its extensions, e.g. TLM) has no such specification, and
 even the host language C++ is not unambiguous across compilers and platforms. 
 
 So Clash (See [#sec:esl]) is a natural choice if we not only want to map and 
-trace changes accross layers but also conduct verification (and trace 
+trace changes across layers but also conduct verification (and trace 
 verification results) across layers. For this we have developed a dedicated 
 backend that can translate Clash designs into SMT Bitvector logic (See also 
 [#sec:clash-smt]). In addition we have built a small tool, that can generate the 
@@ -643,10 +647,6 @@ proof obligations as SMT assertions from the SysML Model, the OCL Constraints
 and the Mappings to the ESL design.
 
 ## The User Interface {#sec:frontend}
-
-![The ChImpAnC user interface](screen-main.png){#fig:screen-main}
-
-[![DFKI-CPS/chimpanc - GitHub](https://gh-card.dev/repos/DFKI-CPS/chimpanc.svg?fullname=)](https://github.com/DFKI-CPS/chimpanc){.ghlink}
 
 [ChImpAnC]{style=font-variant:small-caps} is realised as a web interface and can either run locally or on
 a team server. When users open the application in a browser they get
@@ -657,6 +657,8 @@ represents a refinement step. There are usually more refinement steps involved
 than would fit into the user interface, so there is a navigation bar on the top
 where one can select the layer in focus. 
 
+![The ChImpAnC user interface](screen-main.png){#fig:screen-main}
+
 Natural language descriptions are treated specially due to the fact that they 
 might be mapped to arbitrary lower specification layers. I.e. it might be 
 intended, that an abstract formal description does not contain every 
@@ -665,16 +667,12 @@ care of in subsequent refinements. They may be locked by clicking on the lock
 icon on the lower right, such that the user is able to relate the natural 
 language description to lower level refinements.
 
-![Highlighting of mappings](screen-mappings.png){#fig:mapping}
-
 All extracted model elements are represented as bold identifiers. Mapped
 model elements appear green. When a user hovers the mouse over such a mapped
 element, the corresponding refinement is visually emphasised
 ([#fig:mapping]).
 
-![Highlighting of inconsistencies](screen-missingimpl.png){#fig:inconsistency}
-
-![Inline display of proof obligations](screen-proofobl.png){#fig:proofobligation}
+![Highlighting of mappings](screen-mappings.png){#fig:mapping}
 
 Inconsistencies are highlighted with red wavy underlines. These include
 elements (abstract models, attributes, references, operations or parameters)
@@ -687,7 +685,9 @@ number ([#fig:proofobligation]). When the user moves the mouse over
 a marked element, a tooltip will appear containing information about the
 inconsistency.
 
-![A content warning in natural language](screen-nlwarn.png){#fig:warning}
+![Highlighting of inconsistencies](screen-missingimpl.png){#fig:inconsistency}
+
+![Inline display of proof obligations](screen-proofobl.png){#fig:proofobligation}
 
 Content warnings are highlighted with orange wavy underlines. These are
 currently only present in natural language where we automatically rate the
@@ -695,7 +695,7 @@ quality of refinements, using the techniques from [@nlp]. Again, a
 detailed description of the warning can be obtained by hovering the mouse
 over the marked element ([#fig:warning]).
 
-![An impact warning](screen-modifiedimpl.png){#fig:impactWarn}
+![A content warning in natural language](screen-nlwarn.png){#fig:warning}
 
 Finally, change management support is implemented by impacts. An impact
 can either indicate that a refinement has changed or that the abstraction
@@ -709,6 +709,8 @@ they already result in an inconsistent model, and thus an inconsistency
 error. Impact warnings appear as orange elements indicating that user
 attention is required ([#fig:impactWarn]).
 
+![An impact warning](screen-modifiedimpl.png){#fig:impactWarn}
+
 ## Conclusion
 
 This chapter introduced the different layers of abstraction that may be used to
@@ -720,7 +722,9 @@ down to system-level models. [ChImpAnC]{style=font-variant:small-caps} manages
 the models of the systems at the different abstraction levels, keeps track of 
 dependencies, and calculates the impact of changes.  Moreover, it can warn about 
 inter layer inconsistencies that would previously be left unnoticed by the 
-established tool chain.
+established tool chain. The tool is freely available online:
+
+[![DFKI-CPS/chimpanc - GitHub](https://gh-card.dev/repos/DFKI-CPS/chimpanc.svg?fullname=)](https://github.com/DFKI-CPS/chimpanc){.ghlink}
 
 We will use this foundation to develop the idea of self-verification in the
 subsequent chapters.

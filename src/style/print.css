@@ -142,7 +142,10 @@
   }
 
   table, figure {
-    -prince-float: snap unless-fit; 
+    -prince-float: snap unless-fit;         
+    -prince-float-policy: in-order;    
+    -prince-margin-alt: 0;
+    
   }
 
   :root {

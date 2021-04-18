@@ -21,7 +21,7 @@ and to measure it practically in a meaningful way. The main problem is
 *how many* and *which* variables are fixed. For this, we first state a formal 
 criterion describing an optimal solution to this problem. Based on that, a cost 
 function is defined which can be used to employ stochastic and heuristic methods 
-in order to eventually determine solutions optimized for this goal.
+in order to eventually determine solutions optimised for this goal.
 
 Using a proof-of-concept implementation based on evolutionary algorithms,
 we were able to confirm the potential of the proposed methodology. In fact, 
@@ -29,7 +29,7 @@ experimental evaluations confirmed that this methodology indeed determines a set
 of variables to be fixed which keeps the verification run time within specified 
 limits while still covering as much as possible of the search space.
 
-In general, the methodology works for any other heuristic which optimizes with 
+In general, the methodology works for any other heuristic which optimises with 
 respect to a given cost function, and the proposed analysis method is 
 independent from both the reasoning engine and the underlying logical language, 
 i.e. we treat the reasoning engine as a completely opaque black box which either 
@@ -64,10 +64,10 @@ not cover all instances of the verification problem,
 proving an instance of $\phi$ may still be of potential value. 
 
 This yields the questions *how many* and *which* variables should
-be fixed. So far no detailed analysis exists on whether the number and
+be fixed. So far, no detailed analysis exists on whether the number and
 selection of variables matters, on by how much the verification time is
 actually reduced, and how to measure these effects in the first place.
-In an idealized scenario, answers to these questions would be as sketched in
+In an idealised scenario, answers to these questions would be as sketched in
 the following example:
 
 ::: Example * {#ex:ideal_scen}
@@ -79,19 +79,19 @@ of the verification task.^[
   but the general principle that proving ground term propositions is much
   faster is still valid.
 ]
-Moreover, in an idealized scenario, the proof time would be reduced
+Moreover, in an idealised scenario, the proof time would be reduced
 exponentially with respect to the number of fixed variables. This is
 sketched by the *green solid line* in [#fig:runtime-idealized], showing an 
-idealized graph plotting the (presumed) average proof time (in logarithmic 
-scale) over the number of fixed variables. In this idealized scenario,
+idealised graph plotting the (presumed) average proof time (in logarithmic 
+scale) over the number of fixed variables. In this idealised scenario,
 answers to the two questions raised above are trivial: It does not matter
 *which* variables are fixed (any differences are
 averaged out) and the *number* is basically determined by the
-available resources; i.e. the available time (on the y-axis) determines
+available resources, i.e. the available time (on the y-axis) determines
 the corresponding number of variables (on the x-axis).
 :::
 
-However, such an idealized scenario almost never occurs. In fact, it
+However, such an idealised scenario almost never occurs. In fact, it
 quickly becomes clear that the relation between the number of fixed
 variables and the proof time is rather erratic.  Again, this is
 illustrated by means of an example:
@@ -109,11 +109,11 @@ corresponds to the average proof time $t$ of $\phi$ with $n$ different
 variables fixed. As can clearly be seen, there is no
 obvious relation between proof time and the number of fixed
 variables. Instead, there are a number of data points which are better
-than the idealized scenario discussed before in [#ex:ideal_scen], i.e. points 
+than the idealised scenario discussed before in [#ex:ideal_scen], i.e. points 
 which lie below the diagonal in [#fig:runtime-idealized].
 :::
 
-![Idealized and observed run time of a representative verification problem.](idealized-runtime.ts){#fig:runtime-idealized}
+![Idealised and observed run time of a representative verification problem.](idealized-runtime.ts){#fig:runtime-idealized}
 
 As illustrated by these observations, simply fixing a certain number of
 variables of $\phi$ often does not yield the desired result.  Moreover, a
@@ -139,7 +139,7 @@ Effectiveness
 : We are particularly interested in verification
   problems which cannot be completed due to a time-out; here, we are
   looking for the data points which lie as much to the left in
-  [#fig:runtime-idealized] as possible, but are still below the
+  [#fig:runtime-idealized] as possible but are still below the
   time-out. These are hard to find by enumeration as one would run into
   time-outs a lot.
 
@@ -166,7 +166,7 @@ The inputs of the optimization problem are as follows:
 
 Note that the actual time units are irrelevant, but we assume that the time
 is deterministic and reproducible.^[
-  In the experiments summarized below, we use the number of elementary
+  In the experiments summarised below, we use the number of elementary
   operations of the SMT solver *Z3* [@Moura2008Z3AE] as time unit
   (`rlimit` count), since this is deterministic and independent of 
   architecture or memory.]
@@ -208,7 +208,7 @@ However, in between, the behaviour is not so well defined. From the above,
 we might guess that the smaller the set $X$, the larger the average
 verification run time (i.e. $\AvgTphi X$ is anti-monotone over the size
 of the variable set), but this turns out not be true (also confirmed by [#fig:runtime-idealized] discussed in [#ex:erratic]).
-Mathematically, Given two different subsets $X,Y\in\FV{\phi}$, we have
+Mathematically, given two different subsets $X,Y\in\FV{\phi}$, we have
 
 $$
 \begin{equation}
@@ -240,7 +240,7 @@ approaches do not lead to satisfactory results in most cases. The optimal
 solution for say two variables is
 not necessarily a subset of the optimal solution for three
 variables (they are not even guaranteed to intersect at all).
-So we lack an order structure on the space of possible solutions ---
+So, we lack an order structure on the space of possible solutions ---
 all subsets of $\FV{\phi}$ --- which can guide a search process to the
 optimal solution. To determine a solution in a rather unstructured
 space of solutions (such as this one), a number of probabilistic and
@@ -248,8 +248,6 @@ heuristic approaches are available (e.g. simulated annealing,
 evolutionary algorithms, etc.). However, all of these need a dedicated
 *cost function* which unambiguously describes the quality in a quantifiable 
 fashion (i.e. as a number) to guide the search.
-
-![Contour of the cost function](cost-contour.ts){#fig:runtime-score}
 
 To get this cost function, we propose a geometric interpretation of
 the data points in [#fig:runtime-idealized]. We are
@@ -272,7 +270,7 @@ $$
 $$
 
 ::: Example * 
-  [#fig:runtime-score] visualizes the contours of the cost function
+  [#fig:runtime-score] visualises the contours of the cost function
   ($q$ from [#eq:quality-measure]). The theoretical optimum lies at
   $q(0,0) = 0$. When applied to the results of
   [#fig:runtime-idealized], a ranking of the data points becomes
@@ -280,6 +278,8 @@ $$
   by solid lines in [#fig:runtime-score]). Considering this as cost metric, the
   optimal solution is the point marked with a green circle in [#fig:runtime-score].
 :::
+
+![Contour of the cost function](cost-contour.ts){#fig:runtime-score}
 
 Our cost function requires a concrete value for $T_{\phi}$ which can
 only be approximated (see [#sec:rta-implementation]),
@@ -299,13 +299,13 @@ For the example considered above, assume an acceptable time limit
 $T_{max}$. Based on this, approximate $\tau(\phi)$ as illustrated by
 the dotted lines in [#fig:runtime-score]. Now, only the
 data points between the left bottom corner and these lines
-lines are considered during analysis. This way, it is ensured that a
+are considered during analysis. This way, it is ensured that a
 good solution is derived while, at the same time, the analysis time
 remains efficient.
 :::
 
 Using this cost function and the threshold, any heuristic method of choice can
-be applied to determine a set $X$ such that $q(X)$ is minimized -- this
+be applied to determine a set $X$ such that $q(X)$ is minimised -- this
 will be our desired solution.
 
 ## Implementation {#sec:rta-implementation}
@@ -317,7 +317,7 @@ which represent an established method to solve optimization problems, with
 applications in hardware design [@KorousicSeljak2005AnEA;@Vascek2015EvolutionaryAT] 
 or multi-objective optimization [@Chen2018DynamicMO;@Deb2015MultiObjectiveEA].
 In the following, we briefly review the basic concepts of EAs in general,
-before discussing how those concepts are utilized in order to address the
+before discussing how those concepts are utilised in order to address the
 problem.^[However, note that any other optimization
   methodology can be applied as well, and that the usage of EAs
   only constitutes a representative.]
@@ -372,7 +372,7 @@ observed any more) or until a time limit terminates the process.
 
 ### EA-based Verification Run Time Analysis {#sec:ea_sol}
 
-In the following, we describe how EAs can be utilized for the optimization
+In the following, we describe how EAs can be utilised for the optimization
 problem defined above.  Recall that we are interested in keeping the set
 $X$ of variables to be fixed as small as possible while the average
 verification run time $\AvgTphi X$ remains feasible for the reasoning
@@ -453,12 +453,12 @@ order to avoid getting stuck in a local optimum.
 
 Even though the strategies described here constitute only one possible
 implementation, it yields very promising results, as the experimental
-evaluations summarized in the next section will show.
+evaluations summarised in the next section will show.
 
 ## Experiments and Results {#sec:rta-exp}
 
 The solution proposed above has been implemented and evaluated using a
-large corpus of verification instances.  This section summarizes the
+large corpus of verification instances.  This section summarises the
 most important results obtained by this evaluation. To this end, we
 first briefly provide details on the actual set-up as well as
 the considered benchmarks. Afterwards, the obtained results are
@@ -479,9 +479,9 @@ instance. This way, the time measurements (required for the
 fitness function of the EA) remain independent from the actual
 platform and hardware. The target time-out $T_{max}$ was set to an
 `rlimit` count of $500\,000$ which is roughly equivalent to
-$0.5s$ of computation on the utilized compute server^[Note that there is no 
+$0.5s$ of computation on the utilised compute server^[Note that there is no 
 exact relation between Z3's `rlimit` count and real time since `rlimit` also 
-considers memory operations.]
+considers memory operations.].
 
 Using this set-up, the verification run time analysis determines the
 desired set $X$ out of which the variables to be set to fixed values
@@ -515,7 +515,7 @@ original proof time.
 
 ### Obtained Results
 
-A representative subset of results is summarized in [#tab:rta-results] 
+A representative subset of results is summarised in [#tab:rta-results] 
 (For the full results see the linked github repository). Here, the first 
 columns denote the problem size: the number of SMT variables, and the number of 
 bits ($|\FV{\phi}|$) representing those SMT variables. The next group of
@@ -559,10 +559,10 @@ sped up by factor 10 or more, 167 were sped up by factor 100 or more and 94 were
 sped up by factor 1000 and more. For 11 benchmarks the reference time could not
 be determined due to time-outs of factor >10000.
 
-Those benchmarks which were not significantly sped up can actually be recognized during 
+Those benchmarks which were not significantly sped up can actually be recognised during 
 analysis because they show no clear relation between sets of variables and 
 run time and thus have large fluctuations within the population over generations 
-of the EA. We identified sevaral reasons, why this can happen: when too much information 
+of the EA. We identified several reasons, why this can happen: when too much information 
 is represented by a single SMT variable; when there are only pseudo-random 
 dependencies between variables and when too much of the heavy lifting happens in
 local function definitions. However, these instances can be quickly identified 
@@ -633,7 +633,7 @@ The obtained results show how many and which variables to fix to get as much
 as possible out of partial verification. In this regard, note that there may be 
 external reasons to fix (or not fix) a variable. For example, it makes no sense 
 to fix sensor input which changes rapidly, but it makes a lot of sense to fix 
-configuration parameters which rarely change. Obviously such considerations can 
+configuration parameters which rarely change. Obviously, such considerations can 
 easily be integrated into the proposed analysis e.g. by adding a *weight* to the
 variables such that instantiating some variables (which do not change often) is 
 favourable to instantiating others (which do change often).
@@ -648,7 +648,7 @@ the whole verification succeed (see e.g. [@Wuestholz,@Beyer2016]). This is also
 referred to as conditional model checking [@Beyer2012]. Furthermore, the term is 
 also used in the context of agents [@Caragiannis2012,@Yu2011], but refers to 
 verification of truthfulness. However, the methodology proposed in this chapter 
-here is not related to any of these previous work and, hence, is novel to the 
+here is not related to any of these previous works and, hence, is novel to the 
 best of our knowledge.
 
 ## Conclusion

@@ -4,7 +4,7 @@ This thesis has elaborated on self-verification — systems which are not
 verified a priori, during the design phase, but where the proof obligations 
 incurred during the development are postponed until after deployment, and are 
 proven at run-time. This makes proofs easier, as we can instantiate a number 
-of the parameters of the system which are unknown at design time, but become 
+of the parameters of the system which are unknown at design time but become 
 known at run-time. This reduces the state space, turning the exponential growth 
 of the state space — the bane of model-checking — into exponential reduction. 
 Self-verification is supported by a tool chain we have developed, which allows 
@@ -32,23 +32,23 @@ applicability of the approach as well as design decisions that should be made:
   or delay of a trigger transition should never violate the specification --- if 
   we verify our parachute upon pulling the release cord it is clearly too late 
   to handle failure.
-- Trigger transitions should maximize the reduction in prover run time. A 
+- Trigger transitions should maximise the reduction in prover run time. A 
   trigger transition which does not significantly reduce the verification run time,
   may as well be left as a normal transition.
 
 For the latter point, we have developed a methodology which can indicate which
 sets of variables of a proof offer the largest reduction in verification run 
-time. Aiding the designer in this descision.
+time. Aiding the designer in this decision.
 
-Note that the self-verification is not meant to *replace* the existing 
-verification flow, it *enhances* it. We should by all means use all well-known 
+Note that self-verification is not meant to *replace* the existing 
+verification flow but rather *enhances* it. We should by all means use all well-known 
 powerful tools at design time to discharge verification conditions as before.
 However, self-verification offers a different way to tackle proof obligations 
 which cannot be shown at design time, supplementing design time verification, 
 and offering the designer to pick the best of all possible worlds.
 
 The idea of self-verification opens up numerous possiblities for future work 
-(as sketched in [#chap:advanced]), which the scope of this thesis did not include. 
+(as sketched in [#chap:advanced]), which did not fit the scope of this thesis. 
 However, the evaluations and discussions show that, following the proposed idea,
 allows for a novel verification methodology, that can be adapted today, which 
 does not rely on incremental improvement of existing tools and methods but 

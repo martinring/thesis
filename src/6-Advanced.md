@@ -10,7 +10,7 @@ If neither safety nor functionality can be sacrificed, whenever a trigger
 transition is reached during the run-time of a system, the system must pause
 until it is proven safe to operate again (See also [#sec:practical-exploitation]). 
 This may lead to unacceptable delays in the execution. One possible remedy could 
-be to utilize the idle-time of the proof system to proactively prove possible 
+be to utilise the idle-time of the proof system to proactively prove possible 
 future trigger transitions. However, this imposes a couple of hard problems:
 
 1. We need a method to predict future transitions and
@@ -26,7 +26,7 @@ jams, psychological approaches to intention recognition to predict the behaviour
 of the other road users, etc. It becomes clear, that this direction is by no 
 means a venture that can be easily taken. Not because these methods do not exist,
 but because complex techniques from numerous scientific disciplines have to be 
-combined. However, even rudimentary approaches can give us a benefit. We utilize 
+combined. However, even rudimentary approaches can give us a benefit. We utilise 
 "free" idle time between trigger transitions and every *hit* will improve the 
 responsivenes of the sytem.
 
@@ -46,13 +46,13 @@ availability and responsiveness of self-verifying systems.
 
 ## Just-in-Time Verification {#sec:jit}
 
-So far we have worked with statically assigned trigger transitions such as a 
+So far, we have worked with statically assigned trigger transitions such as a 
 change of the configuration or an environment variable. If these variables are 
 under the control of the system this allows for a completely safe system while 
 we might sacrifice some functionality (when a proof fails) or have to accept 
 delays (when a proof consumes more time than predicted). However, variables that 
 are externally controlled might leave the system unverified for a period of time 
-or even prooven errorneous during execution. *Just-in-time verificataion* can be 
+or even proven erroneous during execution. *Just-in-time verification* can be 
 a remedy for these shortcomings by dynamically triggering *time-bounded 
 verifications* during run-time keeping the system safe in spite of externally 
 controlled variables.
@@ -65,7 +65,7 @@ to the point where the consumed time is larger than the target time span. In
 contrast to full model-checking, time-bounded verification is both decidable and 
 EXPSPACE-Complete instead of undecidable and NP-Complete [@TimeBoundedVerification].
 
-### Prerequesites
+### Prerequisites
 
 Just-in-time verification imposes two essential requirements that have to be met 
 during the design of the system.
@@ -94,12 +94,6 @@ timespan $t_0$ which ends at $\dashv_{t_0}$. When this is done, the system can
 start operating. During operation, the proof engine will continuously trigger 
 proofs after the following schema:
 
-![The ideal jit scenario: . $t_{n-1}$ is the timespan 
-that was previously verified. In this ideal 
-scenario $t_n^\text{proof}$ ends before the end of 
-$\dashv_{t_{n-1}} - \left|t_\text{safe}\right|$. Operation can continue and 
-the next proof ($n+1$) is triggered.](jit-1.svg){#fig:jit-1 width=67%}
-
 1. the proof for $t_{n-1}$ completes.
 2. we trigger a proof for $t_n$ with $\dashv_{t_n} > \dashv_{t_n-1} + t_\text{safe}$. 
    The proof itself consumes the timespan $t_n^\text{proof}$. $t_n$ is 
@@ -110,6 +104,12 @@ the next proof ($n+1$) is triggered.](jit-1.svg){#fig:jit-1 width=67%}
    executing our safety measure. ([#fig:jit-2], [#fig:jit-3])
 5. when we reached a safe state, we can try to restart the system, by 
    bootstrapping again and start from (1)
+
+![The ideal jit scenario: . $t_{n-1}$ is the timespan 
+that was previously verified. In this ideal 
+scenario $t_n^\text{proof}$ ends before the end of 
+$\dashv_{t_{n-1}} - \left|t_\text{safe}\right|$. Operation can continue and 
+the next proof ($n+1$) is triggered.](jit-1.svg){#fig:jit-1 width=67%}
 
 ![Reasons to exit the proof cycle: an error is detected before 
 $t_{n-1} - \left|t_\text{safe}\right|$. The system starts the emergency measure
@@ -146,23 +146,23 @@ $t=\frac{v}{a}$), we have the power to actively control $t_\text{safe}$. If we
 cannot establish a stable proof cycle, a possible remedy could be to 
 actively lower $t_\text{safe}$, i.e. reduce the velocity of the vehicle. 
 
-On the other hand we might be able to control variables that can reliably reduce
-the seach space, e.g. again, the velocity of a vehicle has an influence on the 
+On the other hand, we might be able to control variables that can reliably reduce
+the search space, e.g. again, the velocity of a vehicle has an influence on the 
 area containing the possible future positions of the vehicle. 
 
 By this, the reduction of velocity linearly increases the available proof time 
 while also reducing the search space of the proof exponentially. This 
 observation could well be the key to practically applicable just-in-time 
-verification: The system adapts it's operation to the proof system and vice 
-versa. Both system availability and safety can me maximised dynamically.
+verification: The system adapts its operation to the proof system and vice 
+versa. Both system availability and safety can be maximised dynamically.
 
 ## Verification Aware Inference
 
-Inferred systems or components of sytems, which are the result of modern 
+Inferred systems or components of systems, which are the result of modern 
 machine learning approaches (e.g. deep neural networks) are usually black boxes 
-for verification methods. Their quality assurance usually focuses on the traning 
+for verification methods. Their quality assurance usually focuses on the training 
 inputs. There are several first attempts to the verification of such trained 
 models [@Narodytska2018;@Sun2019]. However, they share the problem of non-scalability.
 
 However, if we take into account the observations from
-[#sec:dependent-operation], that controllable variables can not only have an effect on $t_\text{safe}$ but also on the search space, we can imagine an inferred system that is optimized not only to perform it's primary tasks but also reduce verification time so drastically, that it becomes feasible in spite of the scalability issues. For complex systems with (for humans) impenetrable inter-dependencies this might well be the only way to establish dependent operation.
+[#sec:dependent-operation], that controllable variables can not only have an effect on $t_\text{safe}$ but also on the search space, we can imagine an inferred system that is optimised not only to perform its primary tasks but also reduce verification time so drastically, that it becomes feasible in spite of the scalability issues. For complex systems with (for humans) impenetrable inter-dependencies this might well be the only way to establish dependent operation.

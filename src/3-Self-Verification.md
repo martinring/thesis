@@ -1,6 +1,6 @@
 # Fundamentals of [Self-Verification]{.nobr} {#chap:selfie}
 
-In this chapter, we proposes a simple design and verification methodology which 
+In this chapter, we propose a simple design and verification methodology which 
 conducts verification after deployment. To this end, we start with the 
 observation that contemporary systems are designed to operate in a variety of 
 operating contexts. In order to do so, *configurations* are used, i.e. parameters
@@ -44,7 +44,7 @@ verification until *after* deployment. At first sight, this seems like a rather 
 idea. A system deployed in the field is likely to have far less
 computational power, memory and network resources available than a
 design server. However, it has a main advantage which, we argue,
-outweigh theses deficiencies: after deployment, there is generally
+outweigh these deficiencies: after deployment, there is generally
 *more information* about the operating context available.
 
 In order to enjoy this benefit, the design needs to be geared
@@ -63,10 +63,6 @@ reduction.
 The idea and its benefits are illustrated by the following (running)
 example, which has been deliberately kept simple in order to keep the focus on the methodology.
 
-![Bringing light into darkness: The light controller is connected
-to a luminosity sensor, and switches a light on or off when it becomes
-too dark or bright.](light-sensor-sketch.svg){#fig:sketch .small}
-
 :::Example *
 The simple light controller system sketched in [#fig:sketch]
 works as the running example in the following. This system
@@ -82,6 +78,10 @@ The threshold levels $e_{lo}, e_{hi}$ and the delay $d$ are
 configuration variables, and can be changed post-deployment.
 :::
 
+![Bringing light into darkness: The light controller is connected
+to a luminosity sensor and switches a light on or off when it becomes
+too dark or bright.](light-sensor-sketch.svg){#fig:sketch .small}
+
 Systems like these are designed in a flexible fashion, so that they
 can be applied in various contexts. For the light controller, the threshold levels and delay are not fixed at
 design or production time but will be set post-deployment.  Hence, in order to verify the correctness of the system, we need to take into account
@@ -89,7 +89,15 @@ design or production time but will be set post-deployment.  Hence, in order to v
 exponentially. It also means that a lot of possible configurations are
 checked during verification which may never be applied during the system's
 lifetime. Hence, if we instantiate the configuration variables after
-deployment and keep only the variables of the system which change frequently arbitrary, we get a much smaller search space to explore.
+deployment and keep only the variables of the system which change frequently 
+arbitrary, we get a much smaller search space to explore.
+
+The reduced search space can be handled comfortably by a lightweight solver
+after deployment, even under the prevailing conditions of limited
+computational resources.  But note that this verification is only valid for
+the particular configuration (i.e. the supplied values for 
+$e_{lo}, e_{hi}$ and $d$) and, thus, can principally not be done prior to deployment
+without severely reducing the flexibility and versatility of the system.
 
 :::Example * continued 
 Consider again the running example. If we assume a width of
@@ -113,8 +121,6 @@ e & cnt & status & & total\\
 \end{array}
 \end{equation}
 $$
-
-<!-- TODO EQ -->
   
 Thus, we need to check an overall search space of $2^{41}$ states to verify the
 system, a huge search space for a very simple example.
@@ -130,13 +136,6 @@ $e_{hi}$ and $d$ fixed for the verification, the search
 space reduces to $2^{17}$ states.
 :::
 
-The reduced search space can be handled comfortably by a lightweight solver
-after deployment, even under the prevailing conditions of limited
-computational resources.  But note that this verification is only valid for
-the particular configuration (i.e. the supplied values for 
-$e_{lo}, e_{hi}$ and $d$) and, thus, can principally not be done prior to deployment
-without severely reducing the flexibility and versatility of the system.
-
 ## Implementation {#sec:impl}
 
 The previous section illustrated the potential of conducting verification
@@ -149,11 +148,11 @@ formal development of the running example considered in the previous section.
 
 The design flow starts with a *modelling phase*, where the structure
 and behaviour of the system is modelled at an abstract level without
-referring to any implementation se (see [#fig:design-flow]). In
+referring to any implementation (see [#fig:design-flow]). In
 our case, we use SysML [@SysML] and OCL [@RichtersGogolla2002] to
-specify the structure and formalize constraints on its behaviour as well as the
+specify the structure and formalise constraints on its behaviour as well as the
 functional hardware description language Clash [@Clash] for a uniform,
-executable and synthesizeable model of the system.
+executable and synthesiseable model of the system.
 
 The actual specification and implementation languages are of no
 particular relevance and could be replaced by others (e.g. we could use
@@ -161,7 +160,7 @@ UML instead of SysML, or SystemC instead of Clash), but serve here to
 point out the level of abstraction in the corresponding part of the
 design process.
 
-From the model, we can synthesize an *implementation* of the system
+From the model, we can synthesise an *implementation* of the system
 by generating a representation in a low-level hardware modelling language such as VHDL or
 Verilog, which is used to program an FPGA -- constituting the actual
 implementation. Moreover, we want to *verify* that the generated
@@ -186,15 +185,16 @@ if the values of the configuration variables are changed.
 
 ### The Design Process At Work 
 
+In the following, we apply the design flow ([#fig:design-flow]) to the simple example from [#sec:selfie-general-idea].
+
 ![Design flow for verification after deployment. We start with modelling
 the system behaviour, then derive an implementation and 
-verification conditions. By proving the verification conditions we make sure
+verification conditions. By proving the verification conditions, we make sure
 the system behaves as specified. Due to the large search space, the
 proofs are not possible pre-deployment. But instantiation
 of the configuration variables reduces the size of the search space
 significantly and makes proofs possible post-deployment.](design-flow.svg){#fig:design-flow}
 
-In the following, we apply the design flow to the simple example from [#sec:selfie-general-idea].
 
 #### Specification (top of [#fig:design-flow])
 
@@ -206,6 +206,10 @@ lower and upper threshold of luminosity and the delay when switching off
 are in a separate block marking them as configuration variables.
 
 ![SysML specification of the light controller](sysml-spec.svg){#fig:design-spec width=80%}
+
+The behaviour is provided in OCL as shown in [#fig:ocl-spec]. We model state 
+transitions by an explicit operation `tick()`; The pre- and postcondition of the
+state transition are denoted as pre- and postconditions of this operation.
 
 ````{.ocl #fig:ocl-spec caption="OCL specification of the behaviour of the light controller"}
 context Controller
@@ -222,9 +226,6 @@ context Controller::tick()
   post a5: not (on or off_s) implies
             light.status=light.status@pre
 ````
-The behaviour is provided in OCL as shown in [#fig:ocl-spec]. We model state 
-transitions by an explicit operation `tick()`; The pre- and postcondition of the
-state transition are denoted as pre- and postconditions of this operation.
 
 #### Model (middle of [#fig:design-flow])
 
@@ -233,7 +234,7 @@ Based on the specification, a Clash model is derived.
 Clash is a strongly typed domain-specific language to model hardware. It
 is embedded into the functional programming language Haskell, and describes
 the hardware as functions of the language. The strong type system guarantees
-that everything we can describe in Clash is still synthesizeable, and
+that everything we can describe in Clash is still synthesiseable, and
 allows us to model the hardware at an abstract but still executable level.
 
 The model describes the hardware by combinators (higher-order functions),
@@ -362,18 +363,6 @@ find a counter-example, the verification condition holds.
 
 #### Instantiation after Deployment (bottom of [#fig:design-flow])
 
-````cnf {#fig:cnf-simple caption="CNF in DIMACS format for a very simple assertion. Lines starting with $c$ are comments; the line starting with $p$ states the number of variables and clauses; the following lines are the clauses, each line containing one conjunct consisting of a disjunction of variable $i$ or its negation $-i$ (terminated by $0$). A suitable representation of this format is used post-deployment."}
-c   e_hi --> [5 6]
-c   e --> [3 4]
-p cnf 7 6
--3 7 0
-4 -6 0
-4 7 0
-5 7 0
--6 7 0
-3 -5 -7 0
-````
-
 Finally, the configuration variables are instantiated in order to reduce
 the search space.  This is directly conducted in the obtained CNF. In
 order to give an impression of the generated CNF, we just consider the very
@@ -386,7 +375,7 @@ bit-vector logic as the assertion:
 
 Using only two bits for $e$ and $e_\text{hi}$, Yices generates the CNF as shown in
 [#fig:cnf-simple], which represents
-these bit-vectors as variables, corresponding to the formula.Here, $x$ is an auxiliary
+these bit-vectors as variables, corresponding to the formula. Here, $x$ is an auxiliary
 variable. $e_1$ and $e_2$ denotes the first respectively the second bit of the bit-vector $e$. The same notation applies to $e_\text{hi}$.:
 
 $$
@@ -400,6 +389,18 @@ $$
   \end{array}
 \end{equation}
 $$
+
+````cnf {#fig:cnf-simple caption="CNF in DIMACS format for a very simple assertion. Lines starting with $c$ are comments; the line starting with $p$ states the number of variables and clauses; the following lines are the clauses, each line containing one conjunct consisting of a disjunction of variable $i$ or its negation $-i$ (terminated by $0$). A suitable representation of this format is used post-deployment."}
+c   e_hi --> [5 6]
+c   e --> [3 4]
+p cnf 7 6
+-3 7 0
+4 -6 0
+4 7 0
+5 7 0
+-6 7 0
+3 -5 -7 0
+````
 
 Yices keeps track of the encoding of the variables, i.e. to instantiate the
 configuration variables, we add corresponding unit clauses, e.g. to
@@ -424,10 +425,10 @@ the idea of verification after deployment, and the proposed verification as
 described in [#sec:impl], to more sophisticated home automation
 controller in order to demonstrate its applicability.
 
-The home controller has been realized on top of a ZedBoard, which comprises an
+The home controller has been realised on top of a ZedBoard, which comprises an
 ARMv7 core running Linux to control a Xilinx FPGA, and which for the
 purposes of verification has been equipped with a lightweight SAT
-solver [@light-weight-SAT-solving]. The obtained results are summarized
+solver [@light-weight-SAT-solving]. The obtained results are summarised
 in this section. Furthermore, we also discuss possible ramifications which
 have to be considered when utilizing the proposed methodology in practice.
 
@@ -476,6 +477,20 @@ similar to the specification of the simple light controller in
 [#fig:ocl-spec], and have verified that the implementation satisfies
 this specification.
 
+[#tab:exp-pre] and [#tab:exp-post] list the results. Column *System* gives the name
+of the considered system. The remaining columns summarise the results in
+two groups: [#tab:exp-pre] for verification according to the established
+verification flow (i.e. verifying all properties at design time) and 
+[#tab:exp-post] for the verification methodology proposed here (using the
+lightweight solver on the target system). For each group, we
+give the size of the search space (i.e. the number of possible solutions to
+be checked); the number of variables; the number of clauses of the
+resulting CNF; and the run time (in seconds).  The run time is measured on
+systems which would typically be used for verification, so they are
+directly comparable: for the established verification flow, a compute
+server (Intel Xeon E3-1270 v3, eight cores, 16 GB memory) and, for the proposed
+verification flow, the ZedBoard (ARMv7, 1GB memory).
+
 Table: Evaluation Results (Established Flow) {#tab:exp-pre}
 
 | System           | Search space | Variables | Clauses | Time     |
@@ -495,20 +510,6 @@ Table: Evaluation Results (Proposed Flow) {#tab:exp-post}
 | **weighted_avg** | $2^{265}$    | 31374     | 146642  | $28.5s$  |
 | **smart**        | $2^{544}$    | 1421153   | 2704606 | $1.5s$   |
 | **multiplier**   | $2^{16}$     | 809       | 2467    | $418.0s$ |
-
-[#tab:exp-pre] and [#tab:exp-post] list the results. Column *System* gives the name
-of the considered system. The remaining columns summarize the results in
-two groups: [#tab:exp-pre] for verification according to the established
-verification flow (i.e. verifying all properties at design time) and 
-[#tab:exp-post] for the verification methodology proposed here (using the
-lightweight solver on the target system). For each group, we
-give the size of the search space (i.e. the number of possible solutions to
-be checked); the number of variables; the number of clauses of the
-resulting CNF; and the run time (in seconds).  The run time is measured on
-systems which would typically be used for verification, so they are
-directly comparable: for the established verification flow, a compute
-server (Intel Xeon E3-1270 v3, eight cores, 16 GB memory) and, for the proposed
-verification flow, the ZedBoard (ARMv7, 1GB memory).
 
 The obtained results clearly show the benefits of the proposed
 approach. Typical embedded systems (as the ones considered here)
@@ -534,7 +535,7 @@ which was previously out of reach for established tools.
 Our approach may be applied in various ways. In the following we illustrate a possible 
 practical application to the design of a smart home controller as described above.
 
-Requirements and properties are established during design time, and checked with 
+Requirements and properties are established during design time and checked with 
 contemporary verification tools. 
 Refinements are tracked and verified down to the electronic system level.
 All properties which cannot be automatically 
@@ -546,7 +547,7 @@ prepared for self-verification using our approach.
 In the deployed system, a verification controller is constantly watching
 the values of the configuration variables and triggers a
 proof if a value change is requested. For example, if a light is
-connected to the smart home controller, the configuration is updated and
+connected to the smart home controller, the configuration is updated, and
 the proofs have to be re-run. Since the system would now be in an
 unverified state, it will either stop operating or defer the value change
 until the proofs have successfully finished; this way, it continues
@@ -566,11 +567,11 @@ three possible ways to cope with this:
    again. This potentially violates non-functional requirements on timing but 
    safety and function are unaffected.
 
-None of these situations is desireable and thus the verification controller
+None of these situations is desirable and thus the verification controller
 might use statistical observations for the prediction of future
 variable-states and proactively verify them during idle-time. If any of these 
 states occurs, the system can instantaneously continue operating with guaranteed
-safety (see also [#sec:predictive-verification])
+safety (see also [#sec:predictive-verification]).
 
 If a proof fails for the resulting configuration, the
 system informs the user about the failed proof.  The user can disconnect
@@ -582,7 +583,7 @@ configuration, and can use this information to take appropriate measures.
 
 ## Discussion
 
-The results obtained by the conducted cases studies summarized above
+The results obtained by the conducted cases studies summarised above
 clearly show the promises of the proposed verification methodology.
 However, some obvious ramifications have to be discussed when evaluating
 the general applicability of this methodology.
@@ -620,7 +621,7 @@ run-time verification is the trace (or run) of a system, and central questions
 are how to derive monitors checking a concrete run against an abstract 
 specification. The logics employed are typically temporal or modal logics. In 
 our work, we are not concerned with monitoring the system at all, we instead 
-*specialize* given variables in an abstract specifications if they do not change 
+*specialise* given variables in an abstract specifications if they do not change 
 often.
 
 ## Conclusion
@@ -632,7 +633,7 @@ questions have yet to be answered:
 
 1. When exactly should the verification take place and what are the consequences
    of late vs. early verification?
-2. Which parts of a system should belong to it's *Configuration* and how can we
+2. Which parts of a system should belong to it's *configuration* and how can we
    systematically determine these parts?
 
 The following chapters will address these questions respectively. 
