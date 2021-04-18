@@ -190,6 +190,10 @@ mjx-container + .example {
   margin-top: 2rem;
 }
 
+.print {
+  display: none;
+}
+
 figure > figcaption::before {  
   content: attr(data-name);
   font-weight: bold;

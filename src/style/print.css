@@ -76,7 +76,7 @@
   @page header {    
     counter-reset: page;
     margin: 4cm !important;
-    margin-inside: 4.85cm;
+    margin-inside: 4.85cm !important;
   }
 
   @page preface {
@@ -197,7 +197,7 @@
     page-break-before: always;
     page: preface;
     display: block !important;
-  }
+  }  
 
   .disclaimer::before {
     content: 'Disclaimer';
@@ -210,6 +210,10 @@
     display: block;
     width: 66%;
     border-top: 1px solid black;
+  }
+
+  .print {
+    display: block !important;    
   }
 
   hr {

@@ -133,8 +133,6 @@ This cumulative thesis is based on the following original publications:
   *My contribution: Implementation (100%), Writing (~25%), Evaluation (100%)*
 {.refs}
 
-
-
 ### Source code
 
 This thesis is accompanied by a large amount of code, implementing the described 
@@ -173,3 +171,11 @@ terms:
 Unfortunately this distinction has not previously been made and hence, the 
 original publication [@VerificationRuntime] "Verification Runtime Analysis" 
 breaks these rules and should rather be titled "Verification Run Time Analysis".
+
+:::{.print style="-prince-float:bottom;color:#666"}
+
+This thesis is typeset in HTML and CSS and is also available online:
+
+[`https://martinring.de/thesis`](https://martinring.de/thesis)
+
+:::
