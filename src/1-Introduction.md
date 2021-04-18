@@ -37,19 +37,19 @@ Current verification techniques such as theorem proving, model checking,
 static analysis or testing are conducted at design time and finished before deployment,
 for two reasons: firstly, we want to make sure the system has no errors
 before putting it into operation, and secondly, it is not entirely clear
-how to conduct verification at runtime. But this approach has the drawback that the
+how to conduct verification at run-time. But this approach has the drawback that the
 time for verification is limited; errors which are not caught by the time
 the system is going into operation will remain undetected and may later on
 have unintended, unpleasant, or even catastrophic consequences.
 
 On the other hand, verification does not necessarily need to terminate with
-the end of the development. In *runtime verification*, we check whether
+the end of the development. In *run-time verification*, we check whether
 a particular run of the system satisfies desired properties. This
 has the advantage that we do not need to stop verification if we deploy the
 system, and checking whether a specific run of the system satisfies the
 desired property is of lower complexity compared to
 model-checking [@LeuckerSchallhart]. The drawbacks are that it may be
-costly to continuously monitor the behaviour of the system at runtime, and
+costly to continuously monitor the behaviour of the system at run-time, and
 once we find an error, it may be too late to do anything about it. This is
 particularly true for hardware, and systems where the split between hardware
 and software is decided rather late in the development process.
@@ -58,9 +58,6 @@ The idea of *self-verification* as envisioned in [@DFW:2015] is to investigate
 the middle ground in between: verify properties of the system as soon as 
 practically possible, but as late as necessary. In other words, verification 
 does not terminate with deployment, but is also not kept until the last moment.
-
-## Scope
-
 The authors of [@DFW:2015] name three benefits that self-verification yields:
 
 1. *More resources* -- the computational power and verification effort of 
@@ -70,9 +67,13 @@ The authors of [@DFW:2015] name three benefits that self-verification yields:
 1. *More information* -- the environment of an deployed unit becomes concrete 
    and by this can substitute abstract variables with definitive observations.
 
-Of these aspects, the focus of this work is the latter: How can information 
+Of these aspects, the scope of this work is the latter: How can information 
 gained during operation be utilized to speed up the verification process so 
-drastically that it becomes feasible? 
+drastically that it becomes feasible? This thesis is *not* concerned with the 
+former two aspects and does not investigate how computing power and time of 
+deployed systems may be combined. Contrarily, we assume less computational power 
+and time, as we aim to prove properties during normal operation on individual 
+devices with far less capabilities than a dedicated compute server has.
 
 ## Structure
 
@@ -87,8 +88,8 @@ The thesis is structured as follows:
 - [#chap:timing] dives deeper into the impacts self-verification has on the 
   development and how design decisions should be made. 
 - [#chap:partitioning] introduces a methodology to analyse proofs with respect 
-  to the question, which parts offer the most reduction in prover run-time when 
-  instantiated during system runtime. 
+  to the question, which parts offer the most reduction in prover run time when 
+  instantiated during system run-time. 
 - Finally we sketch some advanced ideas for future work in [#chap:advanced] and 
 - conclude with a brief summary of the results in [#chap:conclusion].
 
@@ -144,5 +145,31 @@ form is provided:
 
 [![https://github.com/martinring/thesis - GitHub](https://gh-card.dev/repos/martinring/thesis.svg?fullname=)](https://github.com/martinring/thesis){.ghlink}
 
+These links can be clicked in the HTML version of this thesis as well as the PDF 
+but obviously not in the printed form. They resolve to a github link of the 
+form `https://github.com/<repo>` where `<repo>` is the name of the repository. 
+E.g. the above link can be accessed as `https://github.com/martinring/thesis`.
+
 > All linked source code was developed solely by the author of this thesis,
 > unless explicitly indicated otherwise.
+
+### Disambiguation
+
+We talk about different notions of time in this thesis and are confronted with 
+the ambiguous nature of the term "runtime", ["run-time"]{.nobr} or ["run time"]{.nobr}. While 
+there exists no clear definition and all three different spellings may be used 
+for every meaning of the word, in this thesis we assign distinct meanings to the 
+terms:
+
+- *run time* is the length of time taken by the execution of a process. 
+  E.g. "The run time of the verification was 42 seconds".
+- *run-time* is the time at or during which a process runs. 
+  E.g. "The property could be proven during run-time". May be used as an 
+  attributive adjective as in "run-time information" (refering to information
+  available during run-time).
+- finally a *runtime* is shorthand for *Runtime Environment* as in 
+  *Java Runtime* or *Haskell Runtime*.
+
+Unfortunately this distinction has not previously been made and hence, the 
+original publication "Verification Runtime Analysis" breaks these rules and 
+should be titled "Verification Run Time Analysis".

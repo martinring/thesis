@@ -1,9 +1,5 @@
 # A Priori Verification {#chap:specific}
 
-> *This chapter is based on the original work “Change impact analysis for 
-> hardware designs — from natural language to system level” [@Chimpanc]*
-
-
 To allow thought about the verification of systems after deployment, we will 
 first establish a top-down agile work-flow for *a priori* verification in this 
 chapter. To this end, we will introduce the different abstraction levels from 
@@ -134,8 +130,8 @@ semantics).
 ### The Register Transfer Level (RTL) and below
 
 From the ESL, we can map the system design further down to the Register 
-Transfer Level gives designers the ability to design systems that may be 
-translated into hardware [@hafer1983formal].
+Transfer Level, which gives designers the ability to design systems that 
+may be translated into hardware [@hafer1983formal].
 
 Dedicated HDLs are specifically designed to be mapped to hardware, focusing on 
 the description of structural features and parallel execution while at the same 
@@ -178,12 +174,10 @@ development consistent with each other is called *functional change management*.
 As an example, consider the design of an access control system
 (appropriated from [@Abrial]). It should control the access of people
 to buildings by controlling the doors. Initial natural language
-requirements state facts about their relations:
+requirements state facts about their relations ([#fig:case-study-isl])
 
-````
+````{caption="Example - Informal Specification Level" #fig:case-study-isl}
 P1: The model is composed of people and buildings
-````
-````
 P5: Any person in a given building is authorised to be there.
 ````
 
@@ -191,21 +185,25 @@ To formalise requirements such as these, we introduce SysML blocks, with
 added OCL constraints. Here, classes initially include people and
 buildings; associations include $\textit{aut}$ and $\textit{sit}$, which
 point to the buildings someone is authorized to enter, or is currently
-in, respectively. There is one OCL constraint which states that every person can
+in, respectively ([#fig:case-study]). There is one OCL constraint which states that every person can
 only be in a room she or he is authorized for, i.e.
-$\textit{sit}\in\textit{aut}$, written in OCL as `self.aut->includes(self.sit)` ([#fig:case-study], left). These formalized but very loose
+$\textit{sit}\in\textit{aut}$, written in OCL as `self.aut->includes(self.sit)` ([#fig:case-study-ocl]). These formalized but very loose
 constraints can now be refined further. For example, we introduce
 doors which connect buildings, and people are authorized to access certain
 doors.  To make this into an ESL specification, we then describe the actual
 mechanics of operating the door in more detail: when a person is
 approaching the door, a green or red light should indicate whether access is
 granted or denied, and a turnstile should open (or not). This can be
-expressed by a state machine diagram in SysML ([#fig:case-study-state],
-right).
+expressed by a state machine diagram in SysML ([#fig:case-study-state]).
 
-![SysML block definition diagram of the access control system](acs-diagram-blocks.svg){#fig:case-study width=67%}
+![Example - Formal Specification Level (block definition diagram)](acs-diagram-blocks.svg){#fig:case-study width=67%}
 
-![SysML state machine diagram of the access control system](acs-diagram-state.svg){#fig:case-study-state width=80%}
+````{.ocl #fig:case-study-ocl caption="Example - Formal Specification Level (ocl constraint)"}
+context Person
+  inv P5: self.aut->includes(self.sit)
+````
+
+![Example - Formal Specification Level (state machine diagram)](acs-diagram-state.svg){#fig:case-study-state width=80%}
 
 In our refinement steps, we have replaced modelling classes such as people
 and buildings by implementation classes like doors. The final refinement step
@@ -214,7 +212,7 @@ not people) becoming components (called `SC_MODULE` in SystemC), comprised of a
 card reader, a turnstile, and green and red LEDs. The turnstile has a method 
 `operate` which implements the state machine diagram above ([#fig:case-study-systemc]).
 
-```{.cpp caption="SystemC representation of the access control system (excerpt)" #fig:case-study-systemc}
+```{.cpp caption="Example - Electronic System Level" #fig:case-study-systemc}
 SC_MODULE(Door)
 {
   //...
@@ -252,9 +250,10 @@ representations.
 
 The reason we chose Papyrus is the fact, that it is the only Framework which 
 allows for semantically meaningful OCL constraints. All other tools we have 
-investigated treat Constraints as verbatim text with a language annotation, that 
+investigated treat constraints as verbatim text with a language annotation, that 
 can indicate an OCL constraint or any other language (another specification 
-language, natural language or a programming language). 
+language, natural language or a programming language), without the possibility
+to semantically connect the OCL constraint to the surrounding model.
 
 We have developed our own textual representation of SysML (called *SPECifIC SysML*) 
 which is based on the graphical appearance of diagrams. In this section we give 
@@ -272,17 +271,20 @@ modelled by means of the OCL. However, since SPECifIC SysML compiles to Papyrus
 Models it can still be combined with any diagram type that is not supported in 
 the textual representation.
 
-### Lexical Syntax
+### Syntax
 
 The language tries to mimic the appearance of drawn diagrams while keeping it 
 "writable". We use indentation to indicate the structure of a diagram and 
 transfer every textual rule that SysML specifies into the grammar of the 
 language. Most other aspects such as comments, literals and delimiters are taken 
-from the OCL Language specification.^[For details consult the reference implementation]
+from the OCL Language specification. Constraints are always assumed to be 
+written in OCL and by this don't require language annotations. In 
+[#fig:sysml-spec] the example from [#sec:acs-example] is expressed in SPECifIC 
+SysML.
 
-````{.sysml #fig:sysml-spec caption="The example from [#sec:acs-example] expressed in SPECifIC SysML"}
-bdd [package] fsl3::acs [ACS]
------------------------------------------------------------
+````{.sysml #fig:sysml-spec .standalone caption="The example from [#sec:acs-example] expressed in SPECifIC SysML"}
+bdd [package] fsl6::acs [ACS]
+---------------------------------------------------------------
 
 block Building
   references
@@ -290,44 +292,60 @@ block Building
       derive: org_dom.dest->asSet()
     building: Building[*] <- gate
     org_dom: Door[*] <- org
-  constraints
-    inv: not (gate->includes(self))
 
 block Person
+  operations
+    admitted(q: Door): Boolean { query }
+      post P17: q.org = self.sit and self.aut->includes(q.dest)
   references
     aut: Building[*]
-    sit: Building[1] { subsets aut }
-  constraints
-    inv: aut->forAll(b|aut.building->includes(b))
+    sit: Building[1] { subsets aut }    
 
 block Door
+  values
+    green: Boolean
+      derive: dap->notEmpty()
+    red: Boolean
   operations
-    enter(p: Person)
-      pre: p.aut->includes(dest)
-      pre: p.sit = org
-      post: p.sit = dest
+    accept()
+      pre: not (green or red)
+    refuse()
+      pre: not (green or red)
+      post: red
+    pass_thru()
+      pre: green
+    off_grn()
+      pre: green
+    off_red()
+      post: not red
   references
     org:  Building[1] <- org_dom
-    dest: Building[1]
+    dest: Building[1]    
   owned behaviors
-    state machine EnterBehavior <|- enter
+    state machine EnterBehavior
       initial state Waiting
-        enter / -> Waiting
+        accept / -> Accepting
+        refuse / -> Refusing
+      state Accepting
+        off_grn / -> Waiting
+        pass_thru / -> Waiting
+      state Refusing
+        off_red / -> Waiting
 ````
-
-### Syntax
 
 ### Semantics
 
-### Refrence Implementation
+The semantics of the language are completely externalized to the unterlying 
+Papyrus framework. Every Diagram expressed in SPECifIC SysML is mapped to a 
+Papyrus SysML Diagram.
 
-A reference implementation is freely available:
+### Refrence Compiler{#sec:sysml-impl}
+
+Further details about the syntax and semantics of the lanugage can be found 
+online in the reference implementation which is freely available. Here, also 
+further tooling around the language can be found.
 
 [![https://github.com/DFKI-CPS/specific-sysml - GitHub](https://gh-card.dev/repos/DFKI-CPS/specific-sysml.svg?fullname=)](https://github.com/DFKI-CPS/specific-sysml){.ghlink}
-
-DFKI-CPS/specific-sysml
-
-TODO
 
 ## A Framework for Change Impact Analysis {#sec:functionalChangeManagement}
 
@@ -439,7 +457,10 @@ etc.), and transitions are given by the simulation (see [@SystemCStandard]
 for details; however, we use a reasonable abstraction from the concrete
 SystemC implementation instead of a mathematically precise model of the
 implementation). Thus, the semantic entities at the ESL are classes,
-attributes, and methods.
+attributes, and methods. For thiw, we have implemented a semantic meta 
+model for SystemC based on EMF:
+
+[![https://github.com/DFKI-CPS/scemf - GitHub](https://gh-card.dev/repos/DFKI-CPS/scemf.svg?fullname=)](https://github.com/DFKI-CPS/scemf){.ghlink}
 
 The semantic entities on the respective abstraction levels give rise to
 notions of mapping between them. From the ISL to FSL and ESL, we map each
@@ -513,7 +534,7 @@ block is identified by its name, and that the order of the contained
 attributes and operations is irrelevant, while on the other hand the
 order of the parameters of an operation has a semantic meaning.
 
-````{#fig:simeq caption="Example *ecore.equivspec* file"}
+````{.equivspec #fig:simeq caption="Example *ecore.equivspec* file"}
 element Block {
   annotations {
     name!
@@ -625,8 +646,6 @@ and the Mappings to the ESL design.
 
 ![The ChImpAnC user interface](screen-main.png){#fig:screen-main}
 
-The source code of the user interface is freely available:
-
 [![DFKI-CPS/chimpanc - GitHub](https://gh-card.dev/repos/DFKI-CPS/chimpanc.svg?fullname=)](https://github.com/DFKI-CPS/chimpanc){.ghlink}
 
 [ChImpAnC]{style=font-variant:small-caps} is realised as a web interface and can either run locally or on
@@ -693,17 +712,15 @@ attention is required ([#fig:impactWarn]).
 ## Conclusion
 
 This chapter introduced the different layers of abstraction that may be used to
-design systems top-down. We also presented [ChImpAnC]{style=font-variant:small-caps}, 
-a tool which supports a comprehensive system design flow across different levels 
-of abstraction levels, from natural language down to system-level models. [ChImpAnC]{style=font-variant:small-caps} manages the models of the systems at the different 
-abstraction levels, keeps track of dependencies, and calculates the impact of 
-changes.  Moreover, it can warn about inter layer inconsistencies that would 
-previously be left unnoticed by the established tool chain.
+design systems top-down. We presented SPECifIC SysML a textual modelling 
+language that supports a formal subset of the SyML. We integrated all this in 
+[ChImpAnC]{style=font-variant:small-caps}, a tool which supports a comprehensive 
+system design flow across different levels of abstraction, from natural language 
+down to system-level models. [ChImpAnC]{style=font-variant:small-caps} manages 
+the models of the systems at the different abstraction levels, keeps track of 
+dependencies, and calculates the impact of changes.  Moreover, it can warn about 
+inter layer inconsistencies that would previously be left unnoticed by the 
+established tool chain.
 
-We believe that our tool is easy to integrate into existing workflows since it 
-is independent of the utilised tools and can be extended to support all kinds of 
-formats using EMF as a simple and well documented interface. Users can provide 
-rules for refinement and automatic impact propagation as graph rewriting rules 
-in the form of Neo4j queries. Even if not all designers in a team use the tool, 
-it offers added value, since it provides a way to detect and communicate the 
-impact of changes across different layers.
+We will use this foundation to develop the idea of self-verification in the
+subsequent chapters.

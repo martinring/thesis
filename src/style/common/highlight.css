@@ -1,4 +1,4 @@
-.editor .source .keyword:not(.operator) {
+.editor .source .keyword:not(.operator), .editor .source.smt .keyword {
   color: blue;
 }
 
@@ -6,7 +6,7 @@
   color: #af00db;
 }
 
-.editor .source .name.type, .editor .source .name.tag  {
+.editor .source .name.type, .editor .source .name.tag, .editor .source .constant  {
   color: #267f99;
 }
 
@@ -14,7 +14,7 @@
   color: #795e26;
 }
 
-.editor .source .attribute-name {
+.editor .source .attribute-name, .editor .source .member {
   color: #001080;
 }
 

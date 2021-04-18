@@ -1,0 +1,12 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "scopeName": "source.equivspec",
+  "name": "Equivspec",
+  "fileTypes": ["equivspec"],
+  "patterns": [
+    {
+      "name": "keyword",
+      "match": "\\b(element|annotations|constituents|unordered|ordered)\\b"
+    }
+  ]
+}

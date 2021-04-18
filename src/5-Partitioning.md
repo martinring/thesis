@@ -1,25 +1,22 @@
 # Proof Partitioning {#chap:partitioning}
 
-> *This chapter is based on the original work "Verification Runtime Analysis: Get the Most Out of 
-Partial Verification" [@VerificationRuntime]*
-
 The central means to reduce the search space during run-time and, by this, 
-reduce the runtime of the reasoning engine is to set a certain amount of the 
+reduce the run time of the reasoning engine is to set a certain amount of the 
 given variables to a fixed value. While the general methodology has been 
 explored in the previous chapters, the question which variables to fix in 
-order to achieve the largest reduction of verification runtime has not been 
+order to achieve the largest reduction of verification run time has not been 
 addressed yet. While in theory fixing one Boolean variable would reduce the 
-search space and runtime by half, actual instances show a much smaller and less 
+search space and run time by half, actual instances show a much smaller and less 
 uniform reduction due to the optimizations by the proof engine.  Some variables 
 may hardly have an effect at all, while others may immediately cut down a 
 day-long verification process to a few moments. Because of that, it is essential 
 for verification engineers to have a clear understanding about the impact of 
-fixing a particular variable to the verification runtime, so they can follow the 
+fixing a particular variable on the verification run time, so they can follow the 
 general idea of fixing some variables in order to get a partial result out of 
 the verification process covering as many cases as possible. However, no 
 systematic investigation on this effect has been conducted so far.
 
-In this chapter, we introduce a methodology to analyze verification runtime,
+In this chapter, we introduce a methodology to analyze verification run time,
 and to measure it practically in a meaningful way. The main problem is
 *how many* and *which* variables are fixed. For this, we first state a formal 
 criterion describing an optimal solution to this problem. Based on that, a cost 
@@ -29,7 +26,7 @@ in order to eventually determine solutions optimized for this goal.
 Using a proof-of-concept implementation based on evolutionary algorithms,
 we were able to confirm the potential of the proposed methodology. In fact, 
 experimental evaluations confirmed that this methodology indeed determines a set 
-of variables to be fixed which keeps the verification runtime within specified 
+of variables to be fixed which keeps the verification run time within specified 
 limits while still covering as much as possible of the search space.
 
 In general, the methodology works for any other heuristic which optimizes with 
@@ -116,7 +113,7 @@ than the idealized scenario discussed before in [#ex:ideal_scen], i.e. points
 which lie below the diagonal in [#fig:runtime-idealized].
 :::
 
-![Idealized and observed runtime of a representative verification problem.](idealized-runtime.ts){#fig:runtime-idealized}
+![Idealized and observed run time of a representative verification problem.](idealized-runtime.ts){#fig:runtime-idealized}
 
 As illustrated by these observations, simply fixing a certain number of
 variables of $\phi$ often does not yield the desired result.  Moreover, a
@@ -149,13 +146,13 @@ Effectiveness
 In summary, we are interested in finding the data points in the lower left
 corner of [#fig:runtime-idealized], which represent instances where
 only a small number of variables are fixed (i.e. the instance is as
-little restricted as possible), while at the same time runtime is kept
+little restricted as possible), while at the same time run time is kept
 small.
 
-## Verification Runtime Analysis
+## Verification Run Time Analysis
 
 The observations and discussions from above motivate an analysis of the
-verification runtime in order to determine the best possible data points.
+verification run time in order to determine the best possible data points.
 This poses an optimization problem which has not been clearly defined
 so far. In the following, a corresponding definition is provided which is 
 used as a basis for the remainder of this work.
@@ -178,10 +175,10 @@ $T_{\phi}$ is a time unit which is larger than any finite one.
 
 Let $\FV{\phi}$ denote the set of free variables occurring in $\phi$.  Given
 a subset $X \subseteq \FV{\phi}$ of the free variables of $\phi$, we define
-the *average verification runtime* $\AvgTphi{X}$ as the average time
+the *average verification run time* $\AvgTphi{X}$ as the average time
 it takes to prove $\phi$ with the variables in $X$ set to ground terms, and
 the rest in $\FV{\phi}\setminus X$ kept free. That is, $\AvgTphi{X}$ is the
-*expected* verification runtime if the variables in $X$ are set to an
+*expected* verification run time if the variables in $X$ are set to an
 arbitrary fixed value. 
 We have found that, for a given $X$, we can approximate $\AvgTphi X$ with a
 small number (five) of representative samples.
@@ -189,7 +186,7 @@ small number (five) of representative samples.
 ::: Example *
 [#fig:runtime-idealized], which has already been discussed before,
 also provides an illustration of this notation. The figure plots the average
-verification runtime $\AvgTphi X$ at the y-axis over the number of fixed
+verification run time $\AvgTphi X$ at the y-axis over the number of fixed
 variables (i.e. the cardinality $|X|$ of $X$) at the x-axis for the 
 representative benchmark discussed in [#ex:erratic]. Each
 data point in the diagram corresponds to $(|X|,\AvgTphi X)$ for a
@@ -209,7 +206,7 @@ can state that
 
 However, in between, the behaviour is not so well defined. From the above,
 we might guess that the smaller the set $X$, the larger the average
-verification runtime (i.e. $\AvgTphi X$ is anti-monotone over the size
+verification run time (i.e. $\AvgTphi X$ is anti-monotone over the size
 of the variable set), but this turns out not be true (also confirmed by [#fig:runtime-idealized] discussed in [#ex:erratic]).
 Mathematically, Given two different subsets $X,Y\in\FV{\phi}$, we have
 
@@ -221,7 +218,7 @@ $$
 $$
 
 In other words, increasing the number of fixed variables does not
-necessarily decrease the average verification runtime. This is because
+necessarily decrease the average verification run time. This is because
 variables may depend on other variables, i.e. if we set one of them to
 a fixed value, the other one is restrained as well.
 
@@ -234,10 +231,10 @@ verification time $\AvgTphi{X}$ is still acceptable).
 The problem motivated and introduced above can be addressed in a number of
 different ways.  A straightforward approach might employ an iterative
 scheme as follows: Determine the variable with the smallest verification
-runtime (i.e. determine the variable $x$ such that $\AvgTphi{\{x\}}$ is minimal).
+run time (i.e. determine the variable $x$ such that $\AvgTphi{\{x\}}$ is minimal).
 Then, leave it free and determine the variable with the smallest verification
-runtime among the remaining variables. Repeat this process until you reach
-an average runtime which is not feasible anymore.
+run time among the remaining variables. Repeat this process until you reach
+an average run time which is not feasible anymore.
 However, because of [#eq:avgt-not-monotone], such straight-forward
 approaches do not lead to satisfactory results in most cases. The optimal 
 solution for say two variables is
@@ -263,7 +260,7 @@ with the smallest length. In order to make the cost function behave
 uniformly for different propositions $\phi$, we scale both axes with
 the maximum, i.e. the size of the set of fixed variable $|X|$ with the
 total number of free variables $|\FV{\phi}|$ and the average
-verification runtime $\AvgTphi X$ with the proof time of the original
+verification run time $\AvgTphi X$ with the proof time of the original
 proposition $T_{\phi}$. Thus, for a set $X$ of variables to be fixed, our
 cost function is
 
@@ -292,10 +289,10 @@ to consider during the analysis, otherwise we would constantly run
 into time-outs. Given an upper limit $T_{max}$ which is considered
 acceptable for the analysis, the *threshold* $\tau(\phi)$ is
 defined as the number of variables to be fixed such that the average
-verification runtime is still below $T_{max}$. The value of
+verification run time is still below $T_{max}$. The value of
 $\tau(\phi)$ can be efficiently approximated e.g. through a binary
 search. This confines the number of data points to be considered to
-the ones which can be analyzed within acceptable runtime.
+the ones which can be analyzed within acceptable run time.
 
 ::: Example *
 For the example considered above, assume an acceptable time limit
@@ -373,12 +370,12 @@ individuals for the next generation. This process is
 continued until the process converges (i.e. no real improvements are
 observed any more) or until a time limit terminates the process.
 
-### EA-based Verification Runtime Analysis {#sec:ea_sol}
+### EA-based Verification Run Time Analysis {#sec:ea_sol}
 
 In the following, we describe how EAs can be utilized for the optimization
 problem defined above.  Recall that we are interested in keeping the set
 $X$ of variables to be fixed as small as possible while the average
-verification runtime $\AvgTphi X$ remains feasible for the reasoning
+verification run time $\AvgTphi X$ remains feasible for the reasoning
 engine. With this as a basis, we can formulate the
 different EA aspects with respect to the considered problem as follows:
 
@@ -486,7 +483,7 @@ $0.5s$ of computation on the utilized compute server^[Note that there is no
 exact relation between Z3's `rlimit` count and real time since `rlimit` also 
 considers memory operations.]
 
-Using this set-up, the verification runtime analysis determines the
+Using this set-up, the verification run time analysis determines the
 desired set $X$ out of which the variables to be set to fixed values
 can be obtained.  Afterwards, the originally given proposition $\phi$
 as well as the proposition with the variables in $X$ set to ground
@@ -509,11 +506,11 @@ benchmarks which complete in less than roughly
 $T_{max} \cdot 2^{10} \approx 512s$ are omitted.
 
 With the remaining set of hard benchmarks, the proposed method has
-been evaluated on a total of 333 propositions.  The mean runtime
+been evaluated on a total of 333 propositions.  The mean run time
 $t_\text{A}$ of the analysis was 86 seconds. 34\% (114) of the
 benchmarks were analyzed in under 60 seconds, 93\% (309) finished in
 less than 10 minutes, and the longest took 23 minutes 37 seconds. There was no
-significant relation between the runtime of the analysis and the
+significant relation between the run time of the analysis and the
 original proof time.
 
 ### Obtained Results
@@ -525,19 +522,19 @@ bits ($|\FV{\phi}|$) representing those SMT variables. The next group of
 columns shows the results of the analysis: $\tau(\phi)$ is the
 initially approximated number of variables that has to be fixed, $|X|$
 is the size (in bits) of the found solution $X$; and $t_\text{A}$ is the
-runtime of the analysis itself. The last column group shows the
-reduction in verification runtime: $T(\phi)$ is the runtime with
+run time of the analysis itself. The last column group shows the
+reduction in verification run time: $T(\phi)$ is the run time with
 state-of-the-art verification (which results in a time-out for all
 problems because we explicitly consider hard ones).
-$\hat{T}^\text{rnd}_\phi(|X|)$ denotes the runtime when just an
+$\hat{T}^\text{rnd}_\phi(|X|)$ denotes the run time when just an
 arbitrary selection of variables $Y \subset \FV{\phi}$ with the same
 size $|Y| = |X|$ is set to a fixed value, while $\AvgTphi{X}$ denotes
-the runtime when exactly the variables in $X$ are set to a fixed
+the run time when exactly the variables in $X$ are set to a fixed
 value.
 
 The results clearly confirm the benefits of our approach.  While it is
 in general not surprising that fixing a number of variables reduces
-the verification runtime, our analysis yields a small number $|X|$ of
+the verification run time, our analysis yields a small number $|X|$ of
 variables to fix for maximum effect. By this, verification
 engineers get much more out of partial verification since it allows
 them to only set a small portion of the
@@ -553,10 +550,10 @@ should be set to a fixed value (*which?*).  This can clearly be
 seen in the last two columns of [#tab:rta-results] randomly
 fixing $|X|$ variables often leads to a time-out ($600s$). In
 contrast, fixing exactly those variables $X$ obtained by the proposed
-analysis allows solving *all* benchmarks in negligible runtime.
+analysis allows solving *all* benchmarks in negligible run time.
 
 
-The identified candidates do indeed reduce runtime significantly with respect to 
+The identified candidates do indeed reduce run time significantly with respect to 
 randomly constrained instances. Out of 333 instances there were 221 which were 
 sped up by factor 10 or more, 167 were sped up by factor 100 or more and 94 were 
 sped up by factor 1000 and more. For 11 benchmarks the reference time could not
@@ -564,7 +561,7 @@ be determined due to time-outs of factor >10000.
 
 Those benchmarks which were not significantly sped up can actually be recognized during 
 analysis because they show no clear relation between sets of variables and 
-runtime and thus have large fluctuations within the population over generations 
+run time and thus have large fluctuations within the population over generations 
 of the EA. We identified sevaral reasons, why this can happen: when too much information 
 is represented by a single SMT variable; when there are only pseudo-random 
 dependencies between variables and when too much of the heavy lifting happens in
@@ -610,7 +607,7 @@ and might be fixable by adapting the representation of the proof.
 }
 </style>
 
-|                                                |    Problem Size                                                  ||     Analysis                        |||                       Verification Runtime Reduction                                  |||
+|                                                |    Problem Size                                                  ||     Analysis                        |||                       Verification Run time Reduction                                  |||
  Benchmark                                       |   SMT Variables | $\lvert\FV{\phi}\rvert$                         | $\tau(\phi)$ | $\lvert X\rvert$ | $t_\text{A}$ |                    $T(\phi)$   | $\hat{T}^\text{rnd}_\phi(\lvert X\rvert)$ | $\hat{T}_{\phi}(X)$ |
 :------------------------------------------------|----------------:|------------------------------------------------:|-------------:|-----------------:|-------------:|-------------------------------:|------------------------------------------:|--------------------:|
  calypto/problem_22.smt2                         |             33  |                                            205  |         128  |              13  |        173s  |            > 3600 s[*]{.star}  |                     > 600.00 s[*]{.star}  |             0.02 s  |
@@ -656,8 +653,8 @@ best of our knowledge.
 
 ## Conclusion
 
-In this chapter, we presented a systematic verification runtime analysis which 
-shows *how many* and *which* variables to fix for maximum verification runtime 
+In this chapter, we presented a systematic verification run time analysis which 
+shows *how many* and *which* variables to fix for maximum verification run time 
 reduction. Experimental evaluations based on a proof-of-concept implementation 
 confirmed the potential and demonstrated that the proposed analysis method
 does not only yield a partial verification result, but also gets the most out of 
@@ -667,4 +664,4 @@ direction.
 
 In the context of self-verification this analysis method is able to indicate to 
 the designer, which parts of a proof are worthy to transfer or postpone into 
-runtime and by this enhances the workflow drastically.
+run-time and by this enhances the workflow.

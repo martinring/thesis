@@ -1,7 +1,5 @@
 # Fundamentals of [Self-Verification]{.nobr} {#chap:selfie}
 
-> *This chapter is based on the original work "Better Late Than Never: Verification of Embedded Systems After Deployment" [@Selfie2]*
-
 In this chapter, we proposes a simple design and verification methodology which 
 conducts verification after deployment. To this end, we start with the 
 observation that contemporary systems are designed to operate in a variety of 
@@ -285,22 +283,21 @@ controllerT
   (ControllerInput (Configuration e_lo e_hi delay) e)
   | e < e_lo                 = (ControllerState True cntn,True)
   | e > e_hi && cnt >= delay = (ControllerState False cntn,False)
-  | otherwise                = (ControllerState switchState cntn,switchState)
-    where 
-      cntn = if e > e_hi then if cnt < delay then cnt + 1 else cnt else 0
+  | otherwise                = (ControllerState switchState cntn,
+                                switchState)
+    where cntn = if e > e_hi then if cnt < delay then cnt + 1 
+                             else cnt else 0
 
 controller :: Signal ControllerInput -> Signal Bool
 controller = mealy controllerT (ControllerState False 0)
 
-configuredController :: Signal (Bool,Configuration,Unsigned 8) 
+topEntity :: Signal (Bool,Configuration,Unsigned 8) 
   -> Signal Bool
-configuredController input = 
-  controller (fmap (uncurry ControllerInput) $ bundle (cfgOut,sensor))
+topEntity input = 
+  controller (fmap (uncurry ControllerInput) $ 
+    bundle (cfgOut,sensor))
   where (enable,config,sensor) = unbundle input
         cfgOut = configurationController (bundle (enable,config))
-
-topEntity = configuredController
-
 ````
 
 #### Implementation (left-hand side of [#fig:design-flow])
@@ -332,7 +329,7 @@ if the luminosity value drops below *e_lo* and it switches to
 *false* if the luminosity is above the threshold and
 *cnt* is larger or equal to the configured *delay*.
 
-````smt-lib {#fig:bv-spec caption="Implementation modelled in bit-vector logic (excerpt)"}
+````smt {#fig:bv-spec caption="Implementation modelled in bit-vector logic (excerpt)"}
 (define preSwitch :: bool) ; light switch before
 (define switch :: bool)    ; light switch after
 (assert
@@ -349,7 +346,7 @@ To verify the implementation, we translate the specification from OCL
  into bit-vector logic; for example, the two
 clauses *a4* and *a5* from [#fig:ocl-spec] become:
 
-````smt-lib
+````smt
 (=> off_s (not switch))))
 (=> (not (or on off_s)) (= switch preSwitch))))
 ````
@@ -383,7 +380,7 @@ order to give an impression of the generated CNF, we just consider the very
 simple assertion $e \leq e_\text{hi}$, which translates into
 bit-vector logic as the assertion:
 
-````smt-lib
+````smt
 (assert (not (bv-lt e e_hi))).
 ````
 
@@ -420,26 +417,6 @@ search space depends on the values we instantiate the variables
 with. 
 
 ## Evaluation {#sec:eval}
-
-Table: Evaluation Results (Pre-Deployment) {#tab:exp-pre}
-
-| System           | Search space | Variables | Clauses | Time     |
-|:-----------------|:------------:|----------:|--------:|---------:|
-| **simple**       | $2^{41}$     | 161       | 539     | $< 0.1s$ |
-| **average**      | $2^{177}$    | 11807     | 40086   | $131.0s$ |
-| **weighted_avg** | $2^{545}$    | 43569     | 146642  | $> 24h$  |
-| **smart**        | $2^{9504}$   | 1421153   | 4761633 | $> 24h$  |
-| **multiplier**   | $2^{32}$     | 1177      | 6096    | $> 24h$  |
-
-Table: Evaluation Results (Post-Deployment) {#tab:exp-post}
-
-| System           | Search space | Variables | Clauses | Time     |
-|:-----------------|:------------:|----------:|--------:|---------:|
-| **simple**       | $2^{17}$     | 131       | 539     | $< 0.1s$ |
-| **average**      | $2^{137}$    | 8181      | 40086   | $1.4s$   |
-| **weighted_avg** | $2^{265}$    | 31374     | 146642  | $28.5s$  |
-| **smart**        | $2^{544}$    | 1421153   | 2704606 | $1.5s$   |
-| **multiplier**   | $2^{16}$     | 809       | 2467    | $418.0s$ |
 
 So far, the proposed methodology has been illustrated by means of an
 intentionally rather limited example. Moving on from that, we have applied
@@ -499,15 +476,35 @@ similar to the specification of the simple light controller in
 [#fig:ocl-spec], and have verified that the implementation satisfies
 this specification.
 
+Table: Evaluation Results (Established Flow) {#tab:exp-pre}
+
+| System           | Search space | Variables | Clauses | Time     |
+|:-----------------|:------------:|----------:|--------:|---------:|
+| **simple**       | $2^{41}$     | 161       | 539     | $< 0.1s$ |
+| **average**      | $2^{177}$    | 11807     | 40086   | $131.0s$ |
+| **weighted_avg** | $2^{545}$    | 43569     | 146642  | $> 24h$  |
+| **smart**        | $2^{9504}$   | 1421153   | 4761633 | $> 24h$  |
+| **multiplier**   | $2^{32}$     | 1177      | 6096    | $> 24h$  |
+
+Table: Evaluation Results (Proposed Flow) {#tab:exp-post}
+
+| System           | Search space | Variables | Clauses | Time     |
+|:-----------------|:------------:|----------:|--------:|---------:|
+| **simple**       | $2^{17}$     | 131       | 539     | $< 0.1s$ |
+| **average**      | $2^{137}$    | 8181      | 40086   | $1.4s$   |
+| **weighted_avg** | $2^{265}$    | 31374     | 146642  | $28.5s$  |
+| **smart**        | $2^{544}$    | 1421153   | 2704606 | $1.5s$   |
+| **multiplier**   | $2^{16}$     | 809       | 2467    | $418.0s$ |
+
 [#tab:exp-pre] and [#tab:exp-post] list the results. Column *System* gives the name
 of the considered system. The remaining columns summarize the results in
-two groups: the first group for verification according to the established
-verification flow (i.e. verifying all properties at design time) and the
-second group for the verification methodology proposed here (using the
+two groups: [#tab:exp-pre] for verification according to the established
+verification flow (i.e. verifying all properties at design time) and 
+[#tab:exp-post] for the verification methodology proposed here (using the
 lightweight solver on the target system). For each group, we
 give the size of the search space (i.e. the number of possible solutions to
 be checked); the number of variables; the number of clauses of the
-resulting CNF; and the runtime (in seconds).  The runtime is measured on
+resulting CNF; and the run time (in seconds).  The run time is measured on
 systems which would typically be used for verification, so they are
 directly comparable: for the established verification flow, a compute
 server (Intel Xeon E3-1270 v3, eight cores, 16 GB memory) and, for the proposed
@@ -528,11 +525,11 @@ the limited resources of an embedded system as shown in [#tab:exp-post].
 Of course, the search space is only one complexity indicator: as the
 multiplier system shows, even a comparatively small search space may
 require a long time to be verified, because of its inherent
-complexity. However, the proposed verification flow reduces the runtime
+complexity. However, the proposed verification flow reduces the run time
 significantly in this example as well, and thus allows us to verify a system
 which was previously out of reach for established tools.
 
-### Practical Exploitation
+### Practical Exploitation {#sec:practical-exploitation}
 
 Our approach may be applied in various ways. In the following we illustrate a possible 
 practical application to the design of a smart home controller as described above.
@@ -595,8 +592,8 @@ on-board verification tools to conduct the verification tasks. Since the
 considered systems are substantially less powerful than usual desktop systems or 
 verification servers, this requires lightweight but still efficient versions of 
 those tools. Here, recent developments on lightweight methods 
-[@Bornebusch2017TowardsLS;@DBLP:series/lncs/BalintS16] as well as endeavours 
-towards efficient hardware solvers [@DBLP:conf/dsd/IvanA13;@dfki9553] provide 
+[@light-weight-SAT-solving;@DBLP:series/lncs/BalintS16] as well as endeavours 
+towards efficient hardware solvers [@DBLP:conf/dsd/IvanA13;@hardware-SAT-solving] provide 
 promising platforms for this purpose. Besides, it should be noted that 
 the proposed verification methodology yields an exponential reduction in
 the search space, so even less powerful verification tools might be able
@@ -616,10 +613,10 @@ erroneous values. In this case, the system may just pause until it is
 re-configured with allowed values, in this way guaranteeing correct 
 functionality.
 
-Our approach differs from *runtime verification*, which is concerned
+Our approach differs from *run-time verification*, which is concerned
 with "checking whether a *run* of a system under scrutiny satisfies or
 violates a given correctness property" [@Leucker:2009]. The central notion of 
-runtime verification is the trace (or run) of a system, and central questions 
+run-time verification is the trace (or run) of a system, and central questions 
 are how to derive monitors checking a concrete run against an abstract 
 specification. The logics employed are typically temporal or modal logics. In 
 our work, we are not concerned with monitoring the system at all, we instead 
@@ -630,21 +627,12 @@ often.
 
 This Chapter introduced a general approach to Self-Verifying Systems and 
 showed it's feasibility by applying it to several case studies. We were 
-able to show the 
+able to show the general applicability of the approach but a couple of important 
+questions have yet to be answered:
 
-In order to 
-scale the approach to real-world systems we need to answer a couple of important 
-questions regarding the boundary between pre- and post-deployment verification:
+1. When exactly should the verification take place and what are the consequences
+   of late vs. early verification?
+2. Which parts of a system should belong to it's *Configuration* and how can we
+   systematically determine these parts?
 
-*spacial partitioning*
-
-:  Which parts of a system belong to it's *Configuration* and how can we
-   systematically determine these variables? For large systems this is hard to 
-   decide manually.
-
-*temporal partitioning*
-
-:  When exactly should the verification take place and what are the consequences
-   of late vs. early verification? 
-
-The following two chapters will address these questions respectively. 
+The following chapters will address these questions respectively. 

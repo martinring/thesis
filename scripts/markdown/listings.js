@@ -2,14 +2,8 @@ import Highlights from 'highlights'
 import url from 'url';
 import path from 'path'
 
-const highlighter = new Highlights()
-const nodeModules = path.dirname(path.dirname(path.dirname(url.fileURLToPath(import.meta.url)))) + '/node_modules/'
-
-highlighter.requireGrammarsSync({
-  modulePath: nodeModules + 'language-smt-lib/package.json'
-})
-highlighter.requireGrammarsSync({
-  modulePath: nodeModules + 'language-haskell/package.json'
+const highlighter = new Highlights({
+  includePath: path.dirname(path.dirname(path.dirname(url.fileURLToPath(import.meta.url)))) + '/highlights'
 })
 highlighter.loadGrammarsSync()
 

@@ -1319,6 +1319,7 @@
       - - 1994
         - 4
 - id: FailSafe
+  type: paper-conference
   DOI: 10.1109/ftdcs.1997.644721
   publisher: IEEE  
   title: Available fail-safe systems
@@ -1336,4 +1337,217 @@
     date-parts:
       - - 1997
         - 10
+- container-title: Algorithm Engineering — Selected Results and Surveys
+  type: chapter
+  id: DBLP:series/lncs/BalintS16
+  page: 1-18
+  publisher: Springer
+  title: Engineering a Lightweight and Efficient Local Search SAT Solver
+  DOI: 10.1007/978-3-319-49487-6_1
+  author:
+    - given: Adrian
+      family: Balint
+    - given: Uwe
+      family: Schöning
+  issued:
+    date-parts:
+      - - 2016
+- author:
+  - given: Teodor
+    family: Ivan
+  - given: El Mostapha
+    family: Aboulhamid
+  DOI: 10.1109/DSD.2013.31
+  container-title: EUROMICRO Conference on Digital System Design (DSD 2013)
+  event-place: Los Alamitos, CA, USA
+  type: paper-conference
+  id: DBLP:conf/dsd/IvanA13
+  issued:
+    date-parts:
+    - - 2013
+      - 9
+  page: 209-216
+  publisher: IEEE
+  title: An Efficient Hardware Implementation of a SAT Problem Solver on FPGA
+- container-title: The Journal of Logic and Algebraic Programming
+  author:
+  - given: Martin
+    family: Leucker
+  - given: Christian
+    family: Schallhart
+  collection-title: The 1st Workshop on Formal Languages and Analysis of Contract-Oriented
+    Software (FLACOS’07)
+  type: article-journal
+  id: Leucker:2009
+  ISSN: 1567-8326
+  issue: '5'
+  issued:
+    date-parts:
+    - - 2009
+      - 5
+  keyword: Assertion checking,Monitoring,Testing,Verification
+  page: 293-303
+  title: A brief account of runtime verification
+  volume: '78'
+- event-place: Lübeck, Germany
+  author:
+  - given: P.
+    family: Parizek
+  - given: F.
+    family: Plasil
+  container-title: EUROMICRO Conference on Software Engineering and Advanced Applications (EUROMICRO 2007)
+  type: paper-conference
+  id: Parizek2007
+  citation-label: Parizek2007
+  ISSN: 1089-6503
+  issued:
+    date-parts:
+    - - 2007
+      - 8
+  page: 75-82
+  publisher: IEEE
+  title: 'Partial Verification of Software Components: Heuristics for Environment
+    Construction'
+  DOI: 10.1109/EUROMICRO.2007.46
+- number-of-pages: '18'
+  author:
+  - given: Ioannis
+    family: Caragiannis
+  - given: Edith
+    family: Elkind
+  - given: Mario
+    family: Szegedy
+  - given: Lan
+    family: Yu
+  container-title: ACM Conference on Electronic Commerce (EC 2012)
+  event-place: New York, NY, USA
+  collection-title: ec
+  type: paper-conference
+  id: Caragiannis2012
+  issued:
+    date-parts:
+    - - 2012
+      - 6
+  page: 266-283
+  publisher: ACM
+  DOI: 10.1145/2229012.2229035
+  title: 'Mechanism Design: From Partial to Probabilistic Verification'
+- container-title: Autonomous Agents and Multi-Agent Systems
+  DOI: 10.1007/s10458-010-9151-4
+  publisher: Springer
+  author:
+  - given: Lan
+    family: Yu
+  type: article-journal
+  id: Yu2011
+  ISSN: 1573-7454
+  issue: '1'
+  issued:
+    date-parts:
+    - - 2011
+      - 1
+  page: 217-223
+  title: Mechanism design with partial verification and revelation principle
+  volume: '22'
+- publisher: ETH Zürich
+  author:
+  - given: Valentin
+    family: Wüstholz
+  type: thesis
+  genre: PhD dissertation
+  id: Wuestholz
+  issued:
+    date-parts:
+    - - 2015
+  title: Partial Verification Results
+- container-title: International Journal on Software Tools for Technology Transfer
+  publisher: Springer
+  DOI: 10.1007/s10009-003-0130-9
+  author:
+  - given: Alex
+    family: Groce
+  - given: Willem
+    family: Visser
+  type: article-journal
+  id: Groce2004
+  ISSN: 1433-2787
+  issue: '4'
+  issued:
+    date-parts:
+    - - 2004
+      - 8
+  page: 260-276
+  title: Heuristics for model checking Java programs
+  volume: '6'
+- DOI: 0.1007/978-3-319-47166-2_60
+  author:
+  - given: Dirk
+    family: Beyer
+  container-title: 'Leveraging Applications of Formal Methods, Verification and Validation: Foundational Techniques (ISoLA 2016)'
+  event-place: Corfu, Greece
+  collection-title: Lecture Notes in Computer Science (LNCS)
+  type: paper-conference
+  id: Beyer2016
+  issued:
+    date-parts:
+    - - 2016
+      - 10
+  page: 874-880
+  publisher: Springer
+  title: Partial Verification and Intermediate Results as a Solution to Combine Automatic and Interactive Verification Techniques  
+- author:
+  - given: Dirk
+    family: Beyer
+  - given: Thomas A.
+    family: Henzinger
+  - given: M. Erkan
+    family: Keremoglu
+  - given: Philipp
+    family: Wendler
+  container-title: International Symposium on the Foundations of Software Engineering (FSE 2012)
+  event-place: Cary, NC, USA
+  type: paper-conference
+  id: Beyer2012  
+  issued:
+    date-parts:
+    - - 2012
+      - 11
+  page: 1 - 11
+  publisher: ACM
+  title: 'Conditional Model Checking — A Technique to Pass Information Between Verifiers'
+  DOI: 10.1145/2393596.2393664
+- DOI: 10.23919/fmcad.2018.8603017
+  publisher: IEEE
+  type: paper-conference
+  title: Formal Verification of Deep Neural Networks
+  author:
+    - given: Nina
+      family: Narodytska
+  container-title: 2018 Formal Methods in Computer Aided Design (FMCAD 2018)
+  event-place: Austin, TX, USA 
+  page: 1
+  issued:
+    date-parts:
+      - - 2018
+        - 10
+  id: Narodytska2018
+- id: Sun2019
+  DOI: 10.1145/3302504.3311802
+  publisher: ACM
+  type: paper-conference
+  title: Formal verification of neural network controlled autonomous systems
+  author:
+    - given: Xiaowu
+      family: Sun
+    - given: Haitham
+      family: Khedr
+    - given: Yasser
+      family: Shoukry
+  container-title: "ACM International Conference on Hybrid Systems: Computation and Control (HSCC 2019)"
+  event-place: Montreal, Quebec, Canada
+  page: 147–156
+  issued:
+    date-parts:
+      - - 2019
+        - 4
 ...

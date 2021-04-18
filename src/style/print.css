@@ -152,7 +152,7 @@
 
 
   h1[data-name] { 
-    string-set: chapter-num attr(data-chapter), chapter content(), section '';
+    string-set: chapter-num attr(data-chapter), chapter content(), section content();
   }
 
   h2[data-name] { 
@@ -169,8 +169,8 @@
   }
   
   h1,h2,h3,h4,h5,h6 {
-    page-break-inside: avoid;
-    page-break-after: avoid;
+    break-after: avoid;
+    break-inside: avoid;
   }
 
   h1::before, h2::before, h3::before, h4::before {
@@ -189,6 +189,8 @@
   }
 
   .disclaimer {
+    text-align: left;
+    hyphens: none;
     page-break-before: always;
     page: preface;
     display: block !important;

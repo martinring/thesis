@@ -1,7 +1,5 @@
 # Design of Self-Verifying Systems {#chap:timing}
 
-> *This chapter is based on the original work "Let's Prove it Later --- Verification at Different Points in Time" [@Timing]*
-
 In this chapter, we investigate the effects of self-verification on 
 the development. That is, we want to explore *when* to prove properties and 
 which ones, and we want to investigate how self-verification interacts with the 
@@ -10,7 +8,7 @@ self-verification and widen the somewhat simplistic concept of *configurations*
 to *trigger transitions*: Transitions of a system that trigger a verification 
 (i.e. in terms of [#chap:selfie], a change of the configuration). 
 
-## Self-Verification, Design Time & Runtime Verification
+## Self-Verification, Design Time & [Run-time]{.nobr} Verification
 
 The key advantage of self-verification as described in [#chap:selfie] is that 
 after deployment, the concrete values of parameters may become known for 
@@ -18,7 +16,7 @@ verification. Some may be instantiated early on after deployment, and not change
 after that at all, or only very infrequently; others may change, but not that
 often; and even others may be sensor data which are read in small
 intervals, but where the rate of change may be limited. All of this
-information may be utilized at runtime for more efficient verification.
+information may be utilized at run-time for more efficient verification.
 
 This observation hinges on the fact that proving a property $\phi$ depends, 
 *inter alia*, on the number of free variables in $\phi$, and that parameters as 
@@ -28,7 +26,7 @@ $x$ is typically orders of magnitude easier than proving $\phi$.
 
 
 ![Four different points in time chosen for verification, from design time 
-(leftmost) to runtime (rightmost). Trigger transitions are marked with small 
+(leftmost) to run-time (rightmost). Trigger transitions are marked with small 
 boxes; they trigger verification tasks which show that every possible path 
 through the state space which does not include other trigger transitions is 
 safe. Green boxes mark successful verification, and red boxes mark failed 
@@ -44,7 +42,7 @@ is not reachable. The rightmost example allows all but one transition. Note that
 in the last example the system gets deadlocked in state 4 when taking the 
 leftmost path.](traces1.svg;traces2.svg;traces3.svg;traces4.svg){#fig:configuration}
 
-Comparing self-verification to runtime and *a priori* design time 
+Comparing self-verification to run-time and *a priori* design time 
 verification on a more abstract level, we consider specific runs of the system
 $\langle\sigma_i\rangle_{i\in\Nat}$, consisting of states $\sigma_i$, and a
 safety property $\phi$. Usual design time verification proves the
@@ -54,7 +52,7 @@ is achieved by an inductive argument, showing that we start in a safe state,
 $\phi(\sigma_0)$, and that from a safe state we can only get to a safe state, 
 $\phi(\sigma_i)$ implies $\phi(\sigma_{i+1})$.
 
-Runtime verification, on the other hand, considers whether a specific run
+Run-time verification, on the other hand, considers whether a specific run
 satisfies $\forall i.\,\phi(\sigma_i)$ and does not restrict the transitions
 of the system; unsafe states can be reached, but this is always detected.
 
@@ -66,10 +64,10 @@ transitions from $\sigma_{i+1}$ are safe, i.e. $\phi(\sigma_k)$. If another
 trigger transition is reached, the self-verification is run again. Note that the 
 classification of trigger transitions and ordinary transitions depends on the 
 particular $\phi$, and is a design decision (see [#sec:case-study] 
-below). *A priori* and runtime verification can be seen as extreme cases of
+below). *A priori* and run-time verification can be seen as extreme cases of
 self-verification: in design time verification only one transition
 (the one leading to the initial state of the system) is classified as a
-trigger transition, while in runtime verification every transition is a
+trigger transition, while in run-time verification every transition is a
 trigger transition.  [#fig:configuration] illustrates the effect
 of different sets of trigger transitions for one system.
 
@@ -84,7 +82,7 @@ verification, we need to state the required preconditions very precisely ---
 they need to be strong enough to be able to actually show that the system
 globally satisfies the specified properties, and to preclude unwanted
 behaviour, but weak enough to still allow all desired
-implementation. If we move verification into runtime, we can relax
+implementation. If we move verification into run-time, we can relax
 preconditions at design time, allowing for more readable specifications and
 speeding up the development process. Consider
 [#fig:configuration] again: to make the system usable as
@@ -100,8 +98,8 @@ and can instead adapt the proving strategy to the problem at hand.
 ## Case Study {#sec:case-study}
 
 In the following, we introduce a case study building loosely on Abrial 
-[@Abrial]. The case study is simple enough to be easily understood, yet complex 
-enough to show the subtle effects of verification at different points in time. 
+[@Abrial]. The case study is simple enough to be easily understood, yet complex enough to show the subtle effects of verification at different points in time. Note that this case study is stricly different from the  
+similar example in [#chap:specific] and must not be confused.
 
 ### Informal Description
 
@@ -146,11 +144,11 @@ the outside). The situation shown violates the
 safety property.](simple-building.svg){#fig:simple-unsafe width=50%}
 
 This rather innocuous specification allows some subtle effects. Consider the 
-simple building in [#fig:simple-unsafe]; the depicted situation violates the
+simple building in [#fig:simple-unsafe]. The depicted situation violates the
 safety property, as in case of an emergency, we cannot disable access control 
 and open the doors in such a fashion that neither user A or user B are allowed 
 to access rooms they are not authorized to (rooms b and a, respectively), and 
-both are able to get to a safe room (s). 
+at the same time both are able to get to a safe room (s). 
 
 Hence, we need to prevent a situation like this from happening. This
 could be done by
@@ -325,7 +323,7 @@ the search space is through all possible allocations of users to rooms ---
 but still precludes unsafe allocations.
 
 Note how self-verification allows us to relax the development process:
-because we can prove the safety property at runtime, we do not need to
+because we can prove the safety property at run-time, we do not need to
 specify all its preconditions at design time (here, we do not need to
 characterize the preconditions to make buildings and authorizations
 safe). This makes the development process more *agile* without
@@ -335,7 +333,7 @@ compromising safety.
 
 ### Applying the Design-Flow for Self-Verification
 
-````{.sysml #fig:example-bdd caption="Textual representation of the SysML block definition diagram"}
+````{.sysml #fig:example-bdd caption="SysML block definition diagram expressed in SPECifIC SysML"}
 bdd [package] selfie::acs [ACS]
 -------------------------------
 
@@ -358,10 +356,8 @@ block Door
       post: card.location = to  
   constraints
     def: mayPass(card: Card): Boolean = 
-           if from.building.emergency
-           then isOpen 
+           if from.building.emergency then isOpen 
            else card.authorizations->contains(to)
-    inv: from.building = to.building
     inv: isOpen implies from.building.emergency
 
 block Card
@@ -370,10 +366,10 @@ block Card
     location: Room[1] { subsets authorizations } <- checkedIn 
     building: Building[1] <- cards
   constraints
-    inv: authorizations->forall(r | r.building = self.building)
-    inv: building.rooms->forall(r | not r.authorized->contains(self) 
-                                    implies not r.hasAccess(self)))
-    inv: building.rooms->exists(r | r.isSafe and r.hasAccess(self))
+    inv: authorizations->forall(r| r.building = self.building)
+    inv: building.rooms->forall(r| not r.authorized->contains(self) 
+                                   implies not r.hasAccess(self)))
+    inv: building.rooms->exists(r| r.isSafe and r.hasAccess(self))
 
 block Room
   references
@@ -391,18 +387,15 @@ block Room
 ````
 
 We apply the desgin flow introduced in [#chap:selfie] to our case study. As 
-demonstrated in [#sec:case-study], we use the same subset of SysML (block 
-definition diagrams and state machine diagrams^[The case study only uses block 
-definition diagrams.]) together with OCL as a specification formalism. Block 
+demonstrated in [#sec:case-study], we use the same subset of SysML^[The case study only uses block definition diagrams.] together with OCL as a specification formalism. Block 
 definition diagrams and state machine diagrams can be given a formal semantics 
 (which is not the case for all SysML diagrams), so our specifications have a 
 mathematically well-defined, formal meaning. This is indispensable if we want 
 to perform formal correctness proofs.
 
 We use our textual representation of block definition diagrams and
-state machine diagrams. [#fig:example-bdd] shows an excerpt; parts of
-the corresponding OCL specifications have been shown in
-Section [#sec:case-study] above. 
+state machine diagrams ([#fig:example-bdd]). Parts of the 
+corresponding OCL specifications have been shown in Section [#sec:case-study] above. 
 
 The implementation is given as an executable *system model*. To stay
 independent of a specific programming language, we again use the functional
@@ -415,19 +408,19 @@ Clash, adding proof support was merely a question of adding an additional
 backend; in SystemC, we do not even have an explicit representation of the
 model to start from).
 
-Our tool chain reads the SysML and OCL specification, performs the
-appropriate type checks, reads the Clash model, and generates the
-corresponding first-order proof obligations in bitvector format
-(first-order logic with limited width integers as datatypes). The proof
+Our tool chain (as introduced in [#chap:specific]) reads the SysML and OCL
+specification, performs the appropriate type checks, reads the Clash model, 
+and generates the corresponding first-order proof obligations in bitvector 
+format (first-order logic with limited width integers as datatypes). The proof
 obligations are essentially obtained by taking a representation of the
 system model in bitvector logic, and showing they satisfy the OCL constraints
 (pre/postconditions and invariants). They can be
 either processed at design time by an SMT prover such as Yices or Z3, or
-transferred to runtime. Proving at runtime is either performed by an SMT
+transferred to run-time. Proving at run-time is either performed by an SMT
 prover running on the target system, if the latter is powerful enough, or by
 converting the proof obligations into conjunctive normal form (e.g. using
 the Yices prover) before transferring it to the target system, and using a SAT 
-solver at runtime (either as a lightweight software SAT solver
+solver at run-time (either as a lightweight software SAT solver
 [@light-weight-SAT-solving] or even a hardware SAT solver [@hardware-SAT-solving])
 
 ### The Demonstrator
@@ -438,12 +431,12 @@ If we implement the case study in our usual design flow, we derive a
 hardware implementation, e.g. on an FPGA. In order to explore the
 implications of proving at different points in time, and to demonstrate the
 effects of self-verification in an easily accessible setting, 
-we implemented the case study as an interactive demonstrator. For this, we leveraged
-the two previously developed tool flows for the instantiation of our model from 
-[#chap:specific] as well as self-verification in [#chap:selfie].
-This allows us to semi-automatically translate the above SysML defenition 
-into an executable system by generating implementation stubs as well as translating 
-the model into a an refinable SMT instance. 
+we implemented the case study as an interactive demonstrator. For this, we 
+leveraged the two previously developed tool flows for the instantiation of 
+our model from [#chap:specific]. This allows us to semi-automatically 
+translate the above SysML defenition into an executable system by generating 
+implementation stubs as well as translating the model into a an refinable SMT
+instance.
 
 Simulating the hardware turned out to be very slow, so instead we chose to
 adapt our flow: the implementation is an interactive SVG, with the dynamic 
@@ -470,7 +463,7 @@ property this would incur.
 The generated SMT proof obligations are a general equivalence proof which
 can be processed by an SMT prover at design time. As mentioned above, the
 prover quickly finds counter examples since our specification can easily
-be violated in general. By adding runtime information in the form of
+be violated in general. By adding run-time information in the form of
 assertions, we refine the instance on the fly. This was realized by
 establishing a WebSocket connection between the SVG and the Z3
 prover. For this, we use the *websocat* utility, which wraps a
@@ -525,13 +518,13 @@ situations like this will have to be constructed consciously.)
 The source code of the demonstrator is publicly available on
 GitHub:
 
-[![martinring/clash-compiler - GitHub](https://gh-card.dev/repos/DFKI-CPS/selfie-demo.svg?fullname=)](https://github.com/DFKI-CPS/selfie-demo){.ghlink}
+[![martinring/selfie-demo - GitHub](https://gh-card.dev/repos/DFKI-CPS/selfie-demo.svg?fullname=)](https://github.com/DFKI-CPS/selfie-demo){.ghlink}
 
 ## When to Prove
 
 The focus of the case study has been to investigate the implications and
 consequences of the point in time at which the proof of safety properties
-take place at runtime.
+take place at run-time.
 
 Generally, the earlier we can prove, the more
 general the proven safety property, but the larger the search space is and
@@ -555,7 +548,7 @@ should avoid transient states (e.g. a user is
 inside a security gate) which can only be left through trigger transitions since 
 self-verification may lead to a system dead-locked there, as in [#fig:configuration].
 
-## Conclusions
+## Conclusion
 
 The vehicle of our investigations in this chapter was a case study consisting 
 of an access control system, which is parameterized in many dimensions (the 
@@ -574,12 +567,12 @@ effort.
 
 This raises the question of the general applicability of the approach. As 
 presented here, some kinds of safety-critical systems could not be addressed 
-adequately, namely fail-safe systems [@FailSafe], where there is no default safe state which 
-we can always revert to if self-verification does not succeed. On the other 
-hand, an attractive avenue for further exploration is “just-in-time 
-verification”, where one tries to prove properties at run time as they are 
+adequately, namely fail-safe systems [@FailSafe], where there is no default safe 
+state which we can always revert to if self-verification does not succeed. On the 
+other hand, an attractive avenue for further exploration is “just-in-time 
+verification”, where one tries to prove properties at run-time as they are 
 needed (see [#sec:jit])
 
 In [#chap:partitioning], we will further investigate how the designer can 
-be assisted in the design decisions; in particular, how the system can suggest
-which variables offer the most reduction in proof time when instantiated.
+be assisted in the design decisions; in particular, how we can systematically
+find out which variables offer the most reduction in proof time when instantiated.

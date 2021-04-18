@@ -16,6 +16,8 @@
   text-align: justify;
   word-wrap: break-word;
 
+  font-stretch: expanded;
+
   font-variant-numeric: lining-nums;
 }
 

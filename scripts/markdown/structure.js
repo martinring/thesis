@@ -50,8 +50,8 @@ export default function (md) {
           }
           const chapSection = new state.Token('section','section',1)  
           chapSection.attrSet('class',appendix ? 'appendix' : 'chapter') 
-          idx += 1;   
           state.tokens.splice(idx,0,chapSection)
+          idx += 1;   
           tree.push({
             number: undefined,
             id: autoId(block,state.tokens[idx + 1]),

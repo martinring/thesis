@@ -6,6 +6,7 @@ import got from 'got'
 import { argv } from 'process'
 
 const props = new Set([
+  "type",
   "id",
   "citation-key",
   "categories",
