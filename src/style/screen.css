@@ -4,12 +4,10 @@
     font-size: 12pt;
   }
 
+
   header {
     height: 100vh;
-    width: 100vw;
     text-align: center;
-    margin-left: -10rem;    
-    margin-right: -5rem;    
     padding: 0;
     display: flex;
     flex-direction: column;
@@ -22,7 +20,7 @@
   @keyframes pulse {
     from { transform: translate(-50%,0); }
     to { transform: translate(-50%,1rem); }
-  }
+  }  
 
   header::after {
     position: absolute;
@@ -78,18 +76,6 @@
     pointer-events: all;
   }
   
-  body {  
-    overflow-x: visible;
-    margin-left: 10rem;
-    margin-right: 5rem;
-    max-width: 40rem;
-  }
-
-  .standalone {
-    margin-left: -5rem;
-    min-width: calc(5rem + 100%);
-  }
-
   ul, ol {
     max-width: 38.5rem;
   }
@@ -108,4 +94,83 @@
     margin: 0;
     padding: 0;
   }
+}
+
+@media only screen and (max-width: 50rem) {
+  body > .main, body > #TOC {
+    margin-left: 5rem;
+    margin-right: 2rem;
+  }
+}
+
+@media only screen and (min-width: 50rem) {
+  body {
+    display: grid;    
+    grid-template-columns: [start] 1fr [main] minmax(30rem,46.5rem) [toc] min-content 1fr [end];
+    width: 100vw;
+    overflow-x: hidden;
+  }
+
+  header {
+    grid-row: 1;
+    grid-column-start: start;
+    grid-column-end: end;
+  }
+
+  body > .main {
+    margin-left: 5rem;
+    grid-column: main;    
+  }
+
+  #TOC > h1 {
+    display: none;
+  }
+
+  #TOC {
+    grid-column: toc;
+    grid-row: 2;
+    font-family: var(--font-sans);
+    font-size: .8rem;    
+  }
+  
+  #TOC ul {        
+    padding-left: 1rem;
+  }
+
+  /* hide */
+  #TOC ul ul:not(:is(.active, .active + ul)) {
+    line-height: 0;    
+    opacity: 0;
+    padding: 0;
+    /* fade out, then shrink */
+    transition: opacity .1s,
+                line-height .3s .1s,
+                padding-top .3s .1s,
+                padding-bottom .3s .1s;
+  }
+
+  #TOC a.active + ul, #TOC ul.active {
+      /* unshrink, then fade in */
+    transition: line-height .2s,
+                padding-top .2s,
+                padding-bottom .2s,
+                opacity .1s .2s;
+  }
+
+  #TOC > ul {
+    top: 0;
+    left: 0;
+    position: sticky;    
+    padding: 2rem 3.5rem !important;    
+  }
+
+  #TOC a.active {    
+    color: blue;
+    font-weight: bolder;
+  }
+
+  #TOC ul ul ul li {
+    font-style: italic;
+  }
+
 }

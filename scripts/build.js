@@ -13,11 +13,13 @@ import yaml from 'yaml';
 
 const options = yargs(hideBin(argv))
   .option('pdf',{ boolean: true })
+  .option('file',{ type: "string" })
   .argv
 
 const t0 = Date.now()
 
-const src_ = log.timed('load markdown sources',
+const src_ = log.timed('load markdown sources', 
+  options.file ? fs.readFile(options.file).then(x => x.toString('utf-8')) :
   fs.readdir('src',{ withFileTypes: true })
     .then(dir => 
       Promise.all(dir

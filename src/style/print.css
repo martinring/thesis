@@ -125,6 +125,40 @@
     -prince-rotate-body: landscape;
   }
 
+
+  #TOC a {
+    display: block;
+    overflow: hidden;
+  }
+  
+  #TOC li {
+    position: relative;
+  }
+  
+  #TOC > ul > li > a {
+    font-weight: bold;
+  }
+  
+  #TOC .toc-section-number {
+    left: -4rem;
+    width: 3rem;
+    font-variant-numeric: lining-nums tabular-nums;
+    text-align: right;
+    position: absolute;
+  }
+  
+  #TOC > ul {
+    padding: 0;
+  }
+  
+  #TOC a {  
+    color: black;
+  }
+  
+  #TOC li::before {
+    content: '';
+  }
+
   #TOC a::after {
     font-variant-numeric: tabular-nums lining-nums;
     content: leader('⋅') ' ' target-counter(attr(href url), page);
