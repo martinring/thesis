@@ -1,0 +1,452 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=1024" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<title>Self-Verification</title>    
+	<meta name="author" content="Martin Ring" />
+  <link href="./theme.css" rel="stylesheet" />
+</head>
+
+<body class="impress-not-supported">
+	<div class="fallback-message">
+		<p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+		<p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+  </div>
+  
+	<div id="impress"
+		data-transition-duration="1000"
+		data-width="1920"
+		data-height="1080"
+		data-max-scale="3"
+		data-min-scale="0"
+		data-perspective="1000">
+
+		<div id="title" class="step title" data-rotate="-90" data-x="24" data-y="-202"  data-scale="0.21" data-z="300">
+      <h1>Self-Verification</h1>	
+      <h2>Verification of Embedded Systems after Deployment</h2>      
+      <div>Martin Ring</div>
+      <div>28. Mai 2021</div>
+    </div>
+
+    <div id="smartphone" class="step image" data-x="0" data-y="0">      
+      <img src="images/smartphone.png">      
+    </div>
+    
+    <div id="motivation" class="step slide" style="padding-right: 1000px; background-image: url('images/embedded.png');" data-x="-100" data-y="-450" data-z="0">
+      <h1>Motivation</h1>      
+      <ul>
+        <li>Eingebettete Systeme sind überall</li>
+        <li>Größe der Systeme wächst exponentiell</li> 
+        <li>Suchraum für Verifikation wächst doppelt exponentiell</li>
+      </ul>
+    </div>
+
+    <div class="step slide" style="padding-left: 900px;" data-x="1000">      
+        <h1>Idee</h1>      
+        <ul>
+          <li>Muss die Verifikation mit der Produktion enden?</li>
+          <li>Selbst-Verifikation bietet</li>
+          <ul>
+            <li>Mehr Zeit</li>
+            <li class="mute">Mehr Resourcen</li>
+            <li>Mehr Informationen</li>
+          </ul>
+        </ul>
+    </div>
+
+    <div class="step slide" data-x="3000">
+      <h1>A Priori Verifikation</h1>      
+      <ul>
+        <li>Beispiel: Ein automatischer Lichtschalter</li>
+      </ul>
+    </div>
+
+    <div class="step slide big-title arrow-right" data-scale="0.25" data-x="2500" data-y="-550">
+      <h1>ISL</h1>
+      <div class="note-box">
+      P1: This system connects a controller to a luminosity sensor and a light switch<br>
+      P2: The light should turn on if the sensor drops below a given level<br>
+      P3: The light should turn off if the sensor exeeds a given level<br>
+      P4: The light should not flicker
+      </div> 
+    </div>
+
+    <div class="step slide big-title two-column arrow-right" data-scale="0.25" data-x="3000">
+      <h1>FSL</h1>
+      <img src="../src/figures/sysml-spec.svg" width="800px">      
+      <pre class="editor editor-colors"><div class="line"><span class="source ocl"><span class="keyword ocl"><span>context</span></span><span>&nbsp;</span><span class="entity name type"><span>Controller</span></span></span></div><div class="line"><span class="source ocl"><span>&nbsp;&nbsp;</span><span class="keyword ocl"><span>def</span></span><span>&nbsp;e:&nbsp;sensor.value</span></span></div><div class="line"><span class="source ocl"><span>&nbsp;&nbsp;</span><span class="keyword ocl"><span>def</span></span><span>&nbsp;off:&nbsp;e&nbsp;&gt;&nbsp;config.e_hi</span></span></div><div class="line"><span class="source ocl"><span>&nbsp;&nbsp;</span><span class="keyword ocl"><span>def</span></span><span>&nbsp;on:&nbsp;e&nbsp;&lt;&nbsp;config.e_lo</span></span></div><div class="line"><span class="source ocl"><span>&nbsp;&nbsp;</span><span class="keyword ocl"><span>def</span></span><span>&nbsp;off_s:&nbsp;cnt&gt;=config.delay</span></span></div><div class="line"><span class="source ocl"><span>&nbsp;</span></span></div><div class="line"><span class="source ocl"><span class="keyword ocl"><span>context</span></span><span>&nbsp;</span><span class="entity name type"><span>Controller</span></span><span>::</span><span class="entity name function"><span>tick</span></span><span>(</span><span>)</span></span></div><div class="line"><span class="source ocl"><span>&nbsp;&nbsp;</span><span class="keyword ocl"><span>post</span></span><span>&nbsp;</span><span class="entity name section"><span>a1</span></span><span>:</span><span>&nbsp;</span><span class="keyword control ocl"><span>not</span></span><span>&nbsp;off&nbsp;</span><span class="keyword control ocl"><span>implies</span></span><span>&nbsp;cnt=0</span></span></div><div class="line"><span class="source ocl"><span>&nbsp;&nbsp;</span><span class="keyword ocl"><span>post</span></span><span>&nbsp;</span><span class="entity name section"><span>a2</span></span><span>:</span><span>&nbsp;off&nbsp;</span><span class="keyword control ocl"><span>implies</span></span><span>&nbsp;cnt=cnt@</span><span class="keyword ocl"><span>pre</span></span><span>+&nbsp;1</span></span></div><div class="line"><span class="source ocl"><span>&nbsp;&nbsp;</span><span class="keyword ocl"><span>post</span></span><span>&nbsp;</span><span class="entity name section"><span>a3</span></span><span>:</span><span>&nbsp;on&nbsp;</span><span class="keyword control ocl"><span>implies</span></span><span>&nbsp;light.status</span></span></div><div class="line"><span class="source ocl"><span>&nbsp;&nbsp;</span><span class="keyword ocl"><span>post</span></span><span>&nbsp;</span><span class="entity name section"><span>a4</span></span><span>:</span><span>&nbsp;off_s&nbsp;</span><span class="keyword control ocl"><span>implies</span></span><span>&nbsp;</span><span class="keyword control ocl"><span>not</span></span><span>&nbsp;light.status</span></span></div><div class="line"><span class="source ocl"><span>&nbsp;&nbsp;</span><span class="keyword ocl"><span>post</span></span><span>&nbsp;</span><span class="entity name section"><span>a5</span></span><span>:</span><span>&nbsp;</span><span class="keyword control ocl"><span>not</span></span><span>&nbsp;(on&nbsp;</span><span class="keyword control ocl"><span>or</span></span><span>&nbsp;off_s)&nbsp;</span><span class="keyword control ocl"><span>implies</span></span></span></div><div class="line"><span class="source ocl"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;light.status=light.status@</span><span class="keyword ocl"><span>pre</span></span></span></div></pre>
+    </div>
+
+    <div class="step slide big-title arrow-down" data-scale="0.25" data-x="3500">
+      <h1>ESL</h1>
+      <pre class="editor editor-colors" style="font-size: 1.4rem"><div class="line"><span class="source haskell"><span class="meta declaration data algebraic haskell"><span class="keyword other data haskell"><span>data</span></span><span>&nbsp;</span><span class="storage type haskell"><span>Configuration</span></span><span>&nbsp;</span><span class="keyword operator eq haskell"><span>=</span></span><span>&nbsp;</span><span class="constant other haskell"><span>Configuration</span></span><span>&nbsp;</span><span class="meta record definition haskell"><span class="punctuation brace haskell"><span>{</span></span></span></span></span></div><div class="line"><span class="source haskell"><span class="meta declaration data algebraic haskell"><span class="meta record definition haskell"><span>&nbsp;&nbsp;</span><span class="variable other member definition haskell"><span>e_lo</span></span><span>&nbsp;</span><span class="keyword operator double-colon haskell"><span>::</span></span><span>&nbsp;</span><span class="storage type haskell"><span>Unsigned</span></span><span>&nbsp;</span><span class="constant numeric integral decimal haskell"><span>8</span></span><span class="punctuation comma haskell"><span>,</span></span></span></span></span></div><div class="line"><span class="source haskell"><span class="meta declaration data algebraic haskell"><span class="meta record definition haskell"><span>&nbsp;&nbsp;</span><span class="variable other member definition haskell"><span>e_hi</span></span><span>&nbsp;</span><span class="keyword operator double-colon haskell"><span>::</span></span><span>&nbsp;</span><span class="storage type haskell"><span>Unsigned</span></span><span>&nbsp;</span><span class="constant numeric integral decimal haskell"><span>8</span></span><span class="punctuation comma haskell"><span>,</span></span></span></span></span></div><div class="line"><span class="source haskell"><span class="meta declaration data algebraic haskell"><span class="meta record definition haskell"><span>&nbsp;&nbsp;</span><span class="variable other member definition haskell"><span>delay</span></span><span>&nbsp;</span><span class="keyword operator double-colon haskell"><span>::</span></span><span>&nbsp;</span><span class="storage type haskell"><span>Unsigned</span></span><span>&nbsp;</span><span class="constant numeric integral decimal haskell"><span>8</span></span></span></span></span></div><div class="line"><span class="source haskell"><span class="meta declaration data algebraic haskell"><span class="meta record definition haskell"><span class="punctuation brace haskell"><span>}</span></span></span><span>&nbsp;</span><span class="meta deriving haskell"><span class="keyword other deriving haskell"><span>deriving</span></span><span>&nbsp;</span><span class="storage type haskell"><span>Show</span></span></span></span></span></div><div class="line"><span class="source haskell"><span class="meta declaration data algebraic haskell"><span>&nbsp;</span></span></span></div><div class="line"><span class="source haskell"><span class="meta function type-declaration haskell"><span class="entity name function haskell"><span>controllerT</span></span><span>&nbsp;</span><span class="keyword operator double-colon haskell"><span>::</span></span><span>&nbsp;</span><span class="storage type haskell"><span>ControllerState</span></span><span>&nbsp;</span></span></span></div><div class="line"><span class="source haskell"><span class="meta function type-declaration haskell"><span>&nbsp;&nbsp;</span><span class="keyword operator arrow haskell"><span>-&gt;</span></span><span>&nbsp;</span><span class="storage type haskell"><span>ControllerInput</span></span><span>&nbsp;</span></span></span></div><div class="line"><span class="source haskell"><span class="meta function type-declaration haskell"><span>&nbsp;&nbsp;</span><span class="keyword operator arrow haskell"><span>-&gt;</span></span><span>&nbsp;</span><span class="punctuation paren haskell"><span>(</span></span><span class="storage type haskell"><span>ControllerState</span></span><span class="punctuation separator comma haskell"><span>,</span></span><span class="storage type haskell"><span>Bool</span></span><span class="punctuation paren haskell"><span>)</span></span></span></span></div><div class="line"><span class="source haskell"><span>controllerT&nbsp;</span></span></div><div class="line"><span class="source haskell"><span>&nbsp;&nbsp;</span><span class="punctuation paren haskell"><span>(</span></span><span class="constant other haskell"><span>ControllerState</span></span><span>&nbsp;switchState&nbsp;cnt</span><span class="punctuation paren haskell"><span>)</span></span><span>&nbsp;</span></span></div><div class="line"><span class="source haskell"><span>&nbsp;&nbsp;</span><span class="punctuation paren haskell"><span>(</span></span><span class="constant other haskell"><span>ControllerInput</span></span><span>&nbsp;</span><span class="punctuation paren haskell"><span>(</span></span><span class="constant other haskell"><span>Configuration</span></span><span>&nbsp;e_lo&nbsp;e_hi&nbsp;delay</span><span class="punctuation paren haskell"><span>)</span></span><span>&nbsp;e</span><span class="punctuation paren haskell"><span>)</span></span></span></div><div class="line"><span class="source haskell"><span>&nbsp;&nbsp;</span><span class="keyword operator pipe haskell"><span>|</span></span><span>&nbsp;e&nbsp;</span><span class="keyword operator infix haskell"><span>&lt;</span></span><span>&nbsp;e_lo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword operator eq haskell"><span>=</span></span><span>&nbsp;</span><span class="punctuation paren haskell"><span>(</span></span><span class="constant other haskell"><span>ControllerState</span></span><span>&nbsp;</span><span class="constant other haskell"><span>True</span></span><span>&nbsp;cntn</span><span class="punctuation separator comma haskell"><span>,</span></span><span class="constant other haskell"><span>True</span></span><span class="punctuation paren haskell"><span>)</span></span></span></div><div class="line"><span class="source haskell"><span>&nbsp;&nbsp;</span><span class="keyword operator pipe haskell"><span>|</span></span><span>&nbsp;e&nbsp;</span><span class="keyword operator infix haskell"><span>&gt;</span></span><span>&nbsp;e_hi&nbsp;</span><span class="keyword operator infix haskell"><span>&amp;&amp;</span></span><span>&nbsp;cnt&nbsp;</span><span class="keyword operator infix haskell"><span>&gt;=</span></span><span>&nbsp;delay&nbsp;</span><span class="keyword operator eq haskell"><span>=</span></span><span>&nbsp;</span><span class="punctuation paren haskell"><span>(</span></span><span class="constant other haskell"><span>ControllerState</span></span><span>&nbsp;</span><span class="constant other haskell"><span>False</span></span><span>&nbsp;cntn</span><span class="punctuation separator comma haskell"><span>,</span></span><span class="constant other haskell"><span>False</span></span><span class="punctuation paren haskell"><span>)</span></span></span></div><div class="line"><span class="source haskell"><span>&nbsp;&nbsp;</span><span class="keyword operator pipe haskell"><span>|</span></span><span>&nbsp;otherwise&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword operator eq haskell"><span>=</span></span><span>&nbsp;</span><span class="punctuation paren haskell"><span>(</span></span><span class="constant other haskell"><span>ControllerState</span></span><span>&nbsp;switchState&nbsp;cntn</span><span class="punctuation separator comma haskell"><span>,</span></span></span></div><div class="line"><span class="source haskell"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;switchState</span><span class="punctuation paren haskell"><span>)</span></span></span></div><div class="line"><span class="source haskell"><span>&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword other where haskell"><span>where</span></span><span>&nbsp;cntn&nbsp;</span><span class="keyword operator eq haskell"><span>=</span></span><span>&nbsp;</span><span class="keyword control if haskell"><span>if</span></span><span>&nbsp;e&nbsp;</span><span class="keyword operator infix haskell"><span>&gt;</span></span><span>&nbsp;e_hi&nbsp;</span><span class="keyword control then haskell"><span>then</span></span><span>&nbsp;</span><span class="keyword control if haskell"><span>if</span></span><span>&nbsp;cnt&nbsp;</span><span class="keyword operator infix haskell"><span>&lt;</span></span><span>&nbsp;delay&nbsp;</span><span class="keyword control then haskell"><span>then</span></span><span>&nbsp;cnt&nbsp;</span><span class="keyword operator infix haskell"><span>+</span></span><span>&nbsp;</span><span class="constant numeric integral decimal haskell"><span>1</span></span><span>&nbsp;</span></span></div><div class="line"><span class="source haskell"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="keyword control else haskell"><span>else</span></span><span>&nbsp;cnt&nbsp;</span><span class="keyword control else haskell"><span>else</span></span><span>&nbsp;</span><span class="constant numeric integral decimal haskell"><span>0</span></span></span></div><div class="line"><span class="source haskell"><span>&nbsp;</span></span></div><div class="line"><span class="source haskell"><span class="meta function type-declaration haskell"><span class="entity name function haskell"><span>controller</span></span><span>&nbsp;</span><span class="keyword operator double-colon haskell"><span>::</span></span><span>&nbsp;</span><span class="storage type haskell"><span>Signal</span></span><span>&nbsp;</span><span class="storage type haskell"><span>ControllerInput</span></span><span>&nbsp;</span><span class="keyword operator arrow haskell"><span>-&gt;</span></span><span>&nbsp;</span><span class="storage type haskell"><span>Signal</span></span><span>&nbsp;</span><span class="storage type haskell"><span>Bool</span></span></span></span></div><div class="line"><span class="source haskell"><span>controller&nbsp;</span><span class="keyword operator eq haskell"><span>=</span></span><span>&nbsp;mealy&nbsp;controllerT&nbsp;</span><span class="punctuation paren haskell"><span>(</span></span><span class="constant other haskell"><span>ControllerState</span></span><span>&nbsp;</span><span class="constant other haskell"><span>False</span></span><span>&nbsp;</span><span class="constant numeric integral decimal haskell"><span>0</span></span><span class="punctuation paren haskell"><span>)</span></span></span></div></pre>
+    </div>
+
+    <div class="step slide big-title arrow-down" data-scale="0.25" data-x="3500" data-y="-200">
+      <h1>RTL</h1>
+      <ul>
+        <li>Signalfluss zwischen Registern</li>
+        <li>Weitere Synthese weitestgehend automatisch</li>
+      </ul>
+    </div>
+
+    <div class="step image fade" data-scale="0.8" data-x="3150" data-y="-550">
+      <img src="images/circle.svg">
+    </div>
+
+    <div class="step slide fade two-column" data-scale="0.01" data-y="-651.8" data-x="3080">
+      <h1>Korrektheitsbeweise FSL → ESL</h1>
+      <ul>
+        <li>Verfeinerungen innerhalb der FSL sind formal überprüfbar</li>
+        <li>Werkzeug: SPECifIC SysML
+          <ul>
+            <li>Textuelle Repräsentation von SysML Diagrammen und OCL</li>            
+            <li>Automatische Synthese SysML → SMT</li>
+          </ul>
+        </li>                
+      </ul>
+      <ul>
+        <li>Mappings zwischen Datentypen der FSL und der ESL machen die Implementierung formal überprüfbar</li>
+        <li>Werkzeug:
+          <ul>
+            <li>Automatische Synthese Clash → SMT</li>
+          </ul>
+        </li>        
+      </ul>
+    </div>
+
+    <div class="step slide" data-x="3000" data-y="-450">
+
+    </div>
+
+    <div class="step slide" data-x="5000">
+      <h1>Self-Verification</h1>      
+      <ul>
+        <li><p>Naive Idee: Quasi-Statische Variablen substituieren</p></li>
+        <li><p>Exponentielle Verkleinerung des Suchraums<br><br>
+          <span class="math">
+\begin{array}{}
+\underbrace{\begin{array}{}
+e_{lo} & e_{hi} & d\\
+8 & 8 & 8
+\end{array}{}}_{\textit{configuration}} &
+\begin{array}{}
+e & cnt & status & & total\\
+8 & 8 & 1 & = & 41
+\end{array}
+\end{array}
+          </span></p>
+        </li>        
+      </ul>      
+    </div>
+
+    <div class="step image" data-scale="0.6" data-x="5500" data-y="-600">
+      <img src="../src/figures/design-flow.svg">
+    </div>
+
+    <div class="step image fade" data-scale="0.05" data-x="5430" data-y="-440">
+      <h1>Experimente</h1>
+      <img src="images/table1.png">
+    </div>
+
+    <div class="step"  data-x="5000" data-y="-450">
+
+    </div>
+
+    <div class="step slide" data-y="650">
+      <h1>Einordnung</h1>
+      <ul>
+        <li><b>A priori</b>: Für alle Ausführungen <span class="math">\langle\sigma_i\rangle_{i\in\mathbb{N}}</span> muss <span class="math">\phi</span> in allen Zuständen gelten: <span class="math">\forall i.\,\phi(\sigma_i)</span></li>
+        <span class="math">\Rightarrow</span> Unsichere Zustände werden ausgeschlossen<br>
+        <span class="math">\Rightarrow</span> Kann sichere Ausführungen verhindern<br>
+        <span class="math">\Rightarrow</span> Garantiert Korrektheit und Funktionalität         
+        <li><b>Runtime</b>: Eine konkrete Ausführung erfüllt <span class="math">\forall i.\,\phi(\sigma_i)</span></li>
+        <span class="math">\Rightarrow</span> Unsichere Zustände können erreicht werden<br>
+        <span class="math">\Rightarrow</span> Keine Ausführungen werden verhindert<br>
+        <span class="math">\Rightarrow</span> Garantiert (teilweise) Funktionalität
+        <li><b>Self-Verification</b>: Dazwischen</li>
+        <span class="math">\Rightarrow</span> Unsichere Zustände können nicht erreicht werden<br>
+        <span class="math">\Rightarrow</span> Erlaubt einen Teil der sicheren Ausführungen<br>
+        <span class="math">\Rightarrow</span> Garantiert Korrektheit
+      </ul>
+    </div>
+
+    <div class="step slide" data-y="1750">
+      <h1>Trigger Transitionen</h1>
+      <ul>
+        <li>Transitionen werden in normale und <i>Trigger Transitionen</i> klassifiziert</li>
+        <li>Wenn eine Trigger Transition erreicht wird: Verifiziere die Korrektheit aller Ausführungen bis zur nächsten Trigger Transition</li>
+        <li>Naive Möglichkeit: Rekonfiguration</li>
+        <li>Nebeneffekt: Erlaubt Unterspezifikation</li>
+      </ul>
+    </div>
+
+    <div class="step slide fade" style="background-color: white;" data-y="2200">
+      <h1>Zeitliche Abwägungen</h1>
+      <div style="display: flex; justify-content: space-evenly; margin-top: 100px;">
+        <img height="700px" src="../src/figures/traces1.svg">
+        <img height="700px" src="../src/figures/traces2.svg">
+        <img height="700px" src="../src/figures/traces3.svg">
+        <img height="700px" src="../src/figures/traces4.svg">
+      </div>
+    </div>
+
+    <div class="step image" data-y="3300">
+      <h1>Fallstudie: Zugangskontrollsystem</h1>
+      <img height="500px" src="../src/figures/simple-building.svg">
+    </div>
+
+    <div class="step solid image fade">
+      <h1>Fallstudie: Zugangskontrollsystem</h1>
+      <img height="800px" src="../src/figures/formal.svg">
+    </div>
+
+    <div class="step solid image fade">
+      <h1>Fallstudie: Zugangskontrollsystem</h1>
+      <img src="images/acs-01.png">
+    </div>
+
+    <div class="step solid image fade">
+      <h1>Fallstudie: Zugangskontrollsystem</h1>
+      <img src="images/acs-02.png">
+    </div>
+
+    <div class="step solid image fade">
+      <h1>Fallstudie: Zugangskontrollsystem</h1>
+      <img src="images/acs-03.png">
+    </div>
+
+    <div class="step solid image fade">
+      <h1>Fallstudie: Zugangskontrollsystem</h1>
+      <img src="images/acs-04.png">
+    </div>
+
+    <div class="step slide" data-y="4400">
+      <h1>Wann Verifizieren?</h1>
+      <ul>
+        <li>A priory: <span style="color:darkred">schlägt fehl</span></li>
+        <li>Topologie ändert sich: <span style="color:darkorange">Schließt die meisten Gebäude aus</span></li>
+        <li>Zugangsrechte ändern sich: <span style="color:darkgreen">Schließt manche Konfigurationen aus</span></li>
+        <li>Türzugriff: <span style="color:darkorange">Dead Lock möglich</span></li>
+        <li>Im Notfall: <span style="color:darkred">Möglicherweise Tödlich</span></li>
+      </ul>
+    </div>
+
+    <div class="step image" data-y="5500">
+      <h1>Umsetzung</h1>
+      <img src="../src/figures/design-flow.svg">
+    </div>
+
+    <div class="step image solid fade">
+      <h1>Umsetzung</h1>
+      <img src="../src/figures/design-flow-demonstrator.svg">
+    </div>
+
+
+    <div class="step solid slide fade">
+      <h1>Fallstudie: Ergebnisse</h1>
+      <ul>
+        <li>Trigger Transitionen
+          <ul>
+            <li>Dürfen nicht sicherheitskritisch sein</li>
+            <li>Sollten die Komplexität exponentiell reduzieren</li>            
+          </ul>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="step solid slide fade">
+      <h1>Fallstudie: Ergebnisse</h1>
+      <ul>
+        <li>Trigger Transitionen
+          <ul>
+            <li>Dürfen nicht sicherheitskritisch sein</li>
+            <li>Sollten die Komplexität exponentiell reduzieren</li>            
+          </ul>
+        </li>        
+        <li>
+          Mehrzieloptimierung:
+          <ul class="squiggle-right">
+            <li>Möglichst wenige Trigger Transitionen</li>
+            <li>Möglichst geringe Verifikationszeit</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="step slide" data-x="7000">
+      <h1>Beweiszeit Analyse</h1>
+      <ul>
+        <li>Die Anzahl der freien Variablen in einem Beweis vergrößern den Zustandsraum exponentiell</li>
+        <li>Aber: Substitutionen durch konkrete Werte verkleinern der Suchraum auch exponentiell</li>        
+      </ul>      
+    </div>
+        
+    <div class="step image" data-x="7000" data-y="5600" data-scale="0.7">
+      <img  src="images/paper-figure0.pdf-1.png">
+    </div>
+
+    <div class="step image fade" data-scale="0.7">
+      <img  src="images/paper-figure3.pdf-1.png">
+    </div>
+
+    <div class="step image fade" data-scale="0.7">
+      <img  src="images/paper-figure4.pdf-1.png">
+    </div>
+
+    <div class="step image fade" data-scale="0.7">
+      <img  src="images/paper-figure5.pdf-1.png">
+    </div>
+
+    <div class="step image fade" data-scale="0.7">
+      <img  src="images/paper-figure6.pdf-1.png">
+    </div>
+
+    <div class="step image fade" data-scale="0.7">
+      <img  src="images/paper-figure7.pdf-1.png">
+    </div>
+
+    <div class="step image fade" data-scale="0.7">
+      <img  src="images/paper-figure8.pdf-1.png">
+    </div>
+
+    <div class="step slide" data-y="6700">
+      <h1>Beweislaufzeit</h1>
+      <ul>
+        <li>Gegeben ist
+          <ul>
+            <li>ein Verifikationsproblem <span class="math">\phi</span></li>
+            <li>ein Beweiser der <span class="math">\phi</span> in <span class="math">T_\phi</span> beweisen kann</li>
+          </ul>
+          <li><span class="math">FV(\phi)</span> ist die Menge der freien Variablen in <span class="math">\phi</span></li>
+          <li><span class="math">X</span> ist eine Teilmenge von <span class="math">FV(\phi)</span></li>
+          <li>Dann ist <span class="math">\hat{T}_{\phi}(X)</span> die durchschnittliche Laufzeit für <span class="math">\phi</span> wenn alle Variablen in <span class="math">X</span> substituiert werden.</li>        
+      </ul>
+      <ul style="margin-top: 30px;">
+        <li>Ziel: Ein minimales <span class="math">X</span> welches <span class="math">\hat{T}_{\phi}(X)</span> unter <span class="math">T_\text{max}</span> bringt</li>
+        <li>Iterativer Ansatz scheitert:</li>
+        <span class="math display">|X| \leq |Y| \not\Longrightarrow \hat{T}_{\phi}(X) \geq \hat{T}_{\phi}(Y).</span>
+      </ul>
+    </div>
+
+    <div class="step slide" data-y="7800">
+      <h1>Ordnung muss sein</h1>      
+    </div>
+
+    <div class="step image" data-scale="0.7">
+      <img src="images/paper-figure10.pdf-1.png">
+    </div>
+
+    <div class="step image fade" data-scale="0.7">
+      <img src="images/paper-figure11.pdf-1.png">
+    </div>
+
+    <div class="step image fade" data-scale="0.7">
+      <img src="images/paper-figure12.pdf-1.png">
+    </div>
+
+    <div class="step image" data-y="8900">
+      <h1>Kostenfunktion</h1>
+      <div class="math display">
+        q(X) \triangleq \sqrt{\left(\frac{|X|}{\left|FV{\phi}\right|}\right)^2+\left(\frac{\log(\hat{T}_{\phi}(X))}{\log(T_{\phi})}\right)^2}
+      </div>
+    </div>
+
+    <div class="step slide" data-y="10000">
+      <h1>EA Basierte Implementierung</h1>
+      <ul>
+        <li style="margin: 100px 0;">
+          <i>Individuen</i>: Bitvektoren <span class="math">I=\langle I_i\rangle_{i=1,\ldots,|FV{\phi}|}</span> der Größe <span class="math">\left|FV{\phi}\right|</span>
+        </li>
+        <li style="margin: 100px 0;">
+          <i>Mutation</i>:
+          <span class="math display">
+            \begin{align}            
+              m(I,p_m) & = \langle{J_i}\rangle_{i=1,\ldots,|FV{\phi}|} \\
+              J_i & = \begin{cases}
+              \text{flip}~I_i & ~\text{with}~p_m\\
+              I_i & \text{otherwise}
+            \end{cases}
+            \end{align}      
+          </span>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="step slide" data-y="10550">      
+      <ul>
+        <li style="margin: 100px 0;">
+          <i>Rekombination</i>:
+          <span class="math display">
+            \begin{align*}
+            % \label{eq:recombination_operation}
+            r(I,J,p_r) & =  \langle{K_i}\rangle_{i=1,\ldots,|FV{\phi}|} \\
+            K_i & = \begin{cases}
+            I_i, & \text{if}~I_i = J_i\\
+            I_i, & \text{with}~p_c\\
+            J_i, & \text{otherwise}
+            \end{cases}
+            \end{align*}    
+          </span>
+        </li>
+        <li style="margin: 100px 0;">
+          <i>Fitness Funktion</i>:
+          <span class="math display">
+          q(X) \triangleq \sqrt{\left(\frac{|X|}{\left|FV{\phi}\right|}\right)^2+\left(\frac{\log(\hat{T}_{\phi}(X))}{\log(T_{\phi})}\right)^2}
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="step slide" data-y="11600">
+      <h1>Evaluation</h1>
+      <ul>
+        <li>Eingabe: 333 <i>schwere</i> Probleme aus SMT-LIB (QF_BV)</li>
+        <li>Beweiser: Microsoft z3</li>
+        <li>Zeiteinheit: <code>rlimit</code></li>
+        <li>Hardware: Intel Xeon Octacore / 16GB</li>
+      </ul>
+    </div>
+
+    <div class="step slide" data-y="12000">
+      <h1>Ergebnisse</h1>
+      <img src="images/table2.png" width="100%">
+    </div>
+
+    <div class="step slide" data-y="3000" data-x="-3000">
+      <h1>Ausblick</h1>
+    </div>
+
+    <div class="step slide" data-y="4100">
+      <h1>Zusammenfassung</h1>
+      
+    </div>
+
+    <div id="qa" style="text-align: center;" class="step" data-x="0" data-y="5500" data-z="15500">
+      Fragen?
+    </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/impress.js@1.1.0/js/impress.js" crossorigin="anonymous"></script>
+  <script>
+    impress().init();
+  </script>
+  <!-- The loading of KaTeX is deferred to speed up page rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded",() => {
+      for (let e of document.getElementsByClassName("math")) {
+        katex.render(e.textContent,e,{          
+          displayMode: e.classList.contains("display")
+        })
+      }
+    },{ once: true} )    
+  </script>
+</body>
+</html>
+
+
+

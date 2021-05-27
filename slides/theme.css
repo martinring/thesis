@@ -1,0 +1,417 @@
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Vollkorn+SC&family=Vollkorn:ital,wght@0,400;0,700;1,400&family=Caveat&family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css');
+@import url('https://cdn.jsdelivr.net/npm/impress.js@1.1.0/css/impress-common.css');
+
+body {
+    font-family: 'Public Sans', sans-serif;
+    min-height: 1080px;
+    margin: 0;
+    padding: 0;
+
+    /*background: rgb(187,199,214);
+    background: radial-gradient(circle, white 0%, rgba(187,199,214,1) 100%);*/
+}
+
+h1,h2,h3,h4,h5,h6 {
+  margin: 0 0 20px 0;
+  color: #000;
+  font-family: "Vollkorn";
+  font-weight: bold;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-transform: none;
+  text-shadow: none;
+  word-wrap: break-word; }
+
+h1 { font-size: 60px; }
+
+h2 {
+    font-size: 50px;
+    font-weight: normal;
+}
+
+
+ul {
+    display: block;
+    text-align: left;
+    margin: 0 0 0 1em;
+    list-style-type: none;
+}
+
+ul li {
+    position: relative;
+}
+
+ul li::before {
+    position: absolute;
+    left: -1em;
+    color: rgb(222,124,10);        
+    content: "■";
+}
+
+a {
+    color: #217fdd;
+    text-decoration: none;    
+    border-radius: 0.2em;
+
+    -webkit-transition: 0.5s;
+    -moz-transition:    0.5s;
+    -ms-transition:     0.5s;
+    -o-transition:      0.5s;
+    transition:         0.5s;
+}
+
+a:hover,
+a:focus {
+    color: #4fa5fc;
+}
+
+.fallback-message {
+    font-family: sans-serif;
+    line-height: 1.3;
+
+    width: 1800px;
+    padding: 10px 10px 0;
+    margin: 20px auto;
+
+    border: 1px solid #E4C652;
+    border-radius: 10px;
+    background: #EEDC94;
+}
+
+.fallback-message p {
+    margin-bottom: 10px;
+}
+
+.impress-supported .fallback-message {
+    display: none;
+}
+
+.step {
+    position: relative;
+    width: 1920px;
+    padding: 40px 60px;
+    margin: 20px auto;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing:    border-box;
+    -ms-box-sizing:     border-box;
+    -o-box-sizing:      border-box;
+    box-sizing:         border-box;
+
+    font-size: 40px;
+    line-height: 1.5;
+}
+
+.step.big-title h1 {    
+    font-size: 10rem;
+    margin-bottom: 3rem;
+}
+
+.mute {
+    opacity: 0.5;
+}
+
+.note-box {
+    background-color: #FEFCB4;
+    font-family: Caveat;
+    font-size: 4rem;
+    padding: 1rem;
+    margin: 2rem;
+    box-shadow: 0.1rem 0.1rem 1rem black;
+}
+
+/*
+    ... and we enhance the styles for impress.js.
+
+    Basically we remove the margin and make inactive steps a little bit transparent.
+*/
+.impress-enabled .step {
+    margin: 0;
+    /*opacity: 0.8;
+
+    -webkit-transition: opacity 1s;
+    -moz-transition:    opacity 1s;
+    -ms-transition:     opacity 1s;
+    -o-transition:      opacity 1s;
+    transition:         opacity 1s;*/
+}
+
+.impress-enabled .step.active { opacity: 1 }
+
+.slide {
+    width: 1920px;
+    height: 1080px;
+    padding: 40px 60px;
+    position: relative;
+}
+
+
+.slide.two-column {
+    display: grid;
+    gap: 30px 50px;
+    grid: "title title" min-content
+          "left right" auto
+          / 1fr 1fr;    
+    grid-auto-rows: auto;    
+    position: relative;        
+}
+
+.slide.two-column > ul {
+    margin-left: 0;
+}
+
+.slide.arrow-right::after {
+    content: '➔';
+    position: absolute;
+    right: 30rem;
+    font-size: 20rem;
+    top: -7rem;
+    color: rgba(0, 0, 0, .2)
+}
+
+.slide.arrow-down::after {
+    content: '➔';
+    transform: rotate(90deg);
+    position: absolute;
+    bottom: -20rem;
+    font-size: 20rem;
+    right: 0;
+    color: rgba(0, 0, 0, .2);
+    left: 0;
+    text-align: center;
+}
+
+emph {
+    font-style: italic;
+}
+
+.slide.two-column > :first-child  {
+    grid-row: 1;
+    grid-column: span 2;
+}
+
+#motivation, #title, #smartphone {
+    transition: filter 1s ease;
+}
+
+#motivation {
+    filter: blur(10px);
+}
+
+#motivation.active, #motivation.past {
+    filter: blur(0);
+}
+
+#smartphone, #title {
+    filter: blur(0);
+}
+
+#smartphone.past, #title.past {
+    filter: blur(10px);
+}
+
+.slide.two-column > :first-child ~ img {    
+    text-align: center;    
+    max-height: 840px;
+    max-width: 800px;
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.step.image {    
+    height: 1080px;
+    line-height: 1080px;    
+    vertical-align: middle;    
+    position: relative;
+}
+
+.step.image > img {
+    text-align: center;    
+    max-height: 1000px;
+    max-width: 1800px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.step.image > h1+img {
+    padding-top: 100px;
+    max-height: 900px;
+}
+
+.shade {
+    transition: box-shadow 1s ease;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, .3);
+}
+
+.step.active .shade {
+    box-shadow: 20px 20px 40px rgba(0, 0, 0, .3);
+}
+
+.step .fade, .step.fade {
+    opacity: 0;    
+    transition: opacity 1s ease 0.5s;
+}
+
+.step.white {    
+    background-color: white;
+}
+
+.step.active .fade, .step.active.fade {
+    opacity: 1;
+    transition: opacity 0.5s ease 0s;
+}
+
+.step.reveal {
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.step.reveal.present, .step.reveal.active, .step.reveal.past {
+    opacity: 1;
+}
+
+li > p, li > ul {
+    margin-top: 0;
+    margin-bottom: 1em;
+}
+
+.step.solid {
+    background-color: white;
+}
+
+.squiggle-right {
+    position: relative;
+}
+
+.math.display {
+    text-align: center;
+}
+
+.squiggle-right::after {
+    position: absolute;
+    content: '';
+    width: 1000px;
+    height: 1000px;
+    background-image: url('images/arrow.svg');
+    background-repeat: no-repeat;
+    transform: rotate(-15deg);
+    right: -200px;
+    top: -250px;
+}
+
+.step.title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 1080px;    
+
+    background: rgb(187,199,214);
+    background: radial-gradient(circle, white 0%, rgba(187,199,214,1) 100%);
+}
+
+.step.title > h1 + h2 {
+    font-style: italic;
+    margin-bottom: 130px;
+    position: relative;
+}
+
+.step.title > h1:first-child + h2::before {
+    content: "";
+    position: absolute;
+    background: linear-gradient(90deg, rgba(222, 124, 10,0%) 0%, rgb(222, 124, 10) 33.33%);
+    top: 1.5em;
+    height: 20px;
+    left: 0;
+    right: 0;
+  }
+  
+.step.title > h1:first-child + h2::after {
+    content: "";
+    background-image: url("images/DFKI_Logo.svg");
+    background-position: 0 50%;
+    width: 400px;    
+    position: absolute;
+    right: 0;
+    bottom: -1em;
+    height: 200px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.step.title > div {
+    font-weight: normal;    
+    font-family: 'Public Sans';
+}
+
+.noclick {
+    pointer-events: none;
+}
+
+.editor {
+    font-family: "JetBrains Mono";
+    font-size: 2rem;
+}
+
+.editor .source .keyword:not(.operator), .editor .source.smt .keyword {
+color: blue;
+}
+
+.editor .source .keyword.control {
+color: #af00db;
+}
+
+.editor .source .name.type, .editor .source .name.tag, .editor .source .constant  {
+color: #267f99;
+}
+
+.editor .source .name.function  {
+color: #795e26;
+}
+
+.editor .source .attribute-name, .editor .source .member {
+color: #001080;
+}
+
+.editor .source .comment {
+color: #008000;
+}
+
+.editor .source .storage.type {
+color: #0000ff;
+}
+  
+.math {
+    font-size: 80%;
+}
+
+table {
+    border-top: 4px solid black;
+    border-bottom: 4px solid black;
+    margin-bottom: 4rem;
+    font-size:80%; 
+    border-collapse: collapse;  
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  thead {
+    border-bottom: 2px solid black;
+    font-weight: normal;
+  }
+  th,
+  td {
+    padding: 0;
+    font-weight: normal;
+  }
+  th.centered,
+  td.centered {
+    text-align: center !important;
+  }
