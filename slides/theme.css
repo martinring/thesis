@@ -307,6 +307,22 @@ li > p, li > ul {
     top: -250px;
 }
 
+.arrow-left {
+    position: relative;
+}
+
+.arrow-left::after {
+    position: absolute;
+    content: '';
+    width: 1000px;
+    height: 1000px;
+    background-image: url('images/arrow.svg');
+    background-repeat: no-repeat;
+    transform: rotate(-15deg);
+    left: -850px;
+    top: 130px;
+}
+
 .step.title {
     display: flex;
     flex-direction: column;
@@ -414,4 +430,10 @@ table {
   th.centered,
   td.centered {
     text-align: center !important;
+  }
+
+  #position {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
   }

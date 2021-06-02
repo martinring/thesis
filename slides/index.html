@@ -57,8 +57,30 @@
         </ul>
     </div>
 
-    <div class="step slide" data-x="3000">
-      <h1>A Priori Verifikation</h1>      
+    <div class="step slide" data-x="3000" data-y="-1550">
+      <h1>Entwurfszeitverifikation: Stand der Technik</h1>
+      <ul>
+        <li>
+          Simulation
+          <ul>
+            <li>Constraint-Basierte Verifikation</li>
+            <li>Automatische Stimuli-Generation</li>
+            <li>Assertion Generierung</li>            
+          </ul>
+        </li>
+        <li>
+          Emulation
+        </li>
+        <li>Formale Verifikation</li>
+        <ul>
+          <li>Model Checking</li>
+          <li>Formal Specification Level</li>
+        </ul>
+      </ul>
+    </div>
+
+    <div class="step slide" data-x="3000" data-y="-450">
+      <h1>Entwurfszeitverifikation: Spezifikation</h1>
       <ul>
         <li>Beispiel: Ein automatischer Lichtschalter</li>
       </ul>
@@ -227,11 +249,11 @@ e & cnt & status & & total\\
     <div class="step slide" data-y="4400">
       <h1>Wann Verifizieren?</h1>
       <ul>
-        <li>A priory: <span style="color:darkred">schlägt fehl</span></li>
+        <li>A priori: <span style="color:darkred">schlägt fehl</span></li>
         <li>Topologie ändert sich: <span style="color:darkorange">Schließt die meisten Gebäude aus</span></li>
         <li>Zugangsrechte ändern sich: <span style="color:darkgreen">Schließt manche Konfigurationen aus</span></li>
-        <li>Türzugriff: <span style="color:darkorange">Dead Lock möglich</span></li>
-        <li>Im Notfall: <span style="color:darkred">Möglicherweise Tödlich</span></li>
+        <li>Türzugriff: <span style="color:darkorange">Deadlock möglich</span></li>
+        <li>Im Notfall: <span style="color:darkred">Möglicherweise tödlich</span></li>
       </ul>
     </div>
 
@@ -245,19 +267,6 @@ e & cnt & status & & total\\
       <img src="../src/figures/design-flow-demonstrator.svg">
     </div>
 
-
-    <div class="step solid slide fade">
-      <h1>Fallstudie: Ergebnisse</h1>
-      <ul>
-        <li>Trigger Transitionen
-          <ul>
-            <li>Dürfen nicht sicherheitskritisch sein</li>
-            <li>Sollten die Komplexität exponentiell reduzieren</li>            
-          </ul>
-        </li>
-      </ul>
-    </div>
-    
     <div class="step solid slide fade">
       <h1>Fallstudie: Ergebnisse</h1>
       <ul>
@@ -267,7 +276,7 @@ e & cnt & status & & total\\
             <li>Sollten die Komplexität exponentiell reduzieren</li>            
           </ul>
         </li>        
-        <li>
+        <li class="substep">
           Mehrzieloptimierung:
           <ul class="squiggle-right">
             <li>Möglichst wenige Trigger Transitionen</li>
@@ -321,8 +330,8 @@ e & cnt & status & & total\\
             <li>ein Verifikationsproblem <span class="math">\phi</span></li>
             <li>ein Beweiser der <span class="math">\phi</span> in <span class="math">T_\phi</span> beweisen kann</li>
           </ul>
-          <li><span class="math">FV(\phi)</span> ist die Menge der freien Variablen in <span class="math">\phi</span></li>
-          <li><span class="math">X</span> ist eine Teilmenge von <span class="math">FV(\phi)</span></li>
+          <li><span class="math">\operatorname{\textit{FV}}(\phi)</span> ist die Menge der freien Variablen in <span class="math">\phi</span></li>
+          <li><span class="math">X</span> ist eine Teilmenge von <span class="math">\operatorname{\textit{FV}}(\phi)</span></li>
           <li>Dann ist <span class="math">\hat{T}_{\phi}(X)</span> die durchschnittliche Laufzeit für <span class="math">\phi</span> wenn alle Variablen in <span class="math">X</span> substituiert werden.</li>        
       </ul>
       <ul style="margin-top: 30px;">
@@ -351,7 +360,7 @@ e & cnt & status & & total\\
     <div class="step image" data-y="8900">
       <h1>Kostenfunktion</h1>
       <div class="math display">
-        q(X) \triangleq \sqrt{\left(\frac{|X|}{\left|FV{\phi}\right|}\right)^2+\left(\frac{\log(\hat{T}_{\phi}(X))}{\log(T_{\phi})}\right)^2}
+        q(X) \triangleq \sqrt{\left(\frac{|X|}{\left|\operatorname{\textit{FV}}(\phi)\right|}\right)^2+\left(\frac{\log(\hat{T}_{\phi}(X))}{\log(T_{\phi})}\right)^2}
       </div>
     </div>
 
@@ -359,13 +368,13 @@ e & cnt & status & & total\\
       <h1>EA Basierte Implementierung</h1>
       <ul>
         <li style="margin: 100px 0;">
-          <i>Individuen</i>: Bitvektoren <span class="math">I=\langle I_i\rangle_{i=1,\ldots,|FV{\phi}|}</span> der Größe <span class="math">\left|FV{\phi}\right|</span>
+          <i>Individuen</i>: Bitvektoren <span class="math">I=\langle I_i\rangle_{i=1,\ldots,|\operatorname{\textit{FV}}(\phi)|}</span> der Größe <span class="math">\left|\operatorname{\textit{FV}}(\phi)\right|</span>
         </li>
         <li style="margin: 100px 0;">
           <i>Mutation</i>:
           <span class="math display">
             \begin{align}            
-              m(I,p_m) & = \langle{J_i}\rangle_{i=1,\ldots,|FV{\phi}|} \\
+              m(I,p_m) & = \langle{J_i}\rangle_{i=1,\ldots,|\operatorname{\textit{FV}}(\phi)|} \\
               J_i & = \begin{cases}
               \text{flip}~I_i & ~\text{with}~p_m\\
               I_i & \text{otherwise}
@@ -383,7 +392,7 @@ e & cnt & status & & total\\
           <span class="math display">
             \begin{align*}
             % \label{eq:recombination_operation}
-            r(I,J,p_r) & =  \langle{K_i}\rangle_{i=1,\ldots,|FV{\phi}|} \\
+            r(I,J,p_r) & =  \langle{K_i}\rangle_{i=1,\ldots,|\operatorname{\textit{FV}}(\phi)|} \\
             K_i & = \begin{cases}
             I_i, & \text{if}~I_i = J_i\\
             I_i, & \text{with}~p_c\\
@@ -395,7 +404,7 @@ e & cnt & status & & total\\
         <li style="margin: 100px 0;">
           <i>Fitness Funktion</i>:
           <span class="math display">
-          q(X) \triangleq \sqrt{\left(\frac{|X|}{\left|FV{\phi}\right|}\right)^2+\left(\frac{\log(\hat{T}_{\phi}(X))}{\log(T_{\phi})}\right)^2}
+          q(X) \triangleq \sqrt{\left(\frac{|X|}{\left|\operatorname{\textit{FV}}(\phi)\right|}\right)^2+\left(\frac{\log(\hat{T}_{\phi}(X))}{\log(T_{\phi})}\right)^2}
           </span>
         </li>
       </ul>
@@ -418,32 +427,91 @@ e & cnt & status & & total\\
 
     <div class="step slide" data-y="3000" data-x="-3000">
       <h1>Ausblick</h1>
+      <ul>                
+        <li>Einsatz in "echten" Systemen</li>
+        <li>Andere Beweiser und Beweismethoden</li>
+        <li>Realistische Wahrscheinlichkeitsverteilungen</li>        
+        <li>
+          Weitere Forschungsmöglichkeiten
+          <ul>
+            <li>Integration mit Hardware SAT-Solvern</li>
+            <li>Predictive Self-Verification</li>
+            <li>Dependent Operation</li>
+            <li>Verification Aware Inference</li>
+            <li>Just-in-Time Verification</li>
+          </ul>
+        </li>
+      </ul>      
     </div>
 
-    <div class="step slide" data-y="4100">
+    <div class="step image arrow-left fade" data-y="3290" data-x="-1340">
+      <h1>Just-in-Time Verification</h1>
+      <img src="../src/figures/jit-1.svg" width="1000px">
+    </div>
+
+    <div class="step image fade" data-y="3290" data-x="-1340">
+      <h1>Just-in-Time Verification</h1>
+      <img src="../src/figures/jit-2.svg" width="1000px">
+    </div>
+
+    <div class="step image fade" data-y="3290" data-x="-1340">
+      <h1>Just-in-Time Verification</h1>
+      <img src="../src/figures/jit-3.svg" width="1000px">
+    </div>
+
+    <div class="step slide" data-y="4100" data-x="-3000">
       <h1>Zusammenfassung</h1>
-      
+      <ul>
+        <li>Selbst-Verifikation ist möglich</li>
+        <li>Selbst-Verifikation ist sinnvoll, wenn
+          <ul>
+            <li>die Beweisverpflichtungen nicht regulär gelöst werden können;</li>
+            <li>Verfügbarkeit der Sicherheit geopfert werden kann und</li>
+            <li>ausreichend Trigger Transitionen gefunden werden können.</li>
+          </ul>
+        </li>
+        <li>Trigger Transitionen müssen
+          <ul>
+            <li>unkritisch für die Sicherheit sein und</li>
+            <li>die Beweiszeit stark reduzieren.</li>
+          </ul>          
+        </li>
+        <li>Beweiszeitanalyse ist sinnvoll möglich</li>
+      </ul>
     </div>
 
-    <div id="qa" style="text-align: center;" class="step" data-x="0" data-y="5500" data-z="15500">
+    <div id="qa" style="text-align: center;" class="step stop" data-x="0" data-y="5500" data-z="15500">
       Fragen?
     </div>
-
+    
+  </div>
+  <div id="impress-toolbar"></div>
+  <div class="impress-progressbar"><div></div></div>
+  <div class="impress-progress"></div>
   <script src="https://cdn.jsdelivr.net/npm/impress.js@1.1.0/js/impress.js" crossorigin="anonymous"></script>
-  <script>
-    impress().init();
-  </script>
   <!-- The loading of KaTeX is deferred to speed up page rendering -->
   <script src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js" crossorigin="anonymous"></script>
   
   <script>
+    let i = impress();
+    i.init();
+    console.log(i)
+    document.addEventListener("keydown",e => {
+      switch (e.key) {
+        case 'q':
+          impress().goto(document.getElementById('qa'))
+          break;      
+        default:
+          break;
+      }
+    });
     document.addEventListener("DOMContentLoaded",() => {
       for (let e of document.getElementsByClassName("math")) {
         katex.render(e.textContent,e,{          
           displayMode: e.classList.contains("display")
         })
       }
-    },{ once: true} )    
+    },{ once: true} )
   </script>
 </body>
 </html>
