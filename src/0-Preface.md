@@ -1,6 +1,6 @@
 ---
 title: Self-Verification
-subtitle: Verification of Embedded and Cyber-Physical Systems [after Deployment]{.nobr}
+subtitle: Verification of Embedded Systems [after Deployment]{.nobr}
 author: ['Martin Ring']
 date: the 19th of April 2021
 abstract: |

@@ -11,7 +11,7 @@
     - given: Jannis
       family: Stoppe
     - given: Christoph
-      family: Luth
+      family: Lüth
     - given: Rolf
       family: Drechsler
   editor:
@@ -692,8 +692,8 @@
       family: Ferrari
     - given: E.
       family: Mazzi
-    - given: A. L. Sangiovanni
-      family: Vincentelli
+    - given: A. L. 
+      family: Sangiovanni Vincentelli
   event-place: St. Louis, MO, USA
   container-title: "International Workshop on Hybrid Systems: Computation and Control (HSCC 2008)"
   issued:
@@ -792,9 +792,7 @@
 - author:
   - given: Jean-Raymond
     family: Abrial
-  - given: Jean-Raymond
-    family: Abrial
-  - given: A
+  - given: C.A.R.
     family: Hoare
   type: book
   id: Abrial2005

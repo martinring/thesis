@@ -15,7 +15,7 @@ products earlier and, hence, a full correctness proof is only ever done for the
 most safety-critical systems. For all other devices, errors during the design 
 process may remain undetected in the final product.
 
-This is obviously caused by the exponential complexity of the problem. Each 
+This is obviously caused by the exponential nature of the problem. Each 
 year, more complex systems are being designed and need to be verified. Iterative 
 improvements have been proposed in the past years, e.g. the introduction of 
 higher levels of abstraction for design such as the *Formal Specification Level* 
@@ -50,7 +50,7 @@ system, and checking whether a specific run of the system satisfies the
 desired property is of lower complexity compared to
 model-checking [@LeuckerSchallhart]. The drawbacks are that it may be
 costly to continuously monitor the behaviour of the system at run-time, and
-once we find an error, it may be too late to do anything about it. This is
+once we find an error, it is too late to do anything about it. This is
 particularly true for hardware, and systems where the split between hardware
 and software is decided rather late in the development process.
 
@@ -64,7 +64,7 @@ The authors of [@DFW:2015] name three benefits that self-verification yields:
    thousands of deployed devices may be combined.
 1. *More time* -- the deployment of a system does no longer mark an end to the
    verification.
-1. *More information* -- the environment of an deployed unit becomes concrete 
+1. *More information* -- the environment of a deployed unit becomes concrete 
    and by this can substitute abstract variables with definitive observations.
 
 Of these aspects, the scope of this work is the latter: How can information 

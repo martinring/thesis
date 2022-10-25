@@ -81,7 +81,7 @@ verification, we need to state the required preconditions very precisely ---
 they need to be strong enough to be able to actually show that the system
 globally satisfies the specified properties, and to preclude unwanted
 behaviour, but weak enough to still allow all desired
-implementation. If we move verification into run-time, we can relax
+implementations. If we move verification into run-time, we can relax
 preconditions at design time, allowing for more readable specifications and
 speeding up the development process. Consider
 [#fig:configuration] again: to make the system usable as
@@ -459,12 +459,11 @@ behaviours mentioned for case [#enum-verify-3] in
 in one place unable to proceed because of the violation of the safety
 property this would incur.
 
-The generated SMT proof obligations are a general equivalence proof which
-can be processed by an SMT prover at design time. As mentioned above, the
-prover quickly finds counter examples since our specification can easily
-be violated in general. By adding run-time information in the form of
-assertions, we refine the instance on the fly. This was realised by
-establishing a WebSocket connection between the SVG and the Z3
+The generated SMT proof obligations can be processed by an SMT prover at 
+design time. As mentioned above, the prover quickly finds counter examples 
+since our specification can easily be violated in general. By adding run-time 
+information in the form of assertions, we refine the instance on the fly. This 
+was realised by establishing a WebSocket connection between the SVG and the Z3
 prover. For this, we use the *websocat* utility, which wraps a
 WebSocket server around a command-line program. This allows us to
 load the general proof and then incrementally send assertions restricting

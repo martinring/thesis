@@ -16,7 +16,7 @@ designs, because they require designers to specify systems to the point where
 they can be synthesised automatically. The resulting designs need to be built
 from the bottom up and can only be verified by thorough testing once complete. 
 This approach cannot cope with the shorter design cycles and reduced time to 
-required in today's marketplace.
+market required in today's marketplace.
 
 The remedy suggested in this chapter is to provide designers with more abstract 
 languages that allow systems to be designed top-down, starting with an abstract 
@@ -80,7 +80,6 @@ desired, meaning that these specifications need to be processed manually.
 
 ### The Formal Specification Level (FSL)
 
-
 The next step to describe a system in a more exact way are formal
 languages.
 Standardised languages such as the Systems Modelling Language (SysML) give
@@ -97,7 +96,6 @@ design; e.g. structural diagrams enriched with OCL limit what actions may be
 performed by the system and how the output values may then be structured.
 However, while these models may be used to locate potential errors early on
 in the design process, they are neither complete nor actually executable.
-
 
 ### The Electronic System Level (ESL) {#sec:esl}
 
@@ -242,9 +240,9 @@ When working with OCL-constrained SysML models, there is a large collection of
 tools available, which let us design diagrams. These can be classified into two 
 groups. On the one hand those which have an underlying semantic model and on the 
 other hand graphical tools without a semantic model (of SysML). Examples for the
-former are *Astah SysML*, *Papyrus*, *System Architect* or *Enterprise Architect*. Since 
-we want to formally verify compliance to the specification, we are dependent on 
-the semantic model and thus will not consider the tool from the latter class 
+former are *Astah SysML*, *Papyrus*, *System Architect* or *Enterprise Architect*. 
+Since we want to formally verify compliance to the specification, we are dependent 
+on the semantic model and thus will not consider the tools from the latter class 
 (e.g. *Microsoft Visio* or *Capella*).
 
 We have chosen to support Papyrus, which is based on the Eclipse Modelling 
@@ -254,7 +252,7 @@ representations.
 
 The reason we chose Papyrus is the fact, that it is the only Framework which 
 allows for semantically meaningful OCL constraints. All other tools we have 
-investigated treat constraints as verbatim text with a language annotation, that 
+investigated treat constraints as verbatim text with a language annotation that 
 can indicate an OCL constraint or any other language (another specification 
 language, natural language or a programming language), without the possibility
 to semantically connect the OCL constraint to the surrounding model.
@@ -632,7 +630,7 @@ them fast to execute and keeps the impact system extensible.
 
 ## Reasoning about OCL {#sec:ocl}
 
-To discharge proof obligations, that arise from the formal specification level 
+To discharge proof obligations that arise from the formal specification level, 
 we need a method to transfer constraints into lower level representations. For 
 OCL there exists a thorough specification of the semantics [@OCLSpec], however 
 SystemC (and especially its extensions, e.g. TLM) has no such specification, and
@@ -642,7 +640,7 @@ So Clash (See [#sec:esl]) is a natural choice if we not only want to map and
 trace changes across layers but also conduct verification (and trace 
 verification results) across layers. For this we have developed a dedicated 
 backend that can translate Clash designs into SMT Bitvector logic (See also 
-[#sec:clash-smt]). In addition we have built a small tool, that can generate the 
+[#sec:clash-smt]). In addition we have built a small tool that can generate the 
 proof obligations as SMT assertions from the SysML Model, the OCL Constraints 
 and the Mappings to the ESL design.
 
@@ -661,7 +659,7 @@ where one can select the layer in focus.
 
 Natural language descriptions are treated specially due to the fact that they 
 might be mapped to arbitrary lower specification layers. I.e. it might be 
-intended, that an abstract formal description does not contain every 
+intended that an abstract formal description does not contain every 
 requirement described by a stake holder and that the requirements are taken 
 care of in subsequent refinements. They may be locked by clicking on the lock 
 icon on the lower right, such that the user is able to relate the natural 

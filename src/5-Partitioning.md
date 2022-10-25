@@ -223,7 +223,7 @@ variables may depend on other variables, i.e. if we set one of them to
 a fixed value, the other one is restrained as well.
 
 Hence, the problem remains how to determine an *optimal subset $X$*
-of variables (optimal in the sense of largest set $X$ such that the average
+of variables (optimal in the sense of smallest set $X$ such that the average
 verification time $\AvgTphi{X}$ is still acceptable).
 
 ## Proposed Solution {#sec:sol}
@@ -348,7 +348,7 @@ Mutation operation
 Recombination operation
 
 : Recombinations combine the characteristics of more than one individual, 
-  hoping to get the best out of them towards a better solution.
+  hoping to combine beneficial traits out of them towards a better solution.
   Recombinations aim for employing changes to individuals in order to
   explore new parts of the search space as well, but also converge on
   existing individuals.

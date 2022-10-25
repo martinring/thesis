@@ -23,7 +23,7 @@ self-driving vehicle as an example: We may use meteorologic information to
 predict the static and adhesive friction of the road due to rain, ice and wind
 conditions. We might use statistical traffic data for the prediction of traffic 
 jams, psychological approaches to intention recognition to predict the behaviour
-of the other road users, etc. It becomes clear, that this direction is by no 
+of the other road users, etc. It becomes clear that this direction is by no 
 means a venture that can be easily taken. Not because these methods do not exist,
 but because complex techniques from numerous scientific disciplines have to be 
 combined. However, even rudimentary approaches can give us a benefit. We utilise 
@@ -36,8 +36,8 @@ too large to handle prior to deployment) and over time, an arbitrarily large
 amount of discharged proofs may accumulate (by this, too large to keep in memory). 
 There are two ideas to cope with this (which may be combined):
 
-1. We may employ "garbage collection" which clears proofs for states, that were 
-   predicted under entirely different conditions and stayed unused.
+1. We may employ "garbage collection" which clears proofs for states that were 
+   predicted under entirely different conditions but stayed unused.
 2. Proof results could be condensed by proving patterns of states and storing 
    only the pattern.
 
@@ -126,9 +126,9 @@ $t$ that can be proven or the proof is never faster than the execution. Hence,
 the unanswered research questions that arises from this approach are:
 
 1. Is there a reliable method to infer a "good enough" $\eta$ for a given 
-   system.
+   system?
 2. Are there real-world systems to which just-in-time verification can be 
-   applied without severely restricting functionality.
+   applied without severely restricting functionality?
 
 We have implemented experiments, namely a simplified simulation of an
 adaptive cruise control and several planning algorithms but until now failed to 

@@ -38,7 +38,7 @@ applicability of the approach as well as design decisions that should be made:
 
 For the latter point, we have developed a methodology which can indicate which
 sets of variables of a proof offer the largest reduction in verification run 
-time. Aiding the designer in this decision.
+time, aiding the designer in this decision.
 
 Note that self-verification is not meant to *replace* the existing 
 verification flow but rather *enhances* it. We should by all means use all well-known 
@@ -50,6 +50,6 @@ and offering the designer to pick the best of all possible worlds.
 The idea of self-verification opens up numerous possiblities for future work 
 (as sketched in [#chap:advanced]), which did not fit the scope of this thesis. 
 However, the evaluations and discussions show that, following the proposed idea,
-allows for a novel verification methodology, that can be adapted today, which 
+allows for a novel verification methodology that can be adapted today, which 
 does not rely on incremental improvement of existing tools and methods but 
 tackles complexity from a completely different, and more successful, angle.
