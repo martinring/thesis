@@ -8,10 +8,10 @@ export default function (md) {
     citeproc: (env) => {
       const { bib, style } = md.options.csl      
       /** @type { citeproc.Driver } */
-      const driver = citeproc.Driver.new({
+      const driver = new citeproc.Driver({
         format: 'html',
         style: style
-      }).unwrap()            
+      })
       driver.insertReferences(bib)                
       let counter = 1      
       /** @type { citeproc.ClusterPosition[] } */
@@ -35,21 +35,21 @@ export default function (md) {
             cites: cluster.map(citation => ({              
               id: citation.citationId
             }))            
-          }).unwrap()
+          })
           return id
         },
         renderCluster(id,renderer) {
           if (!fullRender) {
-            driver.setClusterOrder(citations).unwrap()
-            fullRender = driver.fullRender().unwrap()            
+            driver.setClusterOrder(citations)
+            fullRender = driver.fullRender()            
           }
           return `<a href='#refs'>${fullRender.allClusters[id]}</a>`
         },
         renderBibliography() {
           if (!fullRender) {
-            driver.setClusterOrder(citations).unwrap()
-            driver.makeBibliography().unwrap()
-            fullRender = driver.fullRender().unwrap()
+            driver.setClusterOrder(citations)
+            driver.makeBibliography()
+            fullRender = driver.fullRender()
           }
           return fullRender.bibEntries.map(x => `<div class='csl-entry' id='bib:${x.id}'>${x.value}</div>`).join('')          
         }

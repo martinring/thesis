@@ -94,7 +94,8 @@ export default function (md) {
     const adaptor = liteAdaptor({
       fontFamily: 'Vollkorn'
     })  
-    RegisterHTMLHandler(adaptor)     
+    const handler = RegisterHTMLHandler(adaptor)     
+    AssistiveMmlHandler(handler)
 
     const tex = new TeX({
       packages: AllPackages, 
