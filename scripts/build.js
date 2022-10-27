@@ -18,6 +18,8 @@ const options = yargs(hideBin(argv))
 
 const t0 = Date.now()
 
+await fs.mkdir("build", { recursive: true })
+
 const src_ = log.timed('load markdown sources', 
   options.file ? fs.readFile(options.file).then(x => x.toString('utf-8')) :
   fs.readdir('src',{ withFileTypes: true })
