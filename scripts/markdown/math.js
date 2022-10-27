@@ -60,6 +60,7 @@ export default function (md) {
   })
 
   const inline_rex = /\$((?:\S)|(?:\S.*?\S))\$([,.)])?/gy
+  
 
   md.inline.ruler.before('escape', 'inline-math', function (state, silent) {
     const pos = state.pos;
@@ -88,6 +89,11 @@ export default function (md) {
 
   let equation = 0;
 
+  const chtml = new CHTML({
+    fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2',
+    mtextInheritFont: true
+  })
+
   function getMathEngine(env,chapter) {
     if (env.chapter != (env.chapter = chapter)) equation = 0;
     if (env.mathjax) return env.mathjax
@@ -105,11 +111,6 @@ export default function (md) {
         number: () => env.chapter + '.' + (++equation),
         id: (n) => n
       }
-    })
-  
-    const chtml = new CHTML({
-      fontURL: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2',
-      mtextInheritFont: true
     })
   
     const html = mathjax.document('',{

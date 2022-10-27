@@ -176,6 +176,6 @@ breaks these rules and should rather be titled "Verification Run Time Analysis".
 
 This thesis is typeset in HTML and CSS and is also available online:
 
-[`https://martinring.de/thesis`](https://martinring.de/thesis)
+[`https://thesis.martinring.de`](https://thesis.martinring.de)
 
 :::
