@@ -105,10 +105,10 @@ if (options.pdf) {
   await page.close()
   await browser.close()
   
-  /*await log.timed('building pdf', prince()
+  await log.timed('building pdf', prince()
       .inputs('build/index.prince.html')
       .output("build/index.pdf")
-      .execute())*/
+      .execute())
 }
 
 log.info(`total time ${Date.now() - t0}ms`)

@@ -3,7 +3,7 @@ import { TeX } from 'mathjax-full/js/input/tex.js';
 import { CHTML } from 'mathjax-full/js/output/chtml.js';
 import { liteAdaptor } from 'mathjax-full/js/adaptors/liteAdaptor.js';
 import { RegisterHTMLHandler } from 'mathjax-full/js/handlers/html.js';
-import {AssistiveMmlHandler} from 'mathjax-full/js/a11y/assistive-mml.js';
+import { AssistiveMmlHandler } from 'mathjax-full/js/a11y/assistive-mml.js';
 import { AllPackages } from 'mathjax-full/js/input/tex/AllPackages.js';
 
 /** @type { import('markdown-it').PluginSimple } */

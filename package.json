@@ -12,7 +12,8 @@
     "build": "./scripts/build.js",
     "build:pdf": "./scripts/build.js --pdf; prince build/index.prince.html --output build/index.pdf"
   },
-  "author": "Martin Ring <martin.ring@dfki.de>",
+  "author": "Martin Ring <mail@martinring.de>",
+  "license": "UNLICENSED",
   "dependencies": {
     "plotly.js": "^2.16.1"
   },

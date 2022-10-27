@@ -523,7 +523,7 @@
   issued:
     date-parts:
     - - 2012
-  URL: www.fzi.de/sim/kascpar.html
+  URL: http://www.fzi.de/sim/kascpar.html
   title: KaSCPar - Karlsruhe SystemC Parser Suite
 - id: Castillo2007
   container-title: Latin American Applied Research
