@@ -65,8 +65,6 @@ const style_ = log.timed('load citation style',
   fs.readFile('src/bib/ieee.csl').then(f => f.toString('utf-8'))
 )
 
-const cites = [];
-
 const cssOut = [];
 
 const [bib,style] = await Promise.all([bib_,style_])
