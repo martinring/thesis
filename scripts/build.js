@@ -91,9 +91,7 @@ await log.timed('write html output',fs.writeFile('build/index.html', html, { enc
 await es
 
 if (options.pdf) {  
-  const browser = await log.timed('launch chromium',puppeteer.launch({
-    executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'    
-  }));  
+  const browser = await log.timed('launch chromium',puppeteer.launch({channel: 'chrome'}));  
   const page = await log.timed('chromium: new page', browser.newPage())
   await page.setViewport({ height: 500, width: 800 })
   await page.setUserAgent('PDF')
