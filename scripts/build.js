@@ -104,7 +104,8 @@ if (options.pdf) {
   await browser.close()
   
   await log.timed('building pdf', prince()
-      .inputs('build/index.prince.html')
+      .option("no-warn-css")
+      .inputs("build/index.prince.html")
       .output("build/index.pdf")
       .execute())
 }
