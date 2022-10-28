@@ -101,7 +101,7 @@ export default function (md) {
       fontFamily: 'Vollkorn'
     })  
     const handler = RegisterHTMLHandler(adaptor)     
-    AssistiveMmlHandler(handler)
+    //AssistiveMmlHandler(handler)
 
     const tex = new TeX({
       packages: AllPackages, 
