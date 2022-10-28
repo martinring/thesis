@@ -37,11 +37,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
-      - run: yarn build
+      - run: yarn build:pdf
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: 'build:pdf'
+          path: 'build'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
