@@ -1548,4 +1548,60 @@
     date-parts:
       - - 2019
         - 4
+- id: Moore1998
+  DOI: 10.1109/jproc.1998.658762
+  title: Cramming More Components Onto Integrated Circuits
+  publisher: Institute of Electrical and Electronics Engineers (IEEE)
+  issue: "1"
+  type: article-journal
+  page: 82 - 85
+  volume: "86"
+  author:
+    - given: G.E.
+      family: Moore
+      sequence: first
+  container-title: Proceedings of the IEEE
+  issued:
+    date-parts:
+      - - 1998
+        - 1
+  URL: http://dx.doi.org/10.1109/JPROC.1998.658762
+  container-title-short: Proc. IEEE        
+- id: Charette2009
+  title: 'This car runs on code'
+  type: article-journal
+  container-title: IEEE spectrum
+  volume: "46"
+  page: 3,
+  issued:
+    date-parts:
+      - - 2009
+        - 4
+  author:
+    - given: Robert N
+      family: Charette
+      sequence: first
+- id: Drechsler2016
+  DOI: 10.1007/978-3-319-45117-6_1
+  publisher: Springer International Publishing
+  type: chapter
+  page: 3-17
+  source: Crossref
+  title: Model-Based Specification and Refinement for Cyber-Physical Systems
+  author:
+    - given: Rolf
+      family: Drechsler
+      sequence: first
+    - given: Serge
+      family: Autexier
+      sequence: additional
+    - given: Christoph
+      family: Lüth
+      sequence: additional
+  container-title: Dynamics in Logistics  
+  issued:
+    date-parts:
+      - - 2016
+        - 9
+        - 15
 ...

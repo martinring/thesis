@@ -1,30 +1,40 @@
 # Introduction
 
-Contemporary embedded and cyber-physical systems have become so commonplace
-that we, almost unconsciously, rely on their correct functioning --- we
-just expect our smartphone, our car, our home appliances to work. This is 
-contrary to the fact that these systems have reached a complexity where the 
-verification of their correct behaviour becomes prohibitively expensive. In the 
-past decades, the verification of embedded and cyber-physical systems has become 
-a pressing, complex and elaborate problem for which a number of high-end tools 
-are available [@Simulation;@Wille2009;@Clarke:2000;@DBLP:conf/ddecs/KoczorMPP16]. 
-Designers and verification engineers have access to an enormous amount of 
-computational power, e.g. in terms of high-end design and compute servers. 
-However, time-to-market constraints are putting increasing pressure on releasing 
-products earlier and, hence, a full correctness proof is only ever done for the 
-most safety-critical systems. For all other devices, errors during the design 
-process may remain undetected in the final product.
+Contemporary embedded and cyber-physical systems have become so commonplace that
+we, almost unconsciously, rely on their correct functioning --- we just expect
+our smartphone, our car, our home appliances to work. This is contrary to the
+fact that these systems have reached a complexity where the verification of
+their correct behaviour becomes prohibitively expensive. In the past decades,
+the verification of embedded and cyber-physical systems has become a pressing,
+complex and elaborate problem for which a number of high-end tools are available
+[@Simulation;@Wille2009;@Clarke:2000;@DBLP:conf/ddecs/KoczorMPP16]. Designers
+and verification engineers have access to an enormous amount of computational
+power, e.g. in terms of high-end design and compute servers. [Yet,
+time-to-market constraints pressurize the early release of products. As a
+result, full correctness proofs are often reserved for only the most
+safety-critical systems.]{.changed .minor} For all other devices, errors during
+the design process may remain undetected in the final product.
 
-This is obviously caused by the exponential nature of the problem. Each 
-year, more complex systems are being designed and need to be verified. Iterative 
-improvements have been proposed in the past years, e.g. the introduction of 
-higher levels of abstraction for design such as the *Formal Specification Level* 
-[@DSW:12] and the *Electronic System Level* [@MBP:07], or the lifting of SAT 
-solvers to solvers for *SAT Modulo Theory* (SMT) [@ES:2003;@BBC+:2005;@Wille2007SWORDAS;@Dutertre:2014;@Moura2008Z3AE], but these cannot and will not be able to cope
-with the complexity. The consequences are evident today: While several years 
-back, the actual implementation process was the core activity in any design 
-flow, verification dominates today. In fact, more than 40% of the time and costs
-within the design are devoted to prove the correctness of a system [@Foster:13].
+[The exponential nature of the problem is fundamentally tied to the
+combinatorial explosion in verification scenarios
+]{.changed}[@Clarke:2000]. Each year, more complex systems
+are being designed and need to be verified. [As systems incorporate more
+components and interconnections, the number of potential states and behaviors to
+verify grows disproportionately. Moore's Law, which observes a doubling in
+transistors in integrated circuits approximately every two years]{.changed}
+[@Moore1998], [exemplifies this escalating complexity. This vast
+increase in elements and their interdependencies challenges traditional
+verification processes ]{.changed}[@Charette2009].
+Iterative improvements have been proposed in the past years, e.g. the
+introduction of higher levels of abstraction for design such as the *Formal
+Specification Level* [@DSW:12] and the *Electronic System Level* [@MBP:07], or
+the lifting of SAT solvers to solvers for *SAT Modulo Theory* (SMT)
+[@ES:2003;@BBC+:2005;@Wille2007SWORDAS;@Dutertre:2014;@Moura2008Z3AE], but these
+cannot and will not be able to cope with the complexity. The consequences are
+evident today: While several years back, the actual implementation process was
+the core activity in any design flow, verification dominates today. In fact,
+more than 40% of the time and costs within the design are devoted to prove the
+correctness of a system [@Foster:13].
 
 Because of this situation, we are convinced that verification cannot solely be 
 addressed by incremental improvements of existing approaches anymore, but rather 
@@ -49,10 +59,11 @@ has the advantage that we do not need to stop verification if we deploy the
 system, and checking whether a specific run of the system satisfies the
 desired property is of lower complexity compared to
 model-checking [@LeuckerSchallhart]. The drawbacks are that it may be
-costly to continuously monitor the behaviour of the system at run-time, and
-once we find an error, it is too late to do anything about it. This is
-particularly true for hardware, and systems where the split between hardware
-and software is decided rather late in the development process.
+costly to continuously monitor the behaviour of the system at run-time, [and
+that discovering an error post-deployment can often mean that corrective 
+measures are either limited or potentially more costly to implement.]{.changed} 
+This is particularly true for hardware, and systems where the split between 
+hardware and software is decided rather late in the development process.
 
 The idea of *self-verification* as envisioned in [@DFW:2015] is to investigate 
 the middle ground in between: verify properties of the system as soon as 
@@ -64,8 +75,9 @@ The authors of [@DFW:2015] name three benefits that self-verification yields:
    thousands of deployed devices may be combined.
 1. *More time* -- the deployment of a system does no longer mark an end to the
    verification.
-1. *More information* -- the environment of a deployed unit becomes concrete 
-   and by this can substitute abstract variables with definitive observations.
+1. *More information* -- the environment of [a]{.changed .minor} deployed unit 
+   becomes concrete and by this can substitute abstract variables with definitive 
+   observations.
 
 Of these aspects, the scope of this work is the latter: How can information 
 gained during operation be utilised to speed up the verification process so 
@@ -104,7 +116,9 @@ This cumulative thesis is based on the following original publications:
   Specification & Design Languages (FDL 2016)*, Bremen, Germany, Sep. 2016, pp. 
   1–7
 
-  *My contribution: Implementation (100%), Writing (~33%)*
+  *My contribution: [I was responsible for the entire implementation process and 
+  collaborated closely with the co-authors on the manuscript, leading the 
+  process of drafting, revising, and finalizing the content.]{.added}*
 
 [@Selfie2]
 
@@ -113,7 +127,10 @@ This cumulative thesis is based on the following original publications:
   Automation Test in Europe Conference Exhibition (DATE 2019)*, Florence, Italy, 
   Mar. 2019, pp. 890–895
 
-  *My contribution: Implementation (100%), Writing (~25%), Evaluation: (50%)*
+  *My contribution: [I solely conducted the implementation process and was 
+  deeply involved in the writing phase, actively collaborating on drafting, 
+  revisions, and shaping the overall narrative. Additionally, I designed and 
+  executed the evaluation.]{.added}*
 
 [@Timing]
 
@@ -121,7 +138,10 @@ This cumulative thesis is based on the following original publications:
   in Time,” in *International Conference on Software Engineering and Formal 
   Methods (SEFM 2019)*, Oslo, Norway, Sep. 2019, pp. 454–468
 
-  *My contribution: Implementation (100%), Writing (~50%)*
+  *My contribution: [I spearheaded the implementation from conception to 
+  completion, ensuring the work aligned with our research objectives. My 
+  collaboration on the manuscript included participation in discussions as well 
+  as drafting, and finalizing of all sections.]{.added}*
 
 [@VerificationRuntime]
 
@@ -130,7 +150,12 @@ This cumulative thesis is based on the following original publications:
   Automation Test in Europe Conference Exhibition (DATE 2020)*, Grenoble, France, 
   Mar. 2020, pp. 873–878
 
-  *My contribution: Implementation (100%), Writing (~25%), Evaluation (100%)*
+  *My contribution: [I was solely responsible for the entire implementation, 
+  taking the lead in ensuring its accuracy and relevance to our study. In the 
+  writing phase, I collaborated closely with my co-authors, contributing to 
+  all aspects of the paper. Additionally, I took the lead in designing and 
+  executing the evaluation, ensuring our findings were both robust and 
+  insightful.]{.added}*
 {.refs}
 
 ### Source code

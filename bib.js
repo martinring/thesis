@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 import yaml from 'yaml'
-import Cite from 'citation-js'
 import got from 'got'
 import { argv } from 'process'
 

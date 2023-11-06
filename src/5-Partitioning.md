@@ -638,6 +638,9 @@ easily be integrated into the proposed analysis e.g. by adding a *weight* to the
 variables such that instantiating some variables (which do not change often) is 
 favourable to instantiating others (which do change often).
 
+Bla bla blub
+{.added}
+
 With regard to related work, the term "partial verification" is also used with 
 model checking, in particular software model checking (see 
 e.g. [@Parizek2007,@Groce2004]), referring to techniques to reduce the search 

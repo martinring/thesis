@@ -422,53 +422,66 @@ wide-spectrum languages.
 
 ### Underlying Semantics
 
-In our case, the semantics is based on Kripke structures. Without going
-into the details here, a Kripke structure consists of a set of states, a
-transition relation between states, and a set of propositions which hold
-at each state. Thus, Kripke structures allow us to capture the key
-notions of state transition and state-dependent predicates.
+[We based our reasoning about the semantics on the reduction to Kripke 
+structures. At it's core a Kripke structure consists of a set of states, a
+transition relation between states, and an associated set of atomic propositions
+for each state, which hold within that state. By adopting Kripke structures, we 
+are able to encapsulate crucial concepts like state transitions and 
+state-dependent behaviors, offering a foundational basis for verifying 
+properties and understanding the behavior of our system.]{.changed}
 
-We now sketch the semantics of our abstraction levels. The ISL cannot have a 
-mathematically precise semantics, as such would counteract our motivation to 
-use natural language in the first place (we want users to be able to express 
-initial specifications without having to worry about mathematical rigour at the 
-same time). Instead, we use NLP techniques to decompose the natural language 
-requirements into single semantically meaningful requirements, which form the 
-semantic entities at the ISL. Additionally, if NLP does not offer satisfying 
-results, connections between elements of the FSL and the ISL can be drawn 
-manually in order to properly detect the impact of changes across the different 
-abstraction levels.
+[Each considered specification level carries its own semantics, shedding light on
+specific aspects of the system:]{.added}
 
-At the FSL, the class and object diagrams give us a notion of state (see
-[@RichtersGogolla2002] for details): classes describe the system state (via an 
-object model), and object diagrams describe particular system states (in 
-particular, initial states). State transitions are given by the OCL constraints: 
-there is a transition with operation $o$ from $S_1$ to $S_2$ iff
+Informal Specification Level
 
-1. all invariants hold in $S_1$ and $S_2$,
-2. the preconditions of $o$ are satisfied in $S_1$, and
-3. the postconditions of $o$ are satisfied in $S_2$.
+: The ISL cannot have a mathematically precise semantics, as such would
+  counteract our motivation to use natural language in the first place (we want
+  users to be able to express initial specifications without having to worry
+  about mathematical rigour at the same time). Instead, we use NLP techniques
+  to decompose the natural language requirements into single semantically
+  meaningful requirements, which form the semantic entities at the ISL.
+  Additionally, if NLP does not offer satisfying results, connections between
+  elements of the FSL and the ISL can be drawn manually in order to properly
+  detect the impact of changes across the different abstraction levels.
 
-Additionally, transitions can be specified using a restricted form of
-state diagrams.  Thus, the semantic entities at the FSL are classes,
-invariants, pre- and postconditions, objects, and state diagrams.
+Formal Specification Level
 
-At the ESL, the semantics are given by the SystemC semantics. States are
-given by the instances of the SystemC modelling classes (`SC_MODULE`
-etc.), and transitions are given by the simulation (see [@SystemCStandard]
-for details; however, we use a reasonable abstraction from the concrete
-SystemC implementation instead of a mathematically precise model of the
-implementation). Thus, the semantic entities at the ESL are classes,
-attributes, and methods. For this, we have implemented a semantic meta 
-model for SystemC based on EMF:
+: At the FSL, the class and object diagrams give us a notion of state (see
+  [@RichtersGogolla2002] for details): classes describe the system state (via
+  an object model), and object diagrams describe particular system states (in
+  particular, initial states). State transitions are given by the OCL
+  constraints: there is a transition with operation $o$ from $S_1$ to $S_2$ iff
+   1. all invariants hold in $S_1$ and $S_2$, 
+   2. the preconditions of $o$ are satisfied in $S_1$, and
+   3. the postconditions of $o$ are satisfied in $S_2$.
 
-[![https://github.com/DFKI-CPS/scemf - GitHub](https://gh-card.dev/repos/DFKI-CPS/scemf.svg?fullname=)](https://github.com/DFKI-CPS/scemf){.ghlink}
+  Additionally, transitions can be specified using a restricted form of state
+  diagrams. Thus, the semantic entities at the FSL are classes, invariants,
+  pre- and postconditions, objects, and state diagrams.
+
+Electronic System Level
+
+: At the ESL, the semantics are given by the SystemC semantics. States are
+  given by the instances of the SystemC modelling classes (`SC_MODULE` etc.),
+  and transitions are given by the simulation (see [@SystemCStandard] for
+  details; however, we use a reasonable abstraction from the concrete SystemC
+  implementation instead of a mathematically precise model of the
+  implementation). Thus, the semantic entities at the ESL are classes,
+  attributes, and methods. For this, we have implemented a semantic meta model
+  for SystemC based on EMF:
+
+  [![https://github.com/DFKI-CPS/scemf - GitHub](https://gh-card.dev/repos/DFKI-CPS/scemf.svg?fullname=) ](https://github.com/DFKI-CPS/scemf){.ghlink}
+
+### Semantic Relations Across Specification Levels{.added}
 
 The semantic entities on the respective abstraction levels give rise to
 notions of mapping between them. From the ISL to FSL and ESL, we map each
 requirement to one or more specification elements which implement
-them. Within the FSL, we define a notion of refinement based on the
-underlying Kripke structures; a concrete specification $\cal C$ is a
+them. Within the FSL, we can utilize a more formal notion of refinement based on 
+the underlying Kripke structures developed in [@Drechsler2016]:
+
+concrete specification $\cal C$ is a
 refinement of an abstract specification $\cal A$ if each state transition
 in $\cal C$ can be mapped back to a state transition in $\cal A$, i.e.
 $\cal C$ restricts the possible state transitions of $\cal A$. This

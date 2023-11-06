@@ -47,15 +47,15 @@ const bib_ = log.timed('load bibliography',
         log.warn(`no id for reference '${item.title}'`)
       } else {
         if (result.has(item.id)) {
-          log.warn(`duplicate bib entry '${item.id}'`)          
+          log.warn(`duplicate bib entry '${item.id}'`)
         } else {
-          delete item._graph          
+          delete item._graph
           result.set(item.id,item)
         }
       }
     }))    
     const arr = Array.from(result.values())
-    fs.writeFile('build/bib.yaml', yaml.stringify(arr,{    
+    fs.writeFile('build/bib.yaml', yaml.stringify(arr,{
     }))
     return arr
   })
@@ -83,8 +83,8 @@ const markdown_ = log.timed('initialize markdown engine',md({
 const [src,markdown] = await Promise.all([src_,markdown_])
 
 const html_ = log.timed('building markdown',() => markdown.render(src))
-const es = log.timed('building javascript and css', esbuild())
 
+const es = log.timed('building javascript and css', esbuild())
 const html = await html_
 
 await log.timed('write html output',fs.writeFile('build/index.html', html, { encoding: 'utf-8' }))

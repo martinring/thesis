@@ -16,7 +16,7 @@ export default function build() {
       ".woff2": "file",
       ".ttf": "file"    
     },
-    logLevel: 'error'    
+    logLevel: 'error'
   }).then(res => {
     res.warnings.forEach(msg => {
       log.warn(msg.location.file + ":" + msg.location.line + ":" + msg.location.column + ": " + msg.text)

@@ -1,4 +1,3 @@
-import * as anchor from '../../node_modules/markdown-it-anchor/types/index'
 import '../style/index.css'
 
 function toggleParents(elem: HTMLElement, on?: boolean) {  
