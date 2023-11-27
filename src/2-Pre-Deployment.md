@@ -10,13 +10,15 @@ this will allow us to choose where self-verification plugs into the flow.
 
 ## Background
 
-Traditional hardware design languages (HDLs) such as Verilog or VHDL which are 
-supposed to be synthesised into hardware are increasingly unable to handle large 
-designs, because they require designers to specify systems to the point where 
-they can be synthesised automatically. The resulting designs need to be built
-from the bottom up and can only be verified by thorough testing once complete. 
-This approach cannot cope with the shorter design cycles and reduced time to 
-market required in today's marketplace.
+Traditional hardware design languages (HDLs) such as Verilog or VHDL which are
+supposed to be synthesised into hardware are increasingly unable to handle large
+scale designs due to their inherent limitations. For example, they require
+designers to specify systems to the point where they can be synthesised
+automatically. The resulting designs need to be built from the bottom up and can
+only be verified by thorough testing once complete [@Perry2002;@Thomas2002]. This approach cannot cope
+with the shorter design cycles and reduced time to market required in today's
+marketplace. 
+{.changed}
 
 The remedy suggested in this chapter is to provide designers with more abstract 
 languages that allow systems to be designed top-down, starting with an abstract 
@@ -430,10 +432,11 @@ are able to encapsulate crucial concepts like state transitions and
 state-dependent behaviors, offering a foundational basis for verifying 
 properties and understanding the behavior of our system.]{.changed}
 
-[Each considered specification level carries its own semantics, shedding light on
-specific aspects of the system:]{.added}
+Each considered specification level carries its own semantics, shedding light on
+specific aspects of the system:
+{.added}
 
-Informal Specification Level
+Informal Specification Level{.added}
 
 : The ISL cannot have a mathematically precise semantics, as such would
   counteract our motivation to use natural language in the first place (we want
@@ -445,22 +448,50 @@ Informal Specification Level
   elements of the FSL and the ISL can be drawn manually in order to properly
   detect the impact of changes across the different abstraction levels.
 
-Formal Specification Level
+Formal Specification Level{.added}
 
-: At the FSL, the class and object diagrams give us a notion of state (see
-  [@RichtersGogolla2002] for details): classes describe the system state (via
-  an object model), and object diagrams describe particular system states (in
-  particular, initial states). State transitions are given by the OCL
-  constraints: there is a transition with operation $o$ from $S_1$ to $S_2$ iff
-   1. all invariants hold in $S_1$ and $S_2$, 
-   2. the preconditions of $o$ are satisfied in $S_1$, and
-   3. the postconditions of $o$ are satisfied in $S_2$.
+: Our interpretation of the Formal Specification Level (FSL) is based on a 
+  semantically well-defined subset of SysML, which includes class, object 
+  and state diagrams as well as OCL constraints.
+  {.changed}
 
-  Additionally, transitions can be specified using a restricted form of state
-  diagrams. Thus, the semantic entities at the FSL are classes, invariants,
-  pre- and postconditions, objects, and state diagrams.
+  In this context, class and object diagrams provide a notion of state (see 
+  [@RichtersGogolla2002] for details). Classes describe the system state 
+  through an object model, while object diagrams represent specific instances 
+  of these states (in particular, the initial states). The transitions between 
+  these states are governed by OCL constraints, which specify the conditions 
+  under which state transitions may occur.
+  {.changed}
 
-Electronic System Level
+  A formal definition of our FSL subset as introduced in [@Drechsler2016], is 
+  given by the tuple:
+  {.changed}
+
+  $$SP=\langle\cal{M},init,{\rm O{\small PN}},inv,pre,post,st\rangle$${.changed}
+
+  - $\mathcal{M}$ denotes the set of classes within the specification, essentially forming the object model for OCL expressions.
+  - $init$ specifies the initial states of the system.
+  - ${\rm O{\small PN}}$ represents the set of class operations available in the specification.
+  - $inv$ includes class invariants that must always hold true.
+  - $pre$ and $post$ are functions that define the pre- and postconditions for the operations in ${\rm O{\small PN}}$.
+  - $st$ comprises the set of state diagrams, which are simplified in our formal subset to exclude hierarchical states and concurrent regions. This allows representing state diagrams as pre- and post-conditions over virtual class attributes that track the state.
+  {.changed}
+
+  This FSL specification can be further condensed into a Kripke structure, denoted as $[\![ SP ]\!] = \langle S, I, \rightarrow \rangle$, where:
+  {.changed}
+
+  - $S$ is the set of all possible states of the system.
+    {.added}
+  - $I$ is the set of initial states that satisfy both the conditions in $init$ and the invariants in $inv$.
+    {.added}
+  - The transition relation $\rightarrow$ encapsulates all permissible state transitions for any operation $o \in {\rm O{\small PN}}$ from one state $\sigma_1 \in S$ to another $\sigma_2 \in S$, under the following conditions:
+    {.added}
+    1. All invariants hold in both $\sigma_1$ and $\sigma_2$.
+    2. The preconditions of $o$ are satisfied in $\sigma_1$.
+    3. The postconditions of $o$ are satisfied in $\sigma_2$.      
+
+
+Electronic System Level{.added}
 
 : At the ESL, the semantics are given by the SystemC semantics. States are
   given by the instances of the SystemC modelling classes (`SC_MODULE` etc.),
@@ -479,9 +510,19 @@ The semantic entities on the respective abstraction levels give rise to
 notions of mapping between them. From the ISL to FSL and ESL, we map each
 requirement to one or more specification elements which implement
 them. Within the FSL, we can utilize a more formal notion of refinement based on 
-the underlying Kripke structures developed in [@Drechsler2016]:
+the underlying Kripke structures as introduced in [@Drechsler2016]:
 
-concrete specification $\cal C$ is a
+Let $\cal A$ and $\cal C$ be Kripke structures representing abstract and 
+concrete specifications within the FSL, respectively. Then we distinguish two 
+forms of refinement:
+
+Data Refinement
+
+: Let $\mathcal{S}_A$ and $\mathcal{S}_C$ denote the state spaces of $\cal A$ and
+  $\cal C$. Then data refinement can be represented by a total mapping function 
+  $ \mathcal{S}_A$  
+
+a concrete specification $\cal C$ is a
 refinement of an abstract specification $\cal A$ if each state transition
 in $\cal C$ can be mapped back to a state transition in $\cal A$, i.e.
 $\cal C$ restricts the possible state transitions of $\cal A$. This
@@ -489,13 +530,14 @@ refinement can be realised by refining the state (data refinement) or the
 operations (operational refinement).
 An example of data refinement is the introduction of new classes or
 attributes; an example of operational refinement is the implementation of a single
-operation by a state diagram. From the FSL to the ESL, we have the usual
-implementation of SysML diagrams, except that we may map blocks in the
-FSL to instances of the `sc_module` class (corresponding to the fact
-that in hardware, objects exist more or less *a priori*). Within the
-ESL (i.e. between two SystemC models) we do not consider refinement, as
-this would require a more sophisticated semantic modelling of SystemC
-to consider e.g. timing requirements.
+operation by a state diagram. 
+
+From the FSL to the ESL, we have the usual implementation of SysML diagrams,
+except that we may map classes in the FSL to instances of the `sc_module` class
+(corresponding to the fact that in hardware, objects exist more or less *a
+priori*). Within the ESL (i.e. between two SystemC models) we do not consider
+refinement, as this would require a more sophisticated semantic modelling of
+SystemC to consider e.g. timing requirements.
 
 A system development consists of several *layers* $L_1,\ldots,L_n$,
 which group specifications from one
@@ -657,16 +699,23 @@ backend that can translate Clash designs into SMT Bitvector logic (See also
 proof obligations as SMT assertions from the SysML Model, the OCL Constraints 
 and the Mappings to the ESL design.
 
-## The User Interface {#sec:frontend}
+## A User Interface for Change Impact Analysis {#sec:frontend .changed}
 
-[ChImpAnC]{style=font-variant:small-caps} is realised as a web interface and can either run locally or on
-a team server. When users open the application in a browser they get
-presented a multi-column layout representing the different specification
-layers ([#fig:screen-main]). The leftmost column is the most abstract one --- 
-typically natural language --- while every additional column to the right 
-represents a refinement step. There are usually more refinement steps involved 
-than would fit into the user interface, so there is a navigation bar on the top
-where one can select the layer in focus. 
+In this section, we explore a user interface tailored for change management
+analysis: [ChImpAnC]{style=font-variant:small-caps}. Developed as part of our
+approach to a priori verification, this interface serves as a practical tool to
+illustrate how changes in the system can be analyzed more effectively, offering
+insights into potential applications and future enhancements.
+{.added}
+
+[ChImpAnC]{style=font-variant:small-caps} is realised as a web interface and can
+either run locally or on a team server. When users open the application in a
+browser they get presented a multi-column layout representing the different
+specification layers ([#fig:screen-main]). The leftmost column is the most
+abstract one --- typically natural language --- while every additional column to
+the right represents a refinement step. There are usually more refinement steps
+involved than would fit into the user interface, so there is a navigation bar on
+the top where one can select the layer in focus. 
 
 ![The ChImpAnC user interface](screen-main.png){#fig:screen-main}
 
