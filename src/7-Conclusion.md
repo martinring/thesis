@@ -40,16 +40,23 @@ For the latter point, we have developed a methodology which can indicate which
 sets of variables of a proof offer the largest reduction in verification run 
 time, aiding the designer in this decision.
 
-Note that self-verification is not meant to *replace* the existing 
-verification flow but rather *enhances* it. We should by all means use all well-known 
+Note that self-verification is not meant to *replace* the existing verification
+flow but rather *enhances* it. We should by all means use all well-known
 powerful tools at design time to discharge verification conditions as before.
-However, self-verification offers a different way to tackle proof obligations 
-which cannot be shown at design time, supplementing design time verification, 
+However, self-verification offers a different way to tackle proof obligations
+which cannot be shown at design time, supplementing design time verification,
 and offering the designer to pick the best of all possible worlds.
 
-The idea of self-verification opens up numerous possiblities for future work 
-(as sketched in [#chap:advanced]), which did not fit the scope of this thesis. 
+The idea of self-verification opens up numerous possiblities for future work (as
+outlined in [#chap:advanced]), which did not fit the scope of this thesis.
 However, the evaluations and discussions show that, following the proposed idea,
-allows for a novel verification methodology that can be adapted today, which 
-does not rely on incremental improvement of existing tools and methods but 
-tackles complexity from a completely different, and more successful, angle.
+allows for a novel verification methodology that can be adapted today, which
+does not rely on incremental improvement of existing tools and methods but
+tackles complexity from a completely different angle. While self-verification
+offers immense potential, it also comes with challenges and limitations that
+must be addressed. Balancing optimism with a realistic evaluation of these
+challenges, further research as well as collaborative efforts between academia
+and industry are necessary. This will be crucial in advancing self-verification,
+pushing the boundaries of systems reliability, safety, and efficiency in an
+increasingly automated world.
+{.changed}

@@ -7,8 +7,6 @@ import metadata_block from 'markdown-it-metadata-block';
 import yaml from 'yaml';
 import fancy_lists from 'markdown-it-fancy-lists';
 import multimd_table from 'markdown-it-multimd-table';
-import anchor from 'markdown-it-anchor';
-import toc from 'markdown-it-toc-done-right';
 
 /** @type {import('markdown-it').PluginSimple} */
 export default function (md) {

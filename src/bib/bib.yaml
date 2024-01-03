@@ -1294,6 +1294,25 @@
   issued:
     date-parts:
       - - 2009
+- id: TimeBoundedVerificationTheory
+  DOI: 10.1007/978-3-642-14162-1_3
+  publisher: Springer
+  page: 22-37
+  title: Towards a Theory of Time-Bounded Verification
+  author:
+    - given: Joël
+      family: Ouaknine
+      sequence: first
+      affiliation: []
+    - given: James
+      family: Worrell
+      sequence: additional
+      affiliation: []
+  container-title: Automata, Languages and Programming
+  issued:
+    date-parts:
+      - - 2010
+  URL: http://dx.doi.org/10.1007/978-3-642-14162-1_3
 - id: TimedAutomata
   DOI: 10.1016/0304-3975(94)90010-8
   publisher: Elsevier
@@ -1631,4 +1650,30 @@
     date-parts:
       - - 2002
   URL: http://dx.doi.org/10.1007/978-0-387-85344-4  
+- id: AnyTimeAlgorithms
+  DOI: 10.1145/242587.242592
+  publisher: Association for Computing Machinery (ACM)
+  issue: "2"
+  type: article-journal
+  page: 20-27
+  source: Crossref
+  title: Anytime algorithm development tools
+  volume: "7"
+  author:
+    - given: Joshua
+      family: Grass
+      sequence: first
+      affiliation: []
+    - given: Shlomo
+      family: Zilberstein
+      sequence: additional
+      affiliation: []
+  container-title: ACM SIGART Bulletin
+  language: en
+  issued:
+    date-parts:
+      - - 1996
+        - 4
+  URL: http://dx.doi.org/10.1145/242587.242592  
+  container-title-short: SIGART Bull.  
 ...

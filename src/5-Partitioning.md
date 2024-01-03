@@ -223,7 +223,7 @@ variables may depend on other variables, i.e. if we set one of them to
 a fixed value, the other one is restrained as well.
 
 Hence, the problem remains how to determine an *optimal subset $X$*
-of variables (optimal in the sense of smallest set $X$ such that the average
+of variables (optimal in the sense of [smallest]{.changed} set $X$ such that the average
 verification time $\AvgTphi{X}$ is still acceptable).
 
 ## Proposed Solution {#sec:sol}
@@ -494,79 +494,72 @@ measured on an Intel Xeon (E3-1270 v3) compute server with 8 cores and
 
 ### Considered Benchmarks
 
-Our methodology is meant for hard verification tasks which do not terminate 
-before a given time-out. The SMT-LIB library provides a huge, representative 
-corpus of such problems from the verification of circuits and systems, 
-constituting a representative source of problems for our evaluations.
-We considered non-iterative quantifier-free bit vector logic (QF_BV)
-benchmarks from the category "industrial" which are marked as
-"unsat", where $\tau(\phi)$ (determined by binary search as
-described above) is larger than 10; the latter ensures that trivial
-benchmarks which complete in less than roughly
-$T_{max} \cdot 2^{10} \approx 512s$ are omitted.
+Our methodology is meant for hard verification tasks which do not terminate
+before a given time-out. The SMT-LIB library provides a huge, representative
+corpus of such problems from the verification of circuits and systems,
+constituting a representative source of problems for our evaluations. We
+considered non-iterative quantifier-free bit vector logic (QF_BV) benchmarks
+from the category "industrial" which are marked as "unsat", where $\tau(\phi)$
+(determined by binary search as described above) is larger than 10; the latter
+ensures that trivial benchmarks which complete in less than roughly $T_{max}
+\cdot 2^{10} \approx 512s$ are omitted.
 
-With the remaining set of hard benchmarks, the proposed method has
-been evaluated on a total of 333 propositions.  The mean run time
-$t_\text{A}$ of the analysis was 86 seconds. 34\% (114) of the
-benchmarks were analyzed in under 60 seconds, 93\% (309) finished in
-less than 10 minutes, and the longest took 23 minutes 37 seconds. There was no
-significant relation between the run time of the analysis and the
-original proof time.
+With the remaining set of hard benchmarks, the proposed method has been
+evaluated on a total of 333 propositions.  The mean run time $t_\text{A}$ of the
+analysis was 86 seconds. 34\% (114) of the benchmarks were analyzed in under 60
+seconds, 93\% (309) finished in less than 10 minutes, and the longest took 23
+minutes 37 seconds. There was no significant relation between the run time of
+the analysis and the original proof time.
 
 ### Obtained Results
 
-A representative subset of results is summarised in [#tab:rta-results] 
-(For the full results see the linked github repository). Here, the first 
-columns denote the problem size: the number of SMT variables, and the number of 
-bits ($|\FV{\phi}|$) representing those SMT variables. The next group of
-columns shows the results of the analysis: $\tau(\phi)$ is the
-initially approximated number of variables that has to be fixed, $|X|$
-is the size (in bits) of the found solution $X$; and $t_\text{A}$ is the
-run time of the analysis itself. The last column group shows the
-reduction in verification run time: $T(\phi)$ is the run time with
-state-of-the-art verification (which results in a time-out for all
+A representative subset of results is summarised in [#tab:rta-results] (For the
+full results see the linked github repository). Here, the first columns denote
+the problem size: the number of SMT variables, and the number of bits
+($|\FV{\phi}|$) representing those SMT variables. The next group of columns
+shows the results of the analysis: $\tau(\phi)$ is the initially approximated
+number of variables that has to be fixed, $|X|$ is the size (in bits) of the
+found solution $X$; and $t_\text{A}$ is the run time of the analysis itself. The
+last column group shows the reduction in verification run time: $T(\phi)$ is the
+run time with state-of-the-art verification (which results in a time-out for all
 problems because we explicitly consider hard ones).
-$\hat{T}^\text{rnd}_\phi(|X|)$ denotes the run time when just an
-arbitrary selection of variables $Y \subset \FV{\phi}$ with the same
-size $|Y| = |X|$ is set to a fixed value, while $\AvgTphi{X}$ denotes
-the run time when exactly the variables in $X$ are set to a fixed
-value.
+$\hat{T}^\text{rnd}_\phi(|X|)$ denotes the run time when just an arbitrary
+selection of variables $Y \subset \FV{\phi}$ with the same size $|Y| = |X|$ is
+set to a fixed value, while $\AvgTphi{X}$ denotes the run time when exactly the
+variables in $X$ are set to a fixed value.
 
-The results clearly confirm the benefits of our approach.  While it is
-in general not surprising that fixing a number of variables reduces
-the verification run time, our analysis yields a small number $|X|$ of
-variables to fix for maximum effect. By this, verification
-engineers get much more out of partial verification since it allows
-them to only set a small portion of the
-variables to a fixed value. E.g. for *calypto/problem_22.smt2*, 
-a naive method would have led
-them to set $\tau(\phi)=128$ variables to a fixed value; with the
-sophisticated analysis method proposed in this work, just fixing
-$|X|=13$ is sufficient --- yielding substantially larger coverage.
+The results clearly confirm the benefits of our approach.  While it is in
+general not surprising that fixing a number of variables reduces the
+verification run time, our analysis yields a small number $|X|$ of variables to
+fix for maximum effect. By this, verification engineers get much more out of
+partial verification since it allows them to only set a small portion of the
+variables to a fixed value. E.g. for *calypto/problem_22.smt2*, a naive method
+would have led them to set $\tau(\phi)=128$ variables to a fixed value; with the
+sophisticated analysis method proposed in this work, just fixing $|X|=13$ is
+sufficient --- yielding substantially larger coverage.
 
 Moreover, the results confirm that not only the number $|X|$ of
-variables is important (*how many?*), but also which variables
-should be set to a fixed value (*which?*).  This can clearly be
-seen in the last two columns of [#tab:rta-results] randomly
-fixing $|X|$ variables often leads to a time-out ($600s$). In
-contrast, fixing exactly those variables $X$ obtained by the proposed
-analysis allows solving *all* benchmarks in negligible run time.
+variables is important (*how many?*), but also which variables should be set to
+a fixed value (*which?*).  This can clearly be seen in the last two columns of
+[#tab:rta-results] randomly fixing $|X|$ variables often leads to a time-out
+($600s$). In contrast, fixing exactly those variables $X$ obtained by the
+proposed analysis allows solving *all* benchmarks in negligible run time.
 
+The identified candidates do indeed reduce run time significantly with respect
+to randomly constrained instances. Out of 333 instances there were 221 which
+were sped up by factor 10 or more, 167 were sped up by factor 100 or more and 94
+were sped up by factor 1000 and more. For 11 benchmarks the reference time could
+not be determined due to time-outs of factor >10000.
 
-The identified candidates do indeed reduce run time significantly with respect to 
-randomly constrained instances. Out of 333 instances there were 221 which were 
-sped up by factor 10 or more, 167 were sped up by factor 100 or more and 94 were 
-sped up by factor 1000 and more. For 11 benchmarks the reference time could not
-be determined due to time-outs of factor >10000.
-
-Those benchmarks which were not significantly sped up can actually be recognised during 
-analysis because they show no clear relation between sets of variables and 
-run time and thus have large fluctuations within the population over generations 
-of the EA. We identified several reasons, why this can happen: when too much information 
-is represented by a single SMT variable; when there are only pseudo-random 
-dependencies between variables and when too much of the heavy lifting happens in
-local function definitions. However, these instances can be quickly identified 
-and might be fixable by adapting the representation of the proof.
+Those benchmarks which were not significantly sped up can actually be recognised
+during analysis because they show no clear relation between sets of variables
+and run time and thus have large fluctuations within the population over
+generations of the EA. We identified several reasons, why this can happen: when
+too much information is represented by a single SMT variable; when there are
+only pseudo-random dependencies between variables and when too much of the heavy
+lifting happens in local function definitions. However, these instances can be
+quickly identified and might be fixable by adapting the representation of the
+proof.
 
 
 <style>
@@ -636,12 +629,22 @@ to fix sensor input which changes rapidly, but it makes a lot of sense to fix
 configuration parameters which rarely change. Obviously, such considerations can 
 easily be integrated into the proposed analysis e.g. by adding a *weight* to the
 variables such that instantiating some variables (which do not change often) is 
-favourable to instantiating others (which do change often).
+favourable to instantiating others (which do change often). In addition to 
+further increase the usefulness of the results, the induced state-space of 
+variables should be taken into account, not only considering it's possible 
+values but also the variables that it directly affects. This again, can be 
+easily integrated with weights.
 
-Bla bla blub
-{.added}
+With regard to related work, we need to take a look at the decision heuristics 
+of SAT- or SMT-solvers, since a lot of effort and research has been invested in 
+their optimisation. However, in a first approach utilising the decision 
+heuristics, our experments have shown, that while they are very well suited to 
+identify single variables that have a large impact on the verification time, 
+they fail to provide sets of variables: The identified optimal subset $X$ as 
+identified by our approach doesn't necessarily contain the single most impactful
+variable since (See also [#eq:avgt-not-monotone]).
 
-With regard to related work, the term "partial verification" is also used with 
+The term "partial verification" is also used with 
 model checking, in particular software model checking (see 
 e.g. [@Parizek2007,@Groce2004]), referring to techniques to reduce the search 
 space in order to find counterexamples (and, hence, bugs), or referring to the 
@@ -653,6 +656,7 @@ also used in the context of agents [@Caragiannis2012,@Yu2011], but refers to
 verification of truthfulness. However, the methodology proposed in this chapter 
 here is not related to any of these previous works and, hence, is novel to the 
 best of our knowledge.
+{.changed}
 
 ## Conclusion
 

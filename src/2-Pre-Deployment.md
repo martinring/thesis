@@ -512,15 +512,12 @@ requirement to one or more specification elements which implement
 them. Within the FSL, we can utilize a more formal notion of refinement based on 
 the underlying Kripke structures as introduced in [@Drechsler2016]:
 
+We distinguish two forms of refinement: 
+
 Let $\cal A$ and $\cal C$ be Kripke structures representing abstract and 
-concrete specifications within the FSL, respectively. Then we distinguish two 
-forms of refinement:
+concrete specifications within the FSL, respectively. 
 
-Data Refinement
 
-: Let $\mathcal{S}_A$ and $\mathcal{S}_C$ denote the state spaces of $\cal A$ and
-  $\cal C$. Then data refinement can be represented by a total mapping function 
-  $ \mathcal{S}_A$  
 
 a concrete specification $\cal C$ is a
 refinement of an abstract specification $\cal A$ if each state transition

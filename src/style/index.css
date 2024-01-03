@@ -411,3 +411,13 @@ header p.author::before {
 .added, .changed {
   background-color: rgba(0,200,0,0.3);
 }
+
+.todo {
+  background-color: rgba(200,0,0,0.3);
+  display: block;
+}
+
+.todo::before {
+  content: "TODO: ";  
+  font-weight: bold;
+}
