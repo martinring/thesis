@@ -35,13 +35,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
+          cache: 'npm'
       - name: Install Prince
         run: |
           wget https://www.princexml.com/download/prince_14.4-1_ubuntu22.04_amd64.deb
           sudo dpkg -i prince_14.4-1_ubuntu22.04_amd64.deb
-      - run: yarn install --frozen-lockfile
-      - run: yarn build:pdf
+      - run: npm install
+      - run: npm run build:pdf
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
