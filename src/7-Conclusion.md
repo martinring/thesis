@@ -38,7 +38,7 @@ applicability of the approach as well as design decisions that should be made:
 
 For the latter point, we have developed a methodology which can indicate which
 sets of variables of a proof offer the largest reduction in verification run 
-time, aiding the designer in this decision.
+time[, a]{.changed}iding the designer in this decision.
 
 Note that self-verification is not meant to *replace* the existing verification
 flow but rather *enhances* it. We should by all means use all well-known

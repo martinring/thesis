@@ -176,7 +176,7 @@ translated into *conjunctive normal form* (CNF) with a SAT solver such as
 MiniSat. This is where verification usually fails.
 
 However, post-deployment after we have instantiated the configuration
-variables, the search space may become small enough to allow verification of the
+variables, the search space [may become]{.changed} small enough to allow verification of the
 corresponding properties even by a lightweight solver [@light-weight-SAT-solving].
 By this, verification of all properties becomes possible. Recall that this
 instantiation cannot be done at the design time, because at that point the

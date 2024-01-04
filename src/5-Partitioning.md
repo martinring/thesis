@@ -630,11 +630,11 @@ to fix sensor input which changes rapidly, but it makes a lot of sense to fix
 configuration parameters which rarely change. Obviously, such considerations can 
 easily be integrated into the proposed analysis e.g. by adding a *weight* to the
 variables such that instantiating some variables (which do not change often) is 
-favourable to instantiating others (which do change often). In addition to 
+favourable to instantiating others (which do change often). [In addition to 
 further increase the usefulness of the results, the induced state-space of 
 variables should be taken into account, not only considering it's possible 
 values but also the variables that it directly affects. This again, can be 
-easily integrated with weights.
+easily integrated with weights.]{.added}
 
 With regard to related work, we need to take a look at the decision heuristics
 implemented by contemporary SAT- or SMT-solvers, since a lot of effort and

@@ -37,7 +37,7 @@ amount of discharged proofs may accumulate (by this, too large to keep in memory
 There are two ideas to cope with this (which may be combined):
 
 1. We may employ "garbage collection" which clears proofs for states that were 
-   predicted under entirely different conditions but stayed unused.
+   predicted under entirely different conditions [but]{.changed} stayed unused.
 2. Proof results could be condensed by proving patterns of states and storing 
    only the pattern.
 
@@ -173,9 +173,9 @@ $t$ that can be proven or the proof is never faster than the execution. Hence,
 the unanswered research questions that arises from this approach are:
 
 1. Is there a reliable method to infer a "good enough" $\eta$ for a given 
-   system?
+   system[?]{.changed}
 2. Are there real-world systems to which just-in-time verification can be 
-   applied without severely restricting functionality?
+   applied without severely restricting functionality[?]{.changed}
 
 We have implemented experiments, namely a simplified simulation of an
 adaptive cruise control and several planning algorithms but until now failed to 
