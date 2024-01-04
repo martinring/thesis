@@ -207,8 +207,9 @@ can state that
 However, in between, the behaviour is not so well defined. From the above,
 we might guess that the smaller the set $X$, the larger the average
 verification run time (i.e. $\AvgTphi X$ is anti-monotone over the size
-of the variable set), but this turns out not be true (also confirmed by [#fig:runtime-idealized] discussed in [#ex:erratic]).
-Mathematically, given two different subsets $X,Y\in\FV{\phi}$, we have
+of the variable set), but this turns out not be true (also confirmed by 
+[#fig:runtime-idealized] discussed in [#ex:erratic]). Mathematically, given two 
+different subsets $X,Y\in\FV{\phi}$, we have
 
 $$
 \begin{equation}
@@ -347,11 +348,11 @@ Mutation operation
 
 Recombination operation
 
-: Recombinations combine the characteristics of more than one individual, 
-  hoping to combine beneficial traits out of them towards a better solution.
-  Recombinations aim for employing changes to individuals in order to
-  explore new parts of the search space as well, but also converge on
-  existing individuals.
+: Recombinations combine the characteristics of more than one individual, hoping
+  to [merge beneficial traits]{.changed} out of them towards a better solution.
+  Recombinations aim for employing changes to individuals in order to explore
+  new parts of the search space as well, but also converge on existing
+  individuals.
 
 Fitness function
 
@@ -501,8 +502,8 @@ constituting a representative source of problems for our evaluations. We
 considered non-iterative quantifier-free bit vector logic (QF_BV) benchmarks
 from the category "industrial" which are marked as "unsat", where $\tau(\phi)$
 (determined by binary search as described above) is larger than 10; the latter
-ensures that trivial benchmarks which complete in less than roughly $T_{max}
-\cdot 2^{10} \approx 512s$ are omitted.
+ensures that trivial benchmarks which complete in less than roughly 
+$T_{max} \cdot 2^{10} \approx 512s$ are omitted.
 
 With the remaining set of hard benchmarks, the proposed method has been
 evaluated on a total of 333 propositions.  The mean run time $t_\text{A}$ of the
@@ -635,28 +636,34 @@ variables should be taken into account, not only considering it's possible
 values but also the variables that it directly affects. This again, can be 
 easily integrated with weights.
 
-With regard to related work, we need to take a look at the decision heuristics 
-of SAT- or SMT-solvers, since a lot of effort and research has been invested in 
-their optimisation. However, in a first approach utilising the decision 
-heuristics, our experments have shown, that while they are very well suited to 
-identify single variables that have a large impact on the verification time, 
-they fail to provide sets of variables: The identified optimal subset $X$ as 
-identified by our approach doesn't necessarily contain the single most impactful
-variable since (See also [#eq:avgt-not-monotone]).
+With regard to related work, we need to take a look at the decision heuristics
+implemented by contemporary SAT- or SMT-solvers, since a lot of effort and
+research has been invested in their optimisation. However, in a first approach
+utilising the decision heuristics of MiniSAT and Z3 as a basis, our experiments
+have shown, that while they are very well suited to identify single variables
+that have a large impact on the verification time, they fail to provide sets of
+variables: The identified optimal subset $X$ as identified by our approach
+doesn't necessarily contain the single most impactful variable identified by the
+solver (see also [#eq:avgt-not-monotone]). Explicitly stated, for any two sets
+of variables $X$ and $Y$, which is are optimal sets of variables of their
+respective sizes $|X|$ and $|Y|$ where $|X| < |Y|$, we observed examples, where
+$|X| \cap |Y| = \emptyset$. This property unfortunately prohibits any straight 
+forward exploitation of such decision heuristics and justifies our approach. 
+In addition our approach allows to extract additional information, such as 
+actual average runtimes.
+{.added}
 
-The term "partial verification" is also used with 
-model checking, in particular software model checking (see 
-e.g. [@Parizek2007,@Groce2004]), referring to techniques to reduce the search 
-space in order to find counterexamples (and, hence, bugs), or referring to the 
-exchange of results between different automatic tools (model checkers, static 
-analyzers, theorem provers) such that the combination of partial results makes 
-the whole verification succeed (see e.g. [@Wuestholz,@Beyer2016]). This is also 
-referred to as conditional model checking [@Beyer2012]. Furthermore, the term is 
-also used in the context of agents [@Caragiannis2012,@Yu2011], but refers to 
-verification of truthfulness. However, the methodology proposed in this chapter 
-here is not related to any of these previous works and, hence, is novel to the 
-best of our knowledge.
-{.changed}
+The term "partial verification" is also used with model checking, in particular
+software model checking (see e.g. [@Parizek2007,@Groce2004]), referring to
+techniques to reduce the search space in order to find counterexamples (and,
+hence, bugs), or referring to the exchange of results between different
+automatic tools (model checkers, static analyzers, theorem provers) such that
+the combination of partial results makes the whole verification succeed (see
+e.g. [@Wuestholz,@Beyer2016]). This is also referred to as conditional model
+checking [@Beyer2012]. Furthermore, the term is also used in the context of
+agents [@Caragiannis2012,@Yu2011], but refers to verification of truthfulness.
+However, the methodology proposed in this chapter here is not related to any of
+these previous works and, hence, is novel to the best of our knowledge.
 
 ## Conclusion
 

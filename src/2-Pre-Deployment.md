@@ -512,13 +512,6 @@ requirement to one or more specification elements which implement
 them. Within the FSL, we can utilize a more formal notion of refinement based on 
 the underlying Kripke structures as introduced in [@Drechsler2016]:
 
-We distinguish two forms of refinement: 
-
-Let $\cal A$ and $\cal C$ be Kripke structures representing abstract and 
-concrete specifications within the FSL, respectively. 
-
-
-
 a concrete specification $\cal C$ is a
 refinement of an abstract specification $\cal A$ if each state transition
 in $\cal C$ can be mapped back to a state transition in $\cal A$, i.e.

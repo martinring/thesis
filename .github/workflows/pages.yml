@@ -40,8 +40,10 @@ jobs:
         run: |
           wget https://www.princexml.com/download/prince_14.4-1_ubuntu22.04_amd64.deb
           sudo dpkg -i prince_14.4-1_ubuntu22.04_amd64.deb
-      - run: npm install
-      - run: npm run build:pdf
+      - name: NPM Install
+        run: npm install
+      - name: Build PDF
+        run: npm run build:pdf
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

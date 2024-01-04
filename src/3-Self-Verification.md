@@ -359,7 +359,8 @@ violated (because we assert the negated specification).
 
 Because we explore the complete search space (there is no state abstraction
 involved), this procedure is not only sound but also complete; if we cannot
-find a counter-example, the verification condition holds.
+find a counter-example, the verification condition holds [for all reachable 
+states within the reduced search space]{.added}.
 
 #### Instantiation after Deployment (bottom of [#fig:design-flow])
 
@@ -501,7 +502,7 @@ Table: Evaluation Results (Established Flow) {#tab:exp-pre}
 | **smart**        | $2^{9504}$   | 1421153   | 4761633 | $> 24h$  |
 | **multiplier**   | $2^{32}$     | 1177      | 6096    | $> 24h$  |
 
-Table: Evaluation Results (Proposed Flow) {#tab:exp-post}
+Table: Evaluation Results (Proposed Flow, [with randomly assigned values]{.added}) {#tab:exp-post}
 
 | System           | Search space | Variables | Clauses | Time     |
 |:-----------------|:------------:|----------:|--------:|---------:|
