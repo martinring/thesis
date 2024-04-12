@@ -31,12 +31,12 @@ export default function(elem: HTMLElement) {
     font: {
       family: 'var(--font-body)'
     },
-    margin: { t: 10, b: 45 } }, {
+    margin: { t: 10, b: 45 } }, {      
       responsive: true,
       displaylogo: false            
     });
   if (window.navigator.userAgent == 'PDF') plot.then(plot => {        
-    Plotly.toImage(plot,{ format: "svg", width: elem.clientWidth, height: elem.clientHeight }).then(x => {                  
+    Plotly.toImage(plot,{ format: "svg", width: 500, height: 400 }).then(x => {                  
       const obj = document.createElement('object')
       fetch(x).then(x => x.text().then(x => {
         elem.innerHTML = x

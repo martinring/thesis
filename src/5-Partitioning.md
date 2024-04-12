@@ -631,7 +631,7 @@ configuration parameters which rarely change. Obviously, such considerations can
 easily be integrated into the proposed analysis e.g. by adding a *weight* to the
 variables such that instantiating some variables (which do not change often) is 
 favourable to instantiating others (which do change often). [In addition to 
-further increase the usefulness of the results, the induced state-space of 
+further increase the usefulness of the results, the induced state space of 
 variables should be taken into account, not only considering it's possible 
 values but also the variables that it directly affects. This again, can be 
 easily integrated with weights.]{.added}
@@ -639,9 +639,9 @@ easily integrated with weights.]{.added}
 With regard to related work, we need to take a look at the decision heuristics
 implemented by contemporary SAT- or SMT-solvers, since a lot of effort and
 research has been invested in their optimisation. However, in a first approach
-utilising the decision heuristics of MiniSAT and Z3 as a basis, our experiments
+utilising the decision heuristics of [MiniSAT]{.nobr} and Z3 as a basis, our experiments
 have shown, that while they are very well suited to identify single variables
-that have a large impact on the verification time, they fail to provide sets of
+that have a large impact on the verification time, they fail to identify sets of
 variables: The identified optimal subset $X$ as identified by our approach
 doesn't necessarily contain the single most impactful variable identified by the
 solver (see also [#eq:avgt-not-monotone]). Explicitly stated, for any two sets
@@ -649,8 +649,13 @@ of variables $X$ and $Y$, which is are optimal sets of variables of their
 respective sizes $|X|$ and $|Y|$ where $|X| < |Y|$, we observed examples, where
 $|X| \cap |Y| = \emptyset$. This property unfortunately prohibits any straight 
 forward exploitation of such decision heuristics and justifies our approach. 
-In addition our approach allows to extract additional information, such as 
-actual average runtimes.
+The accuracy of our approach despite being less sophisticated than the existing 
+heuristics is not surprising, as our approach is not required to make a very 
+fast decision -- like the established heuristics -- but rather thoroughly 
+analyses the real runtimes of the proof engine, leading to an vastly more 
+expensive but also more accurate result. In addition our approach allows to 
+extract the actual average runtimes, giving an indication on the feasibility of
+the proof on the target system.
 {.added}
 
 The term "partial verification" is also used with model checking, in particular

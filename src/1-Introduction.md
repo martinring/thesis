@@ -138,9 +138,9 @@ This cumulative thesis is based on the following original publications:
   in Time,” in *International Conference on Software Engineering and Formal 
   Methods (SEFM 2019)*, Oslo, Norway, Sep. 2019, pp. 454–468
 
-  *My contribution: [I spearheaded the implementation from conception to 
+  *My contribution: [I solely conducted the implementation from conception to 
   completion, ensuring the work aligned with our research objectives. My 
-  collaboration on the manuscript included participation in discussions as well 
+  collaboration on the manuscript included leading of discussions as well 
   as drafting, and finalizing of all sections.]{.added}*
 
 [@VerificationRuntime]
@@ -151,9 +151,9 @@ This cumulative thesis is based on the following original publications:
   Mar. 2020, pp. 873–878
 
   *My contribution: [I was solely responsible for the entire implementation, 
-  taking the lead in ensuring its accuracy and relevance to our study. In the 
+  ensuring its accuracy and relevance to our study. In the 
   writing phase, I collaborated closely with my co-authors, contributing to 
-  all aspects of the paper. Additionally, I took the lead in designing and 
+  all sections of the paper. Additionally, I took the lead in designing and 
   executing the evaluation, ensuring our findings were both robust and 
   insightful.]{.added}*
 {.refs}

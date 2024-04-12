@@ -63,13 +63,13 @@ involves checking properties over infinite non-conflatable state spaces.
 
 As a remedy for these shortcomings, we propose a novel approach called
 *just-in-time verification*, which dynamically triggers *time-bounded
-verifications* during run-time of the system. Time bounded verification is a
+verifications* during run-time of the system. Time-bounded verification is a
 method of checking the correctness of real-time systems over time intervals of
 fixed, bounded length. It is useful for verifying properties that are relevant
 only for a certain duration, such as deadlines, timeouts, or response times.
-However, in our use-case time bounded verification can also be a means to avoid
+However, in our use-case time-bounded verification can also be a means to avoid
 some of the undecidability and complexity issues of unbounded verification
-[@TimeBoundedVerification]. Time bounded verification can be applied to various
+[@TimeBoundedVerification]. Time-bounded verification can be applied to various
 logics and models of real time, such as timed automata, metric temporal logic,
 event-clock automata, and perturbed timed automata. It can also be combined with
 other techniques, such as partial-order reduction, preemption locks, and
@@ -112,7 +112,7 @@ safety measure).
 
 ### Operation
 
-For it's operation a just-in-time verified system has to be equipped with a
+For its operation a just-in-time verified system has to be equipped with a
 self-verification system, composed of a monitor, a verifier and a controller. 
 The self-verification system is responsible for verifying the system dynamically
 during operation, as well as for adapting the system behavior accordingly.
@@ -143,8 +143,8 @@ continuously trigger proofs in a loop follwing the schema:
 3. when the proof completes before $\dashv_{t_n} - t_\text{safe}$ we [can]{.added}
    continue from (1) ([#fig:jit-1]). [This is the the stable just-in-time proof 
    cycle.]{.added}
-4. when verifier prooves the violation of a property or does not yield a proof 
-   result in time (i.e. before $\dashv_{t_n} - t_\text{safe}$) the contoller 
+4. when verifier proves the violation of a property or does not yield a proof 
+   result in time (i.e. before $\dashv_{t_n} - t_\text{safe}$) the controller 
    interrupts the proof cycle by executing the safety measure. 
    ([#fig:jit-2], [#fig:jit-3])
    {.changed}
@@ -210,9 +210,8 @@ vehicle:
   bring the vehicle to a safe stop (i.e. $t_{safe}$ reduces).
   {.added}
 - The speed of an autonomous vehicle also exponentially reduces the search space
-  of time bounded veficiation tasks as the surface of potential positions of the 
-  vehicle within the relevant time interval shrinks. (i.e. verifiaction time 
-  reduces)
+  of time-bounded veficiation tasks as the surface of potential positions of the 
+  vehicle within the relevant time interval shrinks. (i.e. verification time reduces)
   {.added}
 
 
@@ -258,22 +257,21 @@ inputs. There are several first attempts to the verification of such trained
 models [@Narodytska2018;@Sun2019]. However, they share the problem of 
 non-scalability. [With the recent advent of transformer models, it seams feasible
 to train models not to produce continuous single decisions based on the current 
-state but instead repleatedly update the actual plan or code that is suitable to 
+state but instead repeatedly update the actual plan or code that is suitable to 
 handle the current situation of the system based on the observation of the 
 environment.]{.added}
 
-If we take into account the observations from [#sec:dependent-operation], that 
-controllable variables can not only have an effect on $t_\text{safe}$ but also 
-on the search space, we can imagine an inferred system that is optimised to 
-produce plans that not only to perform their primary tasks but also reduce 
-verification time, so that it becomes feasible to esablish a proof cycle as 
-outlined in [#sec:jit]. Transformer models respond very well to feedback (e.g. 
-RLHF) and by this might be optimisable to produce plans that are easy to verify, 
-by using the verification time (and result) as basis for feedback to the 
-transformer model. For complex systems with (for humans) impenetrable 
-inter-dependencies this might well be the only way to establish dependent 
-operation at all.
-{.changed}
+If we take into account the observations from [#sec:dependent-operation], that
+controllable variables can not only have an effect on $t_\text{safe}$ but also
+on the search space, we can imagine an inferred system that is optimised to
+produce plans that not only serve to perform their primary tasks but also reduce
+verification time, so that it becomes feasible to establish a proof cycle as
+outlined in [#sec:jit]. Transformer models respond very well to feedback (e.g.
+Reinforcement learning from human feedback) and by this might be optimisable to
+produce plans that are easy to verify, by using the verification time (and
+result) as basis for feedback to the transformer model. For complex systems with
+(for humans) impenetrable inter-dependencies this might well be the only way to
+establish dependent operation at all. {.changed}
 
 ## Conclusion {.added}
 

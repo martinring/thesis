@@ -343,7 +343,7 @@ The semantics of the language are completely externalised to the unterlying
 Papyrus framework. Every Diagram expressed in SPECifIC SysML is mapped to a 
 Papyrus SysML Diagram.
 
-### Refrence Compiler{#sec:sysml-impl}
+### Reference Compiler{#sec:sysml-impl}
 
 Further details about the syntax and semantics of the lanugage can be found 
 online in the reference implementation which is freely available. Here, also 
@@ -424,8 +424,8 @@ wide-spectrum languages.
 
 ### Underlying Semantics
 
-[We based our reasoning about the semantics on the reduction to Kripke 
-structures. At it's core a Kripke structure consists of a set of states, a
+[We base our reasoning about the semantics on the reduction to Kripke 
+structures. At its core a Kripke structure consists of a set of states, a
 transition relation between states, and an associated set of atomic propositions
 for each state, which hold within that state. By adopting Kripke structures, we 
 are able to encapsulate crucial concepts like state transitions and 
@@ -477,7 +477,7 @@ Formal Specification Level{.added}
   - $st$ comprises the set of state diagrams, which are simplified in our formal subset to exclude hierarchical states and concurrent regions. This allows representing state diagrams as pre- and post-conditions over virtual class attributes that track the state.
   {.changed}
 
-  This FSL specification can be further condensed into a Kripke structure, denoted as $[\![ SP ]\!] = \langle S, I, \rightarrow \rangle$, where:
+  The semantics of such an FSL specification can be modeled as a Kripke structure, denoted as $[\![ SP ]\!] = \langle S, I, \rightarrow \rangle$, where:
   {.changed}
 
   - $S$ is the set of all possible states of the system.

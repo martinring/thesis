@@ -78,13 +78,13 @@ export default function (elem: HTMLElement) {
         showarrow: false,
         bgcolor: "white",
         font: {
-          size: "150%"
+          size: 1.5
         }
       },
       {
         text: 'T<sub style="font-style:italic">max</sub>',
         x: 1,
-        yanchor: "center",
+        yanchor: "middle",
         xanchor: "right",
         y: 0.45,
         showarrow: false,
@@ -97,14 +97,14 @@ export default function (elem: HTMLElement) {
       return [{
         text: r.toFixed(1).toString(),
         showarrow: false,
-        textangle: phi / (Math.PI / 180),
+        textangle: (phi / (Math.PI / 180)).toString(),
         bgcolor: 'white',      
         y: r * Math.cos(phi),
         x: r * Math.sin(phi)        
       },{
         text: r.toFixed(1).toString(),
         showarrow: false,
-        textangle: phi2 / (Math.PI / 180),
+        textangle: (phi2 / (Math.PI / 180)).toString(),
         bgcolor: 'white',
         y: r * Math.cos(phi2),
         x: r * Math.sin(phi2)
@@ -117,7 +117,7 @@ export default function (elem: HTMLElement) {
       displaylogo: false
     });
   if (window.navigator.userAgent == 'PDF') plot.then(plot => {
-    Plotly.toImage(plot, { format: "svg", width: elem.clientWidth, height: elem.clientHeight }).then(x => {
+    Plotly.toImage(plot, { format: "svg", width: 500, height: 400 }).then(x => {
       const obj = document.createElement('object')
       fetch(x).then(x => x.text().then(x => {
         elem.innerHTML = x

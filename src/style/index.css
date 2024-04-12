@@ -408,7 +408,7 @@ header p.author::before {
   display: block;
 }
 
-.added, .changed {
+/*.added, .changed {
   background-color: rgba(0,200,0,0.3);
 }
 
@@ -420,4 +420,4 @@ header p.author::before {
 .todo::before {
   content: "TODO: ";  
   font-weight: bold;
-}
+}*/
